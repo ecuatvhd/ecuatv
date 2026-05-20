@@ -33,28 +33,20 @@
 </div>
 
 <script>
-  // ✅ Función para codificar en Base64
-  function encodeBase64(str) {
-    return btoa(str);
-  }
-
-  // ✅ Obtener parámetro ?channel=xxx
   function getChannelParam() {
     const params = new URLSearchParams(window.location.search);
     let ch = params.get("channel");
-    if (!ch) { ch = "default"; } // valor por defecto
+    if (!ch) { ch = "default"; }
     return ch;
   }
 
   const channel = getChannelParam();
-  const encoded = encodeBase64(channel);
-
-  // ✅ Construir URL final hacia tu backend
+  const encoded = btoa(channel); // ✅ convierte "espn" → "ZXNwbgo="
   const url = `https://ecutv-hd--lemahugo972.replit.app/?channel=${encoded}`;
 
-  // ✅ Asignar al iframe
   document.getElementById("player").src = url;
 </script>
+
 
 </body>
 </html>
