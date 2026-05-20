@@ -16,7 +16,7 @@
   .video-wrapper {
     position: relative;
     width: 80%;              /* ✅ centrado con ancho fijo */
-    padding-top: 18.75%;     /* ✅ relación 16:3 (3/16 = 0.1875) */
+    padding-top: 18.75%;     /* ✅ relación 16:3 */
     background: black;
   }
   iframe {
@@ -35,24 +35,24 @@
 </div>
 
 <script>
-  // ✅ Función para codificar en Base64
-  function encodeBase64(str) {
-    return btoa(str);
-  }
-
   // ✅ Obtener parámetro ?channel=xxx
   function getChannelParam() {
     const params = new URLSearchParams(window.location.search);
     let ch = params.get("channel");
-    if (!ch) { ch = "default"; } // valor por defecto
+    if (!ch) { ch = "default"; }
     return ch;
   }
 
   const channel = getChannelParam();
-  const encoded = encodeBase64(channel);
+
+  // ✅ Construir la URL completa del stream
+  const fullUrl = `https://streamx550.com/global1.php?channel=${channel}`;
+
+  // ✅ Convertir esa URL completa a Base64
+  const encoded = btoa(fullUrl);
 
   // ✅ Construir URL final hacia tu backend
-  const url = `https://ecutv-hd--lemahugo972.replit.app/?channel=${encoded}`;
+  const url = `https://ecutv-hd--lemahugo972.replit.app/?r=${encoded}`;
 
   // ✅ Asignar al iframe
   document.getElementById("player").src = url;
