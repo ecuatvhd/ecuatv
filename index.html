@@ -3,22 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title> EcuatvHH</title>
+<title>Reproductor 16:3</title>
 <style>
   html, body {
     margin: 0; padding: 0;
     width: 100%; height: 100%;
     background-color: #000;
-    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   .video-wrapper {
     position: relative;
-    width: 100%;
-    padding-top: 18.75%; /* ✅ 16:3 = 3/16 = 0.1875 */
+    width: 80%;              /* ✅ centrado con ancho fijo */
+    padding-top: 18.75%;     /* ✅ relación 16:3 (3/16 = 0.1875) */
     background: black;
   }
   iframe {
-    position: fixed;
+    position: absolute;
     top: 0; left: 0;
     width: 100%;
     height: 100%;
@@ -33,20 +35,28 @@
 </div>
 
 <script>
+  // ✅ Función para codificar en Base64
+  function encodeBase64(str) {
+    return btoa(str);
+  }
+
+  // ✅ Obtener parámetro ?channel=xxx
   function getChannelParam() {
     const params = new URLSearchParams(window.location.search);
     let ch = params.get("channel");
-    if (!ch) { ch = "default"; }
+    if (!ch) { ch = "default"; } // valor por defecto
     return ch;
   }
 
   const channel = getChannelParam();
-  const encoded = btoa(channel); // ✅ convierte "espn" → "ZXNwbgo="
+  const encoded = encodeBase64(channel);
+
+  // ✅ Construir URL final hacia tu backend
   const url = `https://ecutv-hd--lemahugo972.replit.app/?channel=${encoded}`;
 
+  // ✅ Asignar al iframe
   document.getElementById("player").src = url;
 </script>
-
 
 </body>
 </html>
