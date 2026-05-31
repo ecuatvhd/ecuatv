@@ -1,5 +1,6 @@
-
-<!DOCTYPE html><html lang="es"><head>
+<!DOCTYPE html>
+<html lang="es">
+<head>
 <title>DeportesTVHD - Eventos en VIVO Gratis</title>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,9 +8,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Ver Eventos en VIVO GRATIS - DeportesTVHD">
 <meta property="og:locale" content="es_ar">
-<link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Barlow+Condensed:wght@400;600;700;900&amp;family=Barlow:wght@300;400;500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
   :root {
@@ -25,7 +25,6 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
 
-  /* Scrollbar */
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: var(--dark-bg); }
   ::-webkit-scrollbar-thumb {
@@ -36,7 +35,6 @@
 
   body {
     background-color: var(--dark-bg);
-    /* Fondo estático de puntos, sin animación */
     background-image: radial-gradient(rgba(0,255,65,0.04) 1px, transparent 1px);
     background-size: 32px 32px;
     color: var(--text-primary);
@@ -45,7 +43,6 @@
     overflow-x: hidden;
   }
 
-  /* === HEADER === */
   .site-header {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -71,186 +68,80 @@
     gap: 10px;
   }
 
-  /* Logo estático, sin pulso */
   .logo-icon {
-    width: 36px;
-    height: 36px;
+    width: 36px; height: 36px;
     background: var(--neon-green);
     clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
     box-shadow: 0 0 14px rgba(0,255,65,0.55);
   }
+  .logo-icon::after { content: '▶'; color: var(--dark-bg); font-size: 14px; margin-left: 2px; }
 
-  .logo-icon::after {
-    content: '▶';
-    color: var(--dark-bg);
-    font-size: 14px;
-    margin-left: 2px;
-  }
-
-  /* Título sin flicker */
   .logo h2 {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 2rem;
-    letter-spacing: 3px;
-    color: var(--text-primary);
-    line-height: 1;
+    font-size: 2rem; letter-spacing: 3px;
+    color: var(--text-primary); line-height: 1;
     text-shadow: 0 0 16px rgba(0,255,65,0.25);
   }
-
   .logo h2 span { color: var(--neon-green); }
 
-  /* === MAIN === */
-  .main-content {
-    padding-top: 90px;
-    padding-bottom: 60px;
-  }
+  .main-content { padding-top: 90px; padding-bottom: 60px; }
+  .wrapper { max-width: 1300px; margin: 0 auto; padding: 24px 16px 0; }
 
-  .wrapper {
-    max-width: 1300px;
-    margin: 0 auto;
-    padding: 24px 16px 0;
-  }
-
-  /* === PAGE TITLE === */
-  .page-title-wrap {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 24px;
-  }
-
-  .title-line {
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(to right, transparent, rgba(0,255,65,0.45));
-  }
-
-  .title-line.right {
-    background: linear-gradient(to left, transparent, rgba(0,255,65,0.45));
-  }
-
+  .page-title-wrap { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
+  .title-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, rgba(0,255,65,0.45)); }
+  .title-line.right { background: linear-gradient(to left, transparent, rgba(0,255,65,0.45)); }
   .page-title {
     font-family: 'Bebas Neue', sans-serif;
     font-size: clamp(1.2rem, 3vw, 1.8rem);
-    letter-spacing: 5px;
-    color: var(--text-primary);
-    white-space: nowrap;
-    text-align: center;
+    letter-spacing: 5px; color: var(--text-primary);
+    white-space: nowrap; text-align: center;
   }
-
   .page-title span { color: var(--neon-green); }
 
-  /* === VIDEO === */
-  .video-section {
-    position: relative;
-    max-width: 760px;
-    margin: 0 auto;
-  }
-
+  .video-section { position: relative; max-width: 760px; margin: 0 auto; }
   .video-wrapper {
-    position: relative;
-    background: var(--card-bg);
-    border: 1px solid rgba(0,255,65,0.2);
-    border-radius: 10px;
+    position: relative; background: var(--card-bg);
+    border: 1px solid rgba(0,255,65,0.2); border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 0 30px rgba(0,255,65,0.06), 0 20px 60px rgba(0,0,0,0.6);
   }
-
-  /* Barra superior estática, sin shimmer */
   .video-wrapper::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(to right, var(--neon-green), var(--neon-orange));
-    z-index: 2;
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(to right, var(--neon-green), var(--neon-orange)); z-index: 2;
+  }
+  .embed-responsive { position: relative; width: 100%; padding-top: 56.25%; }
+  .embed-responsive iframe, .embed-responsive img {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    border: none; border-radius: 10px;
   }
 
-  .embed-responsive {
-    position: relative;
-    width: 100%;
-    padding-top: 56.25%;
-  }
-
-  .embed-responsive iframe,
-  .embed-responsive img {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
-    border-radius: 10px;
-  }
-
-  /* === RELOAD BUTTON === */
-  .reload-wrap {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-  }
-
+  .reload-wrap { margin-top: 20px; display: flex; justify-content: center; }
   .reload-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    background: transparent;
-    border: 1px solid rgba(0,255,65,0.4);
-    border-radius: 6px;
-    color: var(--neon-green);
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    padding: 12px 32px;
-    cursor: pointer;
-    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    display: inline-flex; align-items: center; gap: 10px;
+    background: transparent; border: 1px solid rgba(0,255,65,0.4); border-radius: 6px;
+    color: var(--neon-green); font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.9rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+    padding: 12px 32px; cursor: pointer;
+    transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
   }
-
   .reload-btn:hover {
-    background: var(--neon-green);
-    color: var(--dark-bg);
-    border-color: var(--neon-green);
-    box-shadow: 0 0 14px rgba(0,255,65,0.4);
+    background: var(--neon-green); color: var(--dark-bg);
+    border-color: var(--neon-green); box-shadow: 0 0 14px rgba(0,255,65,0.4);
   }
 
-  /* === FOOTER === */
-  .site-footer {
-    border-top: 1px solid var(--card-border);
-    padding: 24px 16px;
-    text-align: center;
-    position: relative;
-  }
-
+  .site-footer { border-top: 1px solid var(--card-border); padding: 24px 16px; text-align: center; position: relative; }
   .site-footer::before {
-    content: '';
-    position: absolute;
-    top: -1px; left: 50%;
-    transform: translateX(-50%);
-    width: 120px;
-    height: 1px;
-    background: var(--neon-green);
-    box-shadow: 0 0 12px rgba(0,255,65,0.5);
+    content: ''; position: absolute; top: -1px; left: 50%; transform: translateX(-50%);
+    width: 120px; height: 1px; background: var(--neon-green); box-shadow: 0 0 12px rgba(0,255,65,0.5);
   }
-
-  .footer-text {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.8rem;
-    letter-spacing: 3px;
-    color: var(--text-muted);
-    text-transform: uppercase;
-  }
-
+  .footer-text { font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; letter-spacing: 3px; color: var(--text-muted); text-transform: uppercase; }
   .footer-text span { color: var(--neon-green); font-weight: 700; }
 </style>
-<style type="text/css">* {user-select: auto !important; -webkit-user-select: auto !important;}</style><input type="hidden" id="inject_idm_text_selection"><style></style></head>
+</head>
 
 <body>
 
-<!-- HEADER -->
 <header class="site-header">
   <div class="header-inner">
     <a href="/" class="logo">
@@ -260,24 +151,19 @@
   </div>
 </header>
 
-<!-- MAIN -->
 <div class="main-content">
   <div class="wrapper">
 
-    <!-- TITLE -->
     <div class="page-title-wrap">
       <div class="title-line"></div>
       <h2 class="page-title">Eventos en <span>VIVO</span></h2>
       <div class="title-line right"></div>
     </div>
 
-    <!-- VIDEO -->
     <section class="video-section">
       <div class="video-wrapper">
-        <div class="embed-responsive" id="player-container"><iframe frameborder="0" allow="autoplay; encrypted-media" allowfullscreen="" src="https://mxplayer--hlema5120.replit.app/?channel=espn" scrolling="no" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;border-radius:10px;"></iframe></div>
+        <div class="embed-responsive" id="player-container"></div>
       </div>
-
-      <!-- RELOAD -->
       <div class="reload-wrap">
         <button class="reload-btn" onclick="location.reload()">
           <span>↺ Recargar reproductor</span>
@@ -288,30 +174,69 @@
   </div>
 </div>
 
-<!-- FOOTER -->
 <footer class="site-footer">
   <p class="footer-text"><span>DeportesTVHD</span> © Todos los derechos reservados.</p>
 </footer>
 
 <script>
+  // ─── CONFIGURACIÓN ────────────────────────────────────────────────────────
+  // Cambia esta URL por la de tu reproductor en Replit
+  var PLAYER_URL = "https://mxplayer--hlema5120.replit.app/";
+  // ─────────────────────────────────────────────────────────────────────────
+
   function getParam(name) {
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(location.search);
-    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    var regex = new RegExp("[?&]" + name.replace(/[[\]]/, "\\$&") + "=([^&#]*)");
+    var result = regex.exec(location.search);
+    return result ? decodeURIComponent(result[1].replace(/\+/g, " ")) : "";
   }
 
-  var embed = getParam('embed') || getParam('r') || false;
-  var container = document.getElementById('player-container');
+  var container = document.getElementById("player-container");
 
-  if (embed) {
-    var src = atob(embed);
-    container.innerHTML = '<iframe frameborder="0" allow="autoplay; encrypted-media" allowfullscreen src="' + src + '" scrolling="no" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;border-radius:10px;"></iframe>';
+  // Prioridad de parámetros:
+  //   1. ?r=<base64>    → modo protegido: decodifica base64 → URL del iframe
+  //   2. ?embed=<base64>→ igual que ?r=
+  //   3. ?channel=espn  → construye la URL del player automáticamente
+  //      Ejemplos de uso:
+  //        tusite.github.io/?channel=espn
+  //        tusite.github.io/?channel=liga1max
+  //        tusite.github.io/?channel=foxsports
+  //
+  //   Modo protegido — oculta el canal en la URL:
+  //        Genera el link así: btoa("https://mxplayer.../?channel=espn")
+  //        y comparte: tusite.github.io/?r=<ese_base64>
+
+  var rParam   = getParam("r");
+  var embed    = getParam("embed");
+  var channel  = getParam("channel");
+
+  var src = null;
+
+  if (rParam) {
+    // ?r=<base64> → decodifica y usa directamente
+    try { src = atob(rParam); } catch(e) { src = null; }
+
+  } else if (embed) {
+    // ?embed=<base64> → igual
+    try { src = atob(embed); } catch(e) { src = null; }
+
+  } else if (channel) {
+    // ?channel=espn → arma la URL del player
+    // El reproductor ya convierte el slug a base64 internamente para la API
+    src = PLAYER_URL + "?channel=" + encodeURIComponent(channel);
+  }
+
+  if (src) {
+    container.innerHTML =
+      '<iframe frameborder="0" allow="autoplay; encrypted-media" allowfullscreen src="' +
+      src +
+      '" scrolling="no" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;border-radius:10px;"></iframe>';
   } else {
-    container.innerHTML = '<img src="https://pbs.twimg.com/media/DjY2G6tV4AA5-0p.jpg" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;border-radius:10px;">';
+    // Sin parámetro → imagen de placeholder
+    container.innerHTML =
+      '<img src="https://pbs.twimg.com/media/DjY2G6tV4AA5-0p.jpg" ' +
+      'style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;border-radius:10px;" alt="Sin señal">';
   }
 </script>
 
-<script defer="" src="https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447" integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;f4494b3886d24b338d1b3154098012a3&quot;,&quot;r&quot;:1,&quot;server_timing&quot;:{&quot;name&quot;:{&quot;cfCacheStatus&quot;:true,&quot;cfEdge&quot;:true,&quot;cfExtPri&quot;:true,&quot;cfL4&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfSpeedBrain&quot;:true},&quot;location_startswith&quot;:null}}" crossorigin="anonymous"></script>
-
-</body></html>
+</body>
+</html>
