@@ -40,16 +40,13 @@
   const r = params.get("r");
 
   if (channel) {
-    // Codificar el nombre del canal en Base64
-    const encodedChannel = btoa(channel);
-
-    // Construir la URL de tu backend Replit
-    const backendUrl = `https://ecuatvhd.github.io/ecuatv/eventos.html?channel=${encodedChannel}`;
+    // Construir la URL de tu backend con el canal en claro
+    const backendUrl = `https://ecuatvhd.github.io/ecuatv/eventos.html?channel=${channel}`;
 
     // Codificar esa URL completa en Base64
     const encodedBackendUrl = btoa(backendUrl);
 
-    // Redirigir a la versión con ?r=...
+    // Redirigir automáticamente a la versión con ?r=...
     const newUrl = `${window.location.origin}${window.location.pathname}?r=${encodedBackendUrl}`;
     window.location.replace(newUrl);
   } else if (r) {
