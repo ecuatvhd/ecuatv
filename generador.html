@@ -1,4 +1,6 @@
-<ul id="event-list"></ul>
+<h3>Eventos generados</h3>
+<textarea id="output" rows="20" cols="100"></textarea><br>
+<button id="copyBtn">Copiar HTML</button>
 
 <script>
   // Pega aquí tus eventos masivos en texto plano
@@ -52,21 +54,21 @@ En vivo
     if (title.includes("Primera División")) return "URU";
     if (title.includes("LaLiga 2")) return "ES2";
     if (title.includes("LaLiga")) return "ES1";
-    return "FUT"; // genérico si no se reconoce
+    return "FUT"; // genérico
   }
 
-  // Ordenar cronológicamente por hora
+  // Ordenar cronológicamente
   const sortedEvents = Object.values(events).sort((a, b) => {
     const [ah, am] = a.time.split(":").map(Number);
     const [bh, bm] = b.time.split(":").map(Number);
     return ah * 60 + am - (bh * 60 + bm);
   });
 
-  // Renderizar HTML
-  const list = document.getElementById("event-list");
+  // Generar HTML final
+  let outputHTML = "";
   sortedEvents.forEach(ev => {
     const classLogo = getLogoClass(ev.title);
-    const html = `
+    outputHTML += `
 <li class="${classLogo}"><a href="#">
 ${ev.title}
 <span class="t">${ev.time}</span></a>
@@ -76,7 +78,16 @@ ${ev.channels.map(ch => `
 `).join("")}
 </ul>
 </li>
-    `;
-    list.insertAdjacentHTML("beforeend", html);
+`;
+  });
+
+  // Mostrar en textarea
+  document.getElementById("output").value = outputHTML.trim();
+
+  // Botón copiar
+  document.getElementById("copyBtn").addEventListener("click", () => {
+    const text = document.getElementById("output").value;
+    navigator.clipboard.writeText(text);
+    alert("Eventos copiados al portapapeles");
   });
 </script>
