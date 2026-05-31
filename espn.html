@@ -1,39 +1,317 @@
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Reproductor de video HLS</title>
-    <style>
-        body {
-            margin: 0;
-        }
+<!DOCTYPE html><html lang="es"><head>
+<title>DeportesTVHD - Eventos en VIVO Gratis</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="INDEX, FOLLOW">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Ver Eventos en VIVO GRATIS - DeportesTVHD">
+<meta property="og:locale" content="es_ar">
+<link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Barlow+Condensed:wght@400;600;700;900&amp;family=Barlow:wght@300;400;500&amp;display=swap" rel="stylesheet">
 
-        #videoPlayer {
-            width: 100%;
-            height: auto;
-        }
-    </style>
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-</head>
+<style>
+  :root {
+    --neon-green: #00FF41;
+    --neon-orange: #FF6B00;
+    --dark-bg: #050508;
+    --card-bg: #0a0a12;
+    --card-border: #1a1a2e;
+    --text-primary: #f0f0f0;
+    --text-muted: #666;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--dark-bg); }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, var(--neon-green), var(--neon-orange));
+    border-radius: 3px;
+  }
+  * { scrollbar-width: thin; scrollbar-color: var(--neon-green) var(--dark-bg); }
+
+  body {
+    background-color: var(--dark-bg);
+    /* Fondo estático de puntos, sin animación */
+    background-image: radial-gradient(rgba(0,255,65,0.04) 1px, transparent 1px);
+    background-size: 32px 32px;
+    color: var(--text-primary);
+    font-family: 'Barlow', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* === HEADER === */
+  .site-header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: rgba(5,5,8,0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0,255,65,0.2);
+    padding: 0 16px;
+  }
+
+  .header-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    height: 70px;
+  }
+
+  .logo {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* Logo estático, sin pulso */
+  .logo-icon {
+    width: 36px;
+    height: 36px;
+    background: var(--neon-green);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 14px rgba(0,255,65,0.55);
+  }
+
+  .logo-icon::after {
+    content: '▶';
+    color: var(--dark-bg);
+    font-size: 14px;
+    margin-left: 2px;
+  }
+
+  /* Título sin flicker */
+  .logo h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 3px;
+    color: var(--text-primary);
+    line-height: 1;
+    text-shadow: 0 0 16px rgba(0,255,65,0.25);
+  }
+
+  .logo h2 span { color: var(--neon-green); }
+
+  /* === MAIN === */
+  .main-content {
+    padding-top: 90px;
+    padding-bottom: 60px;
+  }
+
+  .wrapper {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 24px 16px 0;
+  }
+
+  /* === PAGE TITLE === */
+  .page-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  .title-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(0,255,65,0.45));
+  }
+
+  .title-line.right {
+    background: linear-gradient(to left, transparent, rgba(0,255,65,0.45));
+  }
+
+  .page-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    letter-spacing: 5px;
+    color: var(--text-primary);
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  .page-title span { color: var(--neon-green); }
+
+  /* === VIDEO === */
+  .video-section {
+    position: relative;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .video-wrapper {
+    position: relative;
+    background: var(--card-bg);
+    border: 1px solid rgba(0,255,65,0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(0,255,65,0.06), 0 20px 60px rgba(0,0,0,0.6);
+  }
+
+  /* Barra superior estática, sin shimmer */
+  .video-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--neon-green), var(--neon-orange));
+    z-index: 2;
+  }
+
+  .embed-responsive {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+  }
+
+  .embed-responsive iframe,
+  .embed-responsive img {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 10px;
+  }
+
+  /* === RELOAD BUTTON === */
+  .reload-wrap {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .reload-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    border: 1px solid rgba(0,255,65,0.4);
+    border-radius: 6px;
+    color: var(--neon-green);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 12px 32px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .reload-btn:hover {
+    background: var(--neon-green);
+    color: var(--dark-bg);
+    border-color: var(--neon-green);
+    box-shadow: 0 0 14px rgba(0,255,65,0.4);
+  }
+
+  /* === FOOTER === */
+  .site-footer {
+    border-top: 1px solid var(--card-border);
+    padding: 24px 16px;
+    text-align: center;
+    position: relative;
+  }
+
+  .site-footer::before {
+    content: '';
+    position: absolute;
+    top: -1px; left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 1px;
+    background: var(--neon-green);
+    box-shadow: 0 0 12px rgba(0,255,65,0.5);
+  }
+
+  .footer-text {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .footer-text span { color: var(--neon-green); font-weight: 700; }
+</style>
+<style type="text/css">* {user-select: auto !important; -webkit-user-select: auto !important;}</style><input type="hidden" id="inject_idm_text_selection"><style></style></head>
+
 <body>
-    <video id="videoPlayer" controls></video>
-    <script>
-        var video = document.getElementById('videoPlayer');
-        var videoUrl = 'https://mxplayer--hlema5120.replit.app/channel=espn';
 
-        if (Hls.isSupported()) {
-            var hls = new Hls();
-            hls.loadSource(videoUrl);
-            hls.attachMedia(video);
-            hls.on(Hls.Events.MANIFEST_PARSED, function () {
-                video.play();
-            });
-        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-            video.src = videoUrl;
-            video.addEventListener('loadedmetadata', function () {
-                video.play();
-            });
-        }
-    </script>
-</body>
-</html>
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <div class="logo-icon"></div>
+      <h2>Deportes<span>TV</span>HD</h2>
+    </a>
+  </div>
+</header>
+
+<!-- MAIN -->
+<div class="main-content">
+  <div class="wrapper">
+
+    <!-- TITLE -->
+    <div class="page-title-wrap">
+      <div class="title-line"></div>
+      <h2 class="page-title">Eventos en <span>VIVO</span></h2>
+      <div class="title-line right"></div>
+    </div>
+
+    <!-- VIDEO -->
+    <section class="video-section">
+      <div class="video-wrapper">
+        <div class="embed-responsive" id="player-container"><iframe frameborder="0" allow="autoplay; encrypted-media" allowfullscreen="" src="https://mxplayer--hlema5120.replit.app/?channel=espn" scrolling="no" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;border-radius:10px;"></iframe></div>
+      </div>
+
+      <!-- RELOAD -->
+      <div class="reload-wrap">
+        <button class="reload-btn" onclick="location.reload()">
+          <span>↺ Recargar reproductor</span>
+        </button>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <p class="footer-text"><span>DeportesTVHD</span> © Todos los derechos reservados.</p>
+</footer>
+
+<script>
+  function getParam(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+  }
+
+  var embed = getParam('embed') || getParam('r') || false;
+  var container = document.getElementById('player-container');
+
+  if (embed) {
+    var src = atob(embed);
+    container.innerHTML = '<iframe frameborder="0" allow="autoplay; encrypted-media" allowfullscreen src="' + src + '" scrolling="no" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;border-radius:10px;"></iframe>';
+  } else {
+    container.innerHTML = '<img src="https://pbs.twimg.com/media/DjY2G6tV4AA5-0p.jpg" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;border-radius:10px;">';
+  }
+</script>
+
+<script defer="" src="https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447" integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;f4494b3886d24b338d1b3154098012a3&quot;,&quot;r&quot;:1,&quot;server_timing&quot;:{&quot;name&quot;:{&quot;cfCacheStatus&quot;:true,&quot;cfEdge&quot;:true,&quot;cfExtPri&quot;:true,&quot;cfL4&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfSpeedBrain&quot;:true},&quot;location_startswith&quot;:null}}" crossorigin="anonymous"></script>
+
+</body></html>
