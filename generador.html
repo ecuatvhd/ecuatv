@@ -1,74 +1,55 @@
+<h3>Pegar eventos masivos</h3>
+<textarea id="input" rows="20" cols="100" placeholder="Pega aquí tus eventos..."></textarea><br>
+<button id="generateBtn">Generar HTML</button>
+
 <h3>Eventos generados</h3>
 <textarea id="output" rows="20" cols="100"></textarea><br>
 <button id="copyBtn">Copiar HTML</button>
 
 <script>
-  // Pega aquí tus eventos masivos en texto plano
-  const rawText = `
-13:00 - Primera División: Juventud vs Wanderers
-https://streamx741.com/global1.php?channel=disney8
-Copiar
-En vivo
-13:15 - Liga 1: FC Cajamarca vs Alianza Lima
-https://streamx741.com/global1.php?channel=liga1max
-Copiar
-En vivo
-13:15 - Liga 1: FC Cajamarca vs Alianza Lima
-https://streamx741.com/global1.php?channel=fanatiz3
-Copiar
-En vivo
-13:30 - Copa Argentina: Estudiantes LP vs Rosario Central
-https://streamx741.com/global1.php?channel=tyc
-Copiar
-En vivo
-13:30 - Copa Argentina: Estudiantes LP vs Rosario Central
-https://streamx741.com/global1.php?channel=tycint
-Copiar
-En vivo
-`;
-
-  // Parser: agrupa eventos por título
-  const lines = rawText.trim().split("\n").map(l => l.trim()).filter(l => l);
-  const events = {};
-  let currentEvent = null;
-
-  lines.forEach(line => {
-    if (/^\d{1,2}:\d{2}/.test(line)) {
-      const [time, rest] = line.split(" - ");
-      currentEvent = rest;
-      if (!events[currentEvent]) {
-        events[currentEvent] = { time, title: rest, channels: [] };
-      }
-    } else if (line.includes("channel=")) {
-      const channel = line.split("channel=")[1];
-      events[currentEvent].channels.push(channel);
-    }
-  });
-
-  // Función para asignar clase de logo según liga/competición
   function getLogoClass(title) {
     if (title.includes("Copa Argentina")) return "AR";
     if (title.includes("Amistoso Internacional")) return "FIFA";
     if (title.includes("Brasileirão")) return "BRA";
     if (title.includes("Liga 1")) return "PE";
     if (title.includes("Primera División")) return "URU";
+    if (title.includes("Liga de Primera")) return "CHI";
     if (title.includes("LaLiga 2")) return "ES2";
     if (title.includes("LaLiga")) return "ES1";
-    return "FUT"; // genérico
+    return "FUT"; // genérico si no se reconoce
   }
 
-  // Ordenar cronológicamente
-  const sortedEvents = Object.values(events).sort((a, b) => {
-    const [ah, am] = a.time.split(":").map(Number);
-    const [bh, bm] = b.time.split(":").map(Number);
-    return ah * 60 + am - (bh * 60 + bm);
-  });
+  document.getElementById("generateBtn").addEventListener("click", () => {
+    const rawText = document.getElementById("input").value;
+    const lines = rawText.trim().split("\n").map(l => l.trim()).filter(l => l);
+    const events = {};
+    let currentEvent = null;
 
-  // Generar HTML final
-  let outputHTML = "";
-  sortedEvents.forEach(ev => {
-    const classLogo = getLogoClass(ev.title);
-    outputHTML += `
+    lines.forEach(line => {
+      if (/^\d{1,2}:\d{2}/.test(line)) {
+        const [time, rest] = line.split(" - ");
+        currentEvent = rest;
+        if (!events[currentEvent]) {
+          events[currentEvent] = { time, title: rest, channels: [] };
+        }
+      } else if (line.includes("channel=")) {
+        const channel = line.split("channel=")[1];
+        events[currentEvent].channels.push(channel);
+      }
+    });
+
+    // Ordenar cronológicamente
+    const sortedEvents = Object.values(events).sort((a, b) => {
+      const [ah, am] = a.time.split(":").map(Number);
+      const [bh, bm] = b.time.split(":").map(Number);
+      return ah * 60 + am - (bh * 60 + bm);
+    });
+
+    // Generar HTML final
+    let outputHTML = "";
+    sortedEvents.forEach(ev => {
+      const classLogo = getLogoClass(ev.title);
+      outputHTML += `
 <li class="${classLogo}"><a href="#">
 ${ev.title}
 <span class="t">${ev.time}</span></a>
@@ -79,12 +60,11 @@ ${ev.channels.map(ch => `
 </ul>
 </li>
 `;
+    });
+
+    document.getElementById("output").value = outputHTML.trim();
   });
 
-  // Mostrar en textarea
-  document.getElementById("output").value = outputHTML.trim();
-
-  // Botón copiar
   document.getElementById("copyBtn").addEventListener("click", () => {
     const text = document.getElementById("output").value;
     navigator.clipboard.writeText(text);
