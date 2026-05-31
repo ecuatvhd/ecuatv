@@ -1,0 +1,74 @@
+<ul id="event-list"></ul>
+
+<script>
+  // Pega aquí tus eventos masivos en texto plano
+  const rawText = `
+13:30 - Copa Argentina: Estudiantes LP vs Rosario Central
+https://streamx741.com/global1.php?channel=tyc
+Copiar
+En vivo
+13:30 - Copa Argentina: Estudiantes LP vs Rosario Central
+https://streamx741.com/global1.php?channel=tycint
+Copiar
+En vivo
+13:45 - Amistoso Internacional: Alemania vs Finlandia
+https://streamx741.com/global1.php?channel=disney9
+Copiar
+Pronto
+`;
+
+  // Parser: agrupa eventos por título
+  const lines = rawText.trim().split("\n").map(l => l.trim()).filter(l => l);
+  const events = {};
+  let currentEvent = null;
+
+  lines.forEach(line => {
+    if (/^\d{1,2}:\d{2}/.test(line)) {
+      const [time, rest] = line.split(" - ");
+      currentEvent = rest;
+      if (!events[currentEvent]) {
+        events[currentEvent] = { time, title: rest, channels: [] };
+      }
+    } else if (line.includes("channel=")) {
+      const channel = line.split("channel=")[1];
+      events[currentEvent].channels.push(channel);
+    }
+  });
+
+  // Función para asignar clase de logo según liga/competición
+  function getLogoClass(title) {
+    if (title.includes("Copa Argentina")) return "AR";
+    if (title.includes("Amistoso Internacional")) return "FIFA";
+    if (title.includes("Brasileirão")) return "BRA";
+    if (title.includes("Liga 1")) return "PE";
+    if (title.includes("Primera División")) return "URU";
+    if (title.includes("LaLiga 2")) return "ES2";
+    if (title.includes("LaLiga")) return "ES1";
+    return "FUT"; // genérico
+  }
+
+  // Ordenar cronológicamente por hora
+  const sortedEvents = Object.values(events).sort((a, b) => {
+    const [ah, am] = a.time.split(":").map(Number);
+    const [bh, bm] = b.time.split(":").map(Number);
+    return ah * 60 + am - (bh * 60 + bm);
+  });
+
+  // Renderizar HTML
+  const list = document.getElementById("event-list");
+  sortedEvents.forEach(ev => {
+    const classLogo = getLogoClass(ev.title);
+    const html = `
+<li class="${classLogo}"><a href="#">
+${ev.title}
+<span class="t">${ev.time}</span></a>
+<ul style="display: none;">
+${ev.channels.map(ch => `
+<li class="subitem1"><a href="/eventos/eventos.html?channel=${ch}" target="">${ch.toUpperCase()}<span>Calidad 720p</span></a></li>
+`).join("")}
+</ul>
+</li>
+    `;
+    list.insertAdjacentHTML("beforeend", html);
+  });
+</script>
