@@ -3,6 +3,18 @@
 <script>
   // Pega aquí tus eventos masivos en texto plano
   const rawText = `
+13:00 - Primera División: Juventud vs Wanderers
+https://streamx741.com/global1.php?channel=disney8
+Copiar
+En vivo
+13:15 - Liga 1: FC Cajamarca vs Alianza Lima
+https://streamx741.com/global1.php?channel=liga1max
+Copiar
+En vivo
+13:15 - Liga 1: FC Cajamarca vs Alianza Lima
+https://streamx741.com/global1.php?channel=fanatiz3
+Copiar
+En vivo
 13:30 - Copa Argentina: Estudiantes LP vs Rosario Central
 https://streamx741.com/global1.php?channel=tyc
 Copiar
@@ -11,10 +23,6 @@ En vivo
 https://streamx741.com/global1.php?channel=tycint
 Copiar
 En vivo
-13:45 - Amistoso Internacional: Alemania vs Finlandia
-https://streamx741.com/global1.php?channel=disney9
-Copiar
-Pronto
 `;
 
   // Parser: agrupa eventos por título
@@ -44,7 +52,7 @@ Pronto
     if (title.includes("Primera División")) return "URU";
     if (title.includes("LaLiga 2")) return "ES2";
     if (title.includes("LaLiga")) return "ES1";
-    return "FUT"; // genérico
+    return "FUT"; // genérico si no se reconoce
   }
 
   // Ordenar cronológicamente por hora
