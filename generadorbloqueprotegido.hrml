@@ -1,0 +1,39 @@
+<h3>Generador de bloque protegido</h3>
+<input id="urlInput" type="text" size="80" placeholder="Pega aquí tu URL (ej: https://streamx741.com/global1.php?channel=espn)">
+<button id="generateBtn">Generar bloque</button>
+
+<h3>Bloque generado</h3>
+<textarea id="output" rows="10" cols="100"></textarea>
+<button id="copyBtn">Copiar bloque</button>
+
+<script>
+  document.getElementById("generateBtn").addEventListener("click", () => {
+    const url = document.getElementById("urlInput").value.trim();
+    if (!url) {
+      alert("Por favor pega una URL");
+      return;
+    }
+
+    // Codificar la URL en Base64
+    const encoded = btoa(url);
+
+    // Crear bloque protegido
+    const block = `<!-- CONTENIDO PROTEGIDO --> 
+<script>
+  var CIU = ""; 
+  var qOf = ["${encoded}"]; 
+  qOf.forEach(function tms(value) { 
+    CIU += atob(value); 
+  }); 
+  document.write(CIU); 
+</script>`;
+
+    document.getElementById("output").value = block;
+  });
+
+  document.getElementById("copyBtn").addEventListener("click", () => {
+    const text = document.getElementById("output").value;
+    navigator.clipboard.writeText(text);
+    alert("Bloque copiado al portapapeles");
+  });
+</script>
