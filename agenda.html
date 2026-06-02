@@ -49,9 +49,13 @@ span,.menu>li>ul li:hover a:before { color: #13131c}.menu ul>li>a span {font-siz
 <div id="wraper">
 <ul class="menu">
 
-<center><div class="sombreada_css3"><font size="2" face="Helvetica Neue,Helvetica,Arial,sans-serif" color="#FFFFFF">
-<b>Agenda - Lunes 2 de junio de 2026</b>
-</font></div></center>
+<center>
+  <div class="sombreada_css3">
+    <font size="2" face="Helvetica Neue,Helvetica,Arial,sans-serif" color="#FFFFFF">
+      <b id="agendaFecha"></b>
+    </font>
+  </div>
+</center>
 
 <li class="FIFA"><a href="#">
 Amistoso Internacional: Croacia vs Bélgica
@@ -199,4 +203,23 @@ function myFunction() {
 
 <script defer="" src="https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447" integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;f4494b3886d24b338d1b3154098012a3&quot;,&quot;r&quot;:1,&quot;server_timing&quot;:{&quot;name&quot;:{&quot;cfCacheStatus&quot;:true,&quot;cfEdge&quot;:true,&quot;cfExtPri&quot;:true,&quot;cfL4&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfSpeedBrain&quot;:true},&quot;location_startswith&quot;:null}}" crossorigin="anonymous"></script>
 
+<!---Id Fecha Agenda-->
+<script>
+  // Array de días y meses en español
+  const dias = ["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
+  const meses = ["enero","febrero","marzo","abril","mayo","junio","julio",
+                 "agosto","septiembre","octubre","noviembre","diciembre"];
+
+  // Obtener fecha actual
+  const hoy = new Date();
+  const diaSemana = dias[hoy.getDay()];
+  const dia = hoy.getDate();
+  const mes = meses[hoy.getMonth()];
+  const año = hoy.getFullYear();
+
+  // Insertar en el elemento con id agendaFecha
+  document.getElementById("agendaFecha").textContent =
+    `Agenda - ${diaSemana} ${dia} de ${mes} de ${año}`;
+</script>	
+	
 </body></html>
