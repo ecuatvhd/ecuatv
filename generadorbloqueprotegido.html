@@ -36,20 +36,38 @@ function generate() {
   document.write(CIU); 
 </script>`;
 
+  <input id="urlInput" type="text" size="80" placeholder="Pega tu URL">
+<button onclick="generate()">Generar bloque</button>
+
+<textarea id="output" rows="10" cols="100"></textarea>
+<button onclick="copyBlock()">Copiar bloque</button>
+
+<script>
+function generate() {
+  const url = document.getElementById("urlInput").value.trim();
+  if (!url) { alert("Por favor pega una URL"); return; }
+
+  const encoded = btoa(url);
+  const block = `<!-- CONTENIDO PROTEGIDO --> 
+<script>
+  var CIU = ""; 
+  var qOf = ["${encoded}"]; 
+  qOf.forEach(function tms(value) { 
+    CIU += atob(value); 
+  }); 
+  document.write(CIU); 
+</script>`;
+
   document.getElementById("output").value = block;
 }
 
 function copyBlock() {
   const text = document.getElementById("output").value;
-  if (!text) {
-    alert("No hay bloque generado todavía");
-    return;
-  }
+  if (!text) { alert("No hay bloque generado todavía"); return; }
   navigator.clipboard.writeText(text);
   alert("Bloque copiado al portapapeles");
 }
 </script>
 
-</body>
 </html>
 
