@@ -2,34 +2,39 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Generador de bloque protegido</title>
+<title>Generador avanzado de bloque protegido</title>
 </head>
 <body>
 
-<h3>Generador de bloque protegido</h3>
+<h3>Generador avanzado</h3>
 <input id="urlInput" type="text" size="80" placeholder="Pega tu URL">
+<input id="offsetInput" type="number" value="59539215">
 <button onclick="generate()">Generar bloque</button>
 
 <h3>Bloque generado</h3>
-<textarea id="output" rows="10" cols="100"></textarea>
+<textarea id="output" rows="12" cols="100"></textarea>
 <button onclick="copyBlock()">Copiar bloque</button>
 
 <script>
 function generate() {
   const url = document.getElementById("urlInput").value.trim();
+  const offset = parseInt(document.getElementById("offsetInput").value);
   if (!url) { alert("Por favor pega una URL"); return; }
 
+  // Codificar la URL en Base64
   const encoded = btoa(url);
+
+  // Crear bloque protegido con offset
   const block = `<!-- CONTENIDO PROTEGIDO --> 
 <script>
   var CIU = ""; 
   var qOf = ["${encoded}"]; 
-  qOf.forEach(function tms(value) { 
-    CIU += atob(value); 
+  qOf.forEach(function(value){ 
+    CIU += String.fromCharCode(parseInt(atob(value).replace(/\\D/g,'')) - ${offset}); 
   }); 
-  document.write(CIU); 
-</script>
-<script>
+  document.write(decodeURIComponent(escape(CIU))); 
+</script>`;
+
   document.getElementById("output").value = block;
 }
 
