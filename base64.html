@@ -1,0 +1,79 @@
+<h3>Pegar eventos masivos</h3>
+<textarea id="input" rows="20" cols="100" placeholder="Pega aquí tus eventos..."></textarea><br>
+<button id="generateBtn">Generar HTML</button>
+
+<h3>Eventos generados</h3>
+<textarea id="output" rows="20" cols="100"></textarea><br>
+<button id="copyBtn">Copiar HTML</button>
+
+<script>
+  function getLogoClass(title) {
+    if (title.includes("Copa Argentina")) return "AR";
+    if (title.includes("Amistoso Internacional")) return "FIFA";
+    if (title.includes("Brasileirão")) return "BRA";
+    if (title.includes("Liga 1")) return "PE";
+    if (title.includes("Primera División")) return "URU";
+    if (title.includes("Liga de Primera")) return "CHI";
+    if (title.includes("LaLiga 2")) return "ES2";
+    if (title.includes("LaLiga")) return "ES1";
+    if (title.includes("Liga BetPlay")) return "COL";
+    return "FUT"; // genérico si no se reconoce
+  }
+
+  document.getElementById("generateBtn").addEventListener("click", () => {
+    const rawText = document.getElementById("input").value;
+    const lines = rawText.trim().split("\n").map(l => l.trim()).filter(l => l);
+    const events = {};
+    let currentEvent = null;
+
+    lines.forEach(line => {
+      if (/^\d{1,2}:\d{2}/.test(line)) {
+        const [time, rest] = line.split(" - ");
+        currentEvent = rest;
+        if (!events[currentEvent]) {
+          events[currentEvent] = { time, title: rest, channels: [] };
+        }
+      } else if (line.startsWith("http")) {
+        // Guardar URL completa
+        events[currentEvent].channels.push(line);
+      }
+    });
+
+    // Ordenar cronológicamente
+    const sortedEvents = Object.values(events).sort((a, b) => {
+      const [ah, am] = a.time.split(":").map(Number);
+      const [bh, bm] = b.time.split(":").map(Number);
+      return ah * 60 + am - (bh * 60 + bm);
+    });
+
+    // Generar HTML final
+    let outputHTML = "";
+    sortedEvents.forEach(ev => {
+      const classLogo = getLogoClass(ev.title);
+      outputHTML += `
+<li class="${classLogo}"><a href="#">
+${ev.title}
+<span class="t">${ev.time}</span></a>
+<ul style="display: none;">
+${ev.channels.map(url => {
+  const encoded = btoa(url); // codificar en Base64
+  const channelName = url.split("channel=")[1]?.toUpperCase() || "CANAL";
+  return `
+<li class="subitem1"><a href="eventos/eventos.html?r=${encoded}" target="_">${channelName}<span>Calidad 720p</span></a></li>
+<li class="subitem1"><a href="eventos/reproductor2.html?r=${encoded}" target="_">${channelName}|PC<span>Calidad 720p</span></a></li>
+`;
+}).join("")}
+</ul>
+</li>
+`;
+    });
+
+    document.getElementById("output").value = outputHTML.trim();
+  });
+
+  document.getElementById("copyBtn").addEventListener("click", () => {
+    const text = document.getElementById("output").value;
+    navigator.clipboard.writeText(text);
+    alert("Eventos copiados al portapapeles");
+  });
+</script>
