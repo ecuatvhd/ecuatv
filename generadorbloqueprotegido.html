@@ -7,7 +7,7 @@
 <body>
 
 <h3>Generador de bloque protegido</h3>
-<input id="urlInput" type="text" size="80" placeholder="Pega aquí tu URL (ej: https://streamx741.com/global1.php?channel=espn)">
+<input id="urlInput" type="text" size="80" placeholder="Pega tu URL">
 <button onclick="generate()">Generar bloque</button>
 
 <h3>Bloque generado</h3>
@@ -17,15 +17,9 @@
 <script>
 function generate() {
   const url = document.getElementById("urlInput").value.trim();
-  if (!url) {
-    alert("Por favor pega una URL");
-    return;
-  }
+  if (!url) { alert("Por favor pega una URL"); return; }
 
-  // Codificar la URL en Base64
   const encoded = btoa(url);
-
-  // Crear bloque protegido
   const block = `<!-- CONTENIDO PROTEGIDO --> 
 <script>
   var CIU = ""; 
@@ -36,16 +30,12 @@ function generate() {
   document.write(CIU); 
 </script>`;
 <script>
-  // Mostrar el bloque en el textarea
   document.getElementById("output").value = block;
 }
 
 function copyBlock() {
   const text = document.getElementById("output").value;
-  if (!text) {
-    alert("No hay bloque generado todavía");
-    return;
-  }
+  if (!text) { alert("No hay bloque generado todavía"); return; }
   navigator.clipboard.writeText(text);
   alert("Bloque copiado al portapapeles");
 }
