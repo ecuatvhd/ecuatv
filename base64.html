@@ -56,11 +56,11 @@ ${ev.title}
 <span class="t">${ev.time}</span></a>
 <ul style="display: none;">
 ${ev.channels.map(url => {
-  const encoded = btoa(url); // codificar en Base64
+  const encoded = btoa(url); // codificar URL completa en Base64
   const channelName = url.split("channel=")[1]?.toUpperCase() || "CANAL";
   return `
-<li class="subitem1"><a href="eventos/eventos.html?r=${encoded}" target="_">${channelName}<span>Calidad 720p</span></a></li>
-<li class="subitem1"><a href="eventos/reproductor2.html?r=${encoded}" target="_">${channelName}|PC<span>Calidad 720p</span></a></li>
+<li class="subitem1"><a href="/eventos/eventos.html?r=${encoded}" target="_">${channelName}<span>Calidad 720p</span></a></li>
+<li class="subitem1"><a href="/eventos/reproductor2.html?r=${encoded}" target="_">${channelName}|PC<span>Calidad 720p</span></a></li>
 `;
 }).join("")}
 </ul>
