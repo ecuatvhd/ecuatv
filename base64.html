@@ -34,10 +34,10 @@
           events[currentEvent] = { time, title: rest, channels: [] };
         }
       } else if (line.startsWith("http")) {
-        // Extraer solo el parámetro channel
+        // Extraer el parámetro completo channel=...
         const match = line.match(/channel=([^&]+)/);
         if (match) {
-          events[currentEvent].channels.push(match[1]);
+          events[currentEvent].channels.push("channel=" + match[1]);
         }
       }
     });
@@ -59,10 +59,11 @@ ${ev.title}
 <span class="t">${ev.time}</span></a>
 <ul style="display: none;">
 ${ev.channels.map(ch => {
-  const encoded = btoa("channel=" + ch); // codificar solo channel=...
+  const encoded = btoa(ch); // codificar "channel=..."
+  const channelName = ch.split("=")[1].toUpperCase();
   return `
-<li class="subitem1"><a href="/eventos/eventos.html?r=${encoded}" target="">${ch.toUpperCase()}<span>Calidad 720p</span></a></li>
-<li class="subitem1"><a href="/eventos/reproductor2.html?r=${encoded}" target="">${ch.toUpperCase()}|PC<span>Calidad 720p</span></a></li>
+<li class="subitem1"><a href="/eventos/eventos.html?r=${encoded}" target="">${channelName}<span>Calidad 720p</span></a></li>
+<li class="subitem1"><a href="/eventos/reproductor2.html?r=${encoded}" target="">${channelName}|PC<span>Calidad 720p</span></a></li>
 `;
 }).join("")}
 </ul>
