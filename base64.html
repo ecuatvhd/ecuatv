@@ -59,10 +59,10 @@ ${ev.title}
 <span class="t">${ev.time}</span></a>
 <ul style="display: none;">
 ${ev.channels.map(ch => {
-  const encoded = btoa("channel=" + ch.toLowerCase()); // codificar solo channel
+  const encoded = btoa("channel=" + ch); // codificar solo channel=...
   return `
-<li class="subitem1"><a href="https://ecuatvhd.github.io/eventos/eventos.html?r=${encoded}" target="">${ch.toUpperCase()}<span>Calidad 720p</span></a></li>
-<li class="subitem1"><a href="https://ecuatvhd.github.io/eventos/reproductor2.html?r=${encoded}" target="">${ch.toUpperCase()}|PC<span>Calidad 720p</span></a></li>
+<li class="subitem1"><a href="/eventos/eventos.html?r=${encoded}" target="">${ch.toUpperCase()}<span>Calidad 720p</span></a></li>
+<li class="subitem1"><a href="/eventos/reproductor2.html?r=${encoded}" target="">${ch.toUpperCase()}|PC<span>Calidad 720p</span></a></li>
 `;
 }).join("")}
 </ul>
