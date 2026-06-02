@@ -34,8 +34,11 @@
           events[currentEvent] = { time, title: rest, channels: [] };
         }
       } else if (line.startsWith("http")) {
-        // Guardar URL completa
-        events[currentEvent].channels.push(line);
+        // Extraer solo el parámetro channel
+        const match = line.match(/channel=([^&]+)/);
+        if (match) {
+          events[currentEvent].channels.push(match[1]);
+        }
       }
     });
 
@@ -55,12 +58,11 @@
 ${ev.title}
 <span class="t">${ev.time}</span></a>
 <ul style="display: none;">
-${ev.channels.map(url => {
-  const encoded = btoa(url); // codificar URL completa en Base64
-  const channelName = url.split("channel=")[1]?.toUpperCase() || "CANAL";
+${ev.channels.map(ch => {
+  const encoded = btoa("channel=" + ch.toUpperCase()); // codificar solo channel
   return `
-<li class="subitem1"><a href="/eventos/eventos.html?r=${encoded}" target="_">${channelName}<span>Calidad 720p</span></a></li>
-<li class="subitem1"><a href="/eventos/reproductor2.html?r=${encoded}" target="_">${channelName}|PC<span>Calidad 720p</span></a></li>
+<li class="subitem1"><a href="/eventos/eventos.html?r=${encoded}" target="_">${ch.toUpperCase()}<span>Calidad 720p</span></a></li>
+<li class="subitem1"><a href="/eventos/reproductor2.html?r=${encoded}" target="_">${ch.toUpperCase()}|PC<span>Calidad 720p</span></a></li>
 `;
 }).join("")}
 </ul>
