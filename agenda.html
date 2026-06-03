@@ -58,27 +58,6 @@ span,.menu>li>ul li:hover a:before { color: #13131c}.menu ul>li>a span {font-siz
 </center>
 
 
-<ul>
-  <li class="COL"><a href="#">
-    Liga BetPlay: Junior vs Atlético Nacional
-    <span class="t">19:30</span>
-    <span class="score" id="score-junior-nacional">0 - 0</span>
-  </a>
-  <ul style="display: none;">
-    <li class="subitem1"><a href="/eventos/eventos.html?channel=winplus" target="_">WINPLUS<span>Calidad 720p</span></a></li>
-  </ul>
-  </li>
-
-  <li class="AR"><a href="#">
-    Copa Argentina: Barracas Central vs Huracán
-    <span class="t">19:10</span>
-    <span class="score" id="score-barracas-huracan">0 - 0</span>
-  </a>
-  <ul style="display: none;">
-    <li class="subitem1"><a href="/eventos/eventos.html?channel=tyc" target="_">TYC<span>Calidad 720p</span></a></li>
-  </ul>
-  </li>
-</ul>
 
 	
 
@@ -152,36 +131,7 @@ function myFunction() {
 
 
 
-<script>
-async function updateScores() {
-  try {
-    // Llamada al extractor con varias URLs de partidos
-    const res = await fetch(
-      "https://api.apify.com/v2/acts/extractify-labs~flashscore-extractor/run-sync-get-dataset-items"
-      + "?token=apify_api_hmxxjq1IeOQTdQBB8lHsN8jgCttKuJ14mdVU"
-      + "&startUrls=https://www.flashscore.es/partido/futbol/atl-nacional-C23omttL/junior-ptqMix37/?mid=IRrLGlCj"
-      + "&startUrls=https://www.flashscore.es/partido/futbol/barracas-huracan-XYZ"
-    );
-    const data = await res.json();
 
-    data.forEach(match => {
-      const nombre = match.match.toLowerCase();
-
-      if (nombre.includes("junior") && nombre.includes("atlético nacional")) {
-        document.getElementById("score-junior-nacional").textContent = match.score;
-      }
-      if (nombre.includes("barracas") && nombre.includes("huracán")) {
-        document.getElementById("score-barracas-huracan").textContent = match.score;
-      }
-    });
-  } catch (e) {
-    console.error("Error al actualizar marcadores", e);
-  }
-}
-
-setInterval(updateScores, 30000);
-updateScores();
-</script>
 
 	
 </body></html>
