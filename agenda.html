@@ -58,7 +58,19 @@ span,.menu>li>ul li:hover a:before { color: #13131c}.menu ul>li>a span {font-siz
 </center>
 
 
-
+<li class="COL"><a href="#">
+Liga BetPlay: Junior vs Atlético Nacional
+<span class="t">19:30</span>
+<span class="score" id="score-junior-nacional">0 - 0</span> <!-- marcador -->
+</a>
+<ul style="display: none;">
+  <li class="subitem1"><a href="/eventos/eventos.html?channel=fanatiz2" target="_">FANATIZ2<span>Calidad 720p</span></a></li>
+  <li class="subitem1"><a href="/eventos/reproductor2.html?channel=fanatiz2" target="_">FANATIZ2|PC<span>Calidad 720p</span></a></li>
+  <li class="subitem1"><a href="/eventos/eventos.html?channel=winplus" target="_">WINPLUS<span>Calidad 720p</span></a></li>
+  <li class="subitem1"><a href="/eventos/reproductor2.html?channel=winplus" target="_">WINPLUS|PC<span>Calidad 720p</span></a></li>
+</ul>
+</li>
+	
 
 
 
@@ -126,5 +138,29 @@ function myFunction() {
   document.getElementById("agendaFecha").textContent =
     `Agenda - ${diaSemana} ${dia} de ${mes} de ${año}`;
 </script>	
+
+
+
+
+<script>
+async function updateScores() {
+  try {
+    const res = await fetch("https://api.apify.com/v2/acts/extractify-labs~flashscore-extractor/run-sync-get-dataset-items?token=apify_api_hmxxjq1IeOQTdQBB8lHsN8jgCttKuJ14mdVU");
+    const data = await res.json();
+
+    data.forEach(match => {
+      if (match.match.includes("Junior vs Atlético Nacional")) {
+        document.getElementById("score-junior-nacional").textContent = match.score;
+      }
+    });
+  } catch (e) {
+    console.error("Error al actualizar marcadores", e);
+  }
+}
+
+// refrescar cada 30 segundos
+setInterval(updateScores, 30000);
+updateScores();
+</script>
 	
 </body></html>
