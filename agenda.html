@@ -11,25 +11,27 @@
 <meta name="googlebot" content="noindex">
 <title>Agenda Deportiva - EcuTVHD</title>
 <style>
-	.progress-container {
-  width: 100%;
-  background-color: #ddd;
-  height: 6px;
-  margin-top: 5px;
-  position: relative;
+	.progress-container-inline {
+  display: inline-block;
+  margin-left: 10px;
+  vertical-align: middle;
 }
-.progress-bar {
+
+.progress-bar-inline {
+  display: inline-block;
+  width: 0%;
   height: 6px;
   background-color: red;
-  width: 0%;
   transition: width 0.5s;
 }
-.extra {
-  display: block;
-  margin-top: 4px;
+
+.extra-inline {
+  display: inline-block;
+  margin-left: 5px;
   font-size: 12px;
   color: red;
 }
+
 	</style>
 
 <style type="text/css">
@@ -156,15 +158,15 @@ Copa de la Liga: Deportes Concepción vs Coquimbo Unido
   <a href="#">
     NBA: Knicks vs Spurs
     <span class="t">19:30</span>
+
+    <!-- Barra alineada a la derecha dentro del <a> -->
+    <span class="progress-container-inline">
+      <span class="progress-bar-inline" id="bar-knicks-spurs"></span>
+      <span class="extra-inline" id="extra-knicks-spurs"></span>
+    </span>
   </a>
 
-  <!-- Barra de tiempo: debajo del nombre -->
-  <div class="progress-container">
-    <div class="progress-bar" id="bar-knicks-spurs"></div>
-    <span class="extra" id="extra-knicks-spurs"></span>
-  </div>
-
-  <!-- Canales: siguen siendo hermano directo del <a> -->
+  <!-- Canales: siguen intactos -->
   <ul style="display: none;">
     <li class="subitem1"><a href="/eventos/eventos.html?channel=amazon1" target="_">AMAZON1<span>Calidad 720p</span></a></li>
     <li class="subitem1"><a href="/eventos/reproductor2.html?channel=amazon1" target="_">AMAZON1|PC<span>Calidad 720p</span></a></li>
@@ -172,6 +174,7 @@ Copa de la Liga: Deportes Concepción vs Coquimbo Unido
     <li class="subitem1"><a href="/eventos/reproductor2.html?channel=espndeportes" target="_">ESPNDEPORTES|PC<span>Calidad 720p</span></a></li>
   </ul>
 </li>
+
 
 
 	
