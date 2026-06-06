@@ -224,7 +224,7 @@ function myFunction() {
 <!--Barra de tiempo -->
 <script>
 async function updateBars() {
-  const res = await fetch("eventos.json"); // tu archivo en GitHub
+  const res = await fetch("eventos.json?v="); // tu archivo en GitHub
   const events = await res.json();
   const now = new Date();
 
