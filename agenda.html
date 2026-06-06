@@ -38,6 +38,30 @@ span,.menu>li>ul li:hover a:before { color: #13131c}.menu ul>li>a span {font-siz
 }
 /*FIN*/
 
+
+
+.progress-container {
+  width: 100%;
+  background-color: #ddd;
+  height: 6px;
+  margin-top: 5px;
+  position: relative;
+}
+.progress-bar {
+  height: 6px;
+  background-color: red; /* barra roja */
+  width: 0%;
+  transition: width 0.5s;
+}
+.extra {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: red; /* adicionales en rojo */
+}
+
+
+	
 </style>
 
 <!---(<i style="color:red">Nueva Op:</i>)-->
@@ -143,8 +167,6 @@ NBA: Knicks vs Spurs
 <li class="subitem1"><a href="/eventos/eventos.html?channel=espndeportes" target="_">ESPNDEPORTES<span>Calidad 720p</span></a></li>
 <li class="subitem1"><a href="/eventos/reproductor2.html?channel=espndeportes" target="_">ESPNDEPORTES|PC<span>Calidad 720p</span></a></li>
 
-</ul>
-</li>
 <li class="FUT"><a href="#">
 NBA: Knicks vs Spurs
 <span class="t">19:30</span>
@@ -153,7 +175,12 @@ NBA: Knicks vs Spurs
   <div class="progress-bar" id="bar-knicks-spurs"></div>
   <span class="extra" id="extra-knicks-spurs"></span>
 </div>
+<ul style="display: none;">
+  <li class="subitem1"><a href="/eventos/eventos.html?channel=amazon1" target="_">AMAZON1<span>Calidad 720p</span></a></li>
+  <li class="subitem1"><a href="/eventos/eventos.html?channel=espndeportes" target="_">ESPNDEPORTES<span>Calidad 720p</span></a></li>
+</ul>
 </li>
+
 	
 
 
@@ -224,7 +251,7 @@ function myFunction() {
 <!--Barra de tiempo -->
 <script>
 async function updateBars() {
-  const res = await fetch("eventos.json?v="); // tu archivo en GitHub
+  const res = await fetch("eventos.json"); // tu JSON en GitHub
   const events = await res.json();
   const now = new Date();
 
@@ -253,6 +280,7 @@ async function updateBars() {
 setInterval(updateBars, 60000); // cada minuto
 updateBars();
 </script>
+
 
 
 
