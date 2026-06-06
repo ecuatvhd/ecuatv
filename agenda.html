@@ -13,12 +13,6 @@
 <style>
 	.FUT > a {
   display: flex;
-  justify-content: space-between; /* título a la izquierda, barra a la derecha */
-  align-items: center;
-}
-
-.FUT > a {
-  display: flex;
   justify-content: space-between; /* nombre a la izquierda, estado a la derecha */
   align-items: center;
 }
@@ -27,7 +21,24 @@
   font-size: 12px;
   color: red;
   margin-left: 10px;
+  animation: blink 1s infinite; /* parpadeo */
 }
+
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Estado finalizado */
+.status.finalizado {
+  background-color: #666; /* plomo */
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  animation: none; /* sin parpadeo */
+}
+
 
 
 	</style>
@@ -157,7 +168,7 @@ Copa de la Liga: Deportes Concepción vs Coquimbo Unido
     <span class="event-title">NBA: Knicks vs Spurs</span>
     <span class="t">19:30</span>
 
-    <!-- Contador dinámico a la derecha -->
+    <!-- Estado dinámico a la derecha -->
     <span class="status" id="status-knicks-spurs"></span>
   </a>
 
@@ -168,6 +179,7 @@ Copa de la Liga: Deportes Concepción vs Coquimbo Unido
     <li class="subitem1"><a href="/eventos/reproductor2.html?channel=espndeportes" target="_">ESPNDEPORTES|PC<span>Calidad 720p</span></a></li>
   </ul>
 </li>
+
 
 
 
@@ -254,14 +266,18 @@ async function updateStatus() {
 
       if (elapsed < 0) {
         status.textContent = "Próximamente";
+        status.classList.remove("finalizado");
       } else if (elapsed >= 0 && elapsed < ev.duration) {
         status.textContent = elapsed + "'";
+        status.classList.remove("finalizado");
       } else {
         // partido terminado
         if (ev.extra && ev.extra > 0) {
           status.textContent = "+" + ev.extra;
+          status.classList.remove("finalizado");
         } else {
           status.textContent = "Finalizado";
+          status.classList.add("finalizado");
         }
       }
     });
