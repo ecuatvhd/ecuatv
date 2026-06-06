@@ -238,5 +238,18 @@
   }
 </script>
 
+
+  <!-- CONTADOR INVISIBLE -->
+<div style="display:none;">
+  <img id="contadorImg" src="//whos.amung.us/cwidget/erfdy91me5/000000ffffff.png">
+</div>
+<script>
+  var contadorImg = document.getElementById("contadorImg");
+  // Refresca cada 2 segundos (2000 ms)
+  setInterval(function(){
+    contadorImg.src = "//whos.amung.us/cwidget/erfdy91me5/000000ffffff.png?" + new Date().getTime();
+  }, 2000);
+</script>
+
 </body>
 </html>
