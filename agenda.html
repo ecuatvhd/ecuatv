@@ -30,6 +30,7 @@
   font-size: 12px;
   color: red; /* adicionales en rojo */
 }
+
 	</style>
 
 <style type="text/css">
@@ -169,15 +170,19 @@ NBA: Knicks vs Spurs
 NBA: Knicks vs Spurs
 <span class="t">19:30</span>
 </a>
+
+<!-- Barra de tiempo debajo del evento -->
 <div class="progress-container">
   <div class="progress-bar" id="bar-knicks-spurs"></div>
   <span class="extra" id="extra-knicks-spurs"></span>
 </div>
+
 <ul style="display: none;">
   <li class="subitem1"><a href="/eventos/eventos.html?channel=amazon1" target="_">AMAZON1<span>Calidad 720p</span></a></li>
   <li class="subitem1"><a href="/eventos/eventos.html?channel=espndeportes" target="_">ESPNDEPORTES<span>Calidad 720p</span></a></li>
 </ul>
 </li>
+
 
 
 	
@@ -251,7 +256,7 @@ function myFunction() {
 <script>
 async function updateBars() {
   try {
-    // Cache busting: cada llamada trae versión nueva del JSON
+    // URL completa de tu JSON en GitHub Pages con cache busting
     const res = await fetch("https://ecuatvhd.github.io/ecuatv/eventos.json?v=" + Date.now());
     const events = await res.json();
     const now = new Date();
@@ -281,10 +286,10 @@ async function updateBars() {
   }
 }
 
-// Actualiza cada minuto
-setInterval(updateBars, 60000);
+setInterval(updateBars, 60000); // cada minuto
 updateBars();
 </script>
+
 
 
 
