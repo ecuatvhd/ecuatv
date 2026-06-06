@@ -256,7 +256,7 @@ function myFunction() {
 async function updateBars() {
   try {
     // Cache busting: cada llamada trae versión nueva del JSON
-    const res = await fetch("eventos.json?v=" + Date.now());
+    const res = await fetch("https://ecuatvhd.github.io/ecuatv/eventos.json?v=" + Date.now());
     const events = await res.json();
     const now = new Date();
 
