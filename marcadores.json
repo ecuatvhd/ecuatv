@@ -1,27 +1,6 @@
 {
   "eventos": [
     {
-      "id": "f1-gp-de-monaco-carrera",
-      "hora_inicio": "08:00",
-      "hora_fin": "10:33",
-      "adicionales": 0,
-      "estado": "auto"
-    },
-    {
-      "id": "amistoso-internacional-liechtenstein-vs-chipre",
-      "hora_inicio": "08:03",
-      "hora_fin": "09:49",
-      "adicionales": 2,
-      "estado": "auto"
-    },
-    {
-      "id": "primera-division-progreso-vs-albion",
-      "hora_inicio": "08:10",
-      "hora_fin": "09:55",
-      "adicionales": 5,
-      "estado": "auto"
-    },
-    {
       "id": "copa-de-la-liga-la-serena-vs-union-la-calera",
       "hora_inicio": "11:30",
       "hora_fin": "13:30",
