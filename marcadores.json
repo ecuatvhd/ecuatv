@@ -2,7 +2,7 @@
   "eventos": [
     {
       "id": "copa-de-la-liga-la-serena-vs-union-la-calera",
-      "hora_inicio": "11:30",
+      "hora_inicio": "11:31",
       "hora_fin": "13:30",
       "adicionales": 3,
       "estado": "auto"
@@ -16,7 +16,7 @@
     },
     {
       "id": "amistoso-internacional-dinamarca-vs-ucrania",
-      "hora_inicio": "11:30",
+      "hora_inicio": "11:31",
       "hora_fin": "13:30",
       "adicionales": 3,
       "estado": "auto"
