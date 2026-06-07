@@ -2,13 +2,15 @@
   "eventos": [
     {
       "id": "argentina-honduras",
-      "hora_inicio": "20:38",
-      "adicionales": 5,
+      "hora_inicio": "20:42",
+      "hora_fin": "22:42",
+      "adicionales": 3,
       "estado": "auto"
     },
     {
       "id": "ufc-belal-bonfim",
       "hora_inicio": "15:00",
+      "hora_fin": "18:00",
       "adicionales": 0,
       "estado": "proximo"
     }
