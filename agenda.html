@@ -195,83 +195,51 @@ function myFunction() {
   }, 2000);
 </script>
 
-
-<!-- ===================== MARCADORES EN VIVO ===================== -->
+<!-- ========== MARCADORES EN VIVO ========== -->
 <style>
-.marcador-badge {
-  display: inline-block;
-  margin-left: 8px;
-  padding: 1px 7px;
-  border-radius: 4px;
-  font-size: 0.78em;
-  font-weight: bold;
-  vertical-align: middle;
-  line-height: 1.5;
-}
-.marcador-en-vivo {
-  background-color: #e53935;
-  color: #fff;
-  animation: pulso 1.5s infinite;
-}
-.marcador-adicional {
-  background-color: #ff6f00;
-  color: #fff;
-  animation: pulso 1.5s infinite;
-}
-.marcador-finalizado {
-  background-color: #444;
-  color: #ccc;
-}
-@keyframes pulso {
-  0%   { opacity: 1; }
-  50%  { opacity: 0.55; }
-  100% { opacity: 1; }
-}
+.marcador-badge{display:inline-block;margin-left:8px;padding:1px 7px;border-radius:4px;font-size:.78em;font-weight:bold;vertical-align:middle;line-height:1.5}
+.marcador-en-vivo{background:#e53935;color:#fff;animation:pulso 1.5s infinite}
+.marcador-adicional{background:#ff6f00;color:#fff;animation:pulso 1.5s infinite}
+.marcador-finalizado{background:#444;color:#ccc}
+@keyframes pulso{0%{opacity:1}50%{opacity:.55}100%{opacity:1}}
 </style>
 
 <script>
-var URL_MARCADORES = 'https://raw.githubusercontent.com/ecuatvhd/ecuatv/refs/heads/main/marcadores.json?v=';
+var URL_MARCADORES = 'https://ecuatvhd.github.io/ecuatv/marcadores.json?v=';
 
-function obtenerBadge(evento) {
-  if (evento.estado === 'en_vivo')
-    return { texto: evento.minuto + "'", clase: 'marcador-en-vivo' };
-  if (evento.estado === 'adicional')
-    return { texto: evento.minuto + '+' + evento.adicionales + "'", clase: 'marcador-adicional' };
-  if (evento.estado === 'finalizado')
-    return { texto: 'Finalizado', clase: 'marcador-finalizado' };
+function obtenerBadge(e) {
+  if (e.estado === 'en_vivo')    return { texto: e.minuto + "'",                       clase: 'marcador-en-vivo' };
+  if (e.estado === 'adicional')  return { texto: e.minuto + '+' + e.adicionales + "'", clase: 'marcador-adicional' };
+  if (e.estado === 'finalizado') return { texto: 'Finalizado',                          clase: 'marcador-finalizado' };
   return null;
 }
 
 function actualizarMarcadores() {
   fetch(URL_MARCADORES + Date.now())
-    .then(function(r) { return r.json(); })
-    .then(function(data) {
-      data.eventos.forEach(function(evento) {
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      data.eventos.forEach(function(evento){
         var li = document.querySelector('[data-evento-id="' + evento.id + '"]');
         if (!li) return;
-
         var viejo = li.querySelector('.marcador-badge');
         if (viejo) viejo.remove();
-
         var badge = obtenerBadge(evento);
         if (!badge) return;
-
         var span = document.createElement('span');
         span.className = 'marcador-badge ' + badge.clase;
         span.textContent = badge.texto;
-
         var hora = li.querySelector('a > .t');
         if (hora) hora.before(span);
         else li.querySelector('a').appendChild(span);
       });
     })
-    .catch(function(e) { console.warn('Marcadores error:', e); });
+    .catch(function(e){ console.warn('Marcadores error:', e); });
 }
 
 actualizarMarcadores();
 setInterval(actualizarMarcadores, 60000);
 </script>
-<!-- ============================================================= -->
+<!-- ========================================= -->
 	
 
 
