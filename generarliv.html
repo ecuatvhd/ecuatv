@@ -5,33 +5,39 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Generador de Eventos - EcuTVHD</title>
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: Arial, sans-serif; background: #0f0f0f; color: #eee; min-height: 100vh; padding: 20px; }
-  h1 { text-align: center; color: #00e676; font-size: 1.4em; margin-bottom: 6px; letter-spacing: 1px; }
-  .subtitle { text-align: center; color: #888; font-size: .8em; margin-bottom: 24px; }
-  .tabs { display: flex; gap: 8px; margin-bottom: 20px; justify-content: center; }
-  .tab { padding: 10px 22px; border-radius: 6px; border: 2px solid #333; background: #1a1a1a; color: #aaa; cursor: pointer; font-size: .9em; font-weight: bold; transition: all .2s; }
-  .tab.active { background: #00e676; color: #000; border-color: #00e676; }
-  .panel { display: none; }
-  .panel.active { display: block; }
-  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  @media (max-width: 700px) { .row { grid-template-columns: 1fr; } }
-  .box { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 10px; padding: 16px; }
-  .box h3 { color: #00e676; font-size: .85em; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
-  .controls { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; align-items: center; }
-  label { font-size: .78em; color: #aaa; }
-  select, input[type="number"] { background: #111; border: 1px solid #333; color: #eee; border-radius: 5px; padding: 5px 8px; font-size: .82em; }
-  textarea { width: 100%; background: #111; border: 1px solid #333; color: #eee; border-radius: 6px; padding: 10px; font-family: 'Courier New', monospace; font-size: .78em; line-height: 1.5; resize: vertical; min-height: 220px; }
-  textarea:focus { outline: none; border-color: #00e676; }
-  .btn { padding: 9px 20px; border-radius: 6px; border: none; font-size: .85em; font-weight: bold; cursor: pointer; transition: opacity .2s; }
-  .btn:hover { opacity: .85; }
-  .btn-green { background: #00e676; color: #000; }
-  .btn-blue  { background: #1565c0; color: #fff; }
-  .btn-copy  { background: #333; color: #eee; font-size: .78em; padding: 6px 14px; }
-  .actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; align-items: center; }
-  .badge-ok { background:#00e676; color:#000; font-size:.72em; padding:2px 8px; border-radius:4px; font-weight:bold; }
-  .info { background: #1a2a1a; border: 1px solid #2a4a2a; border-radius: 8px; padding: 12px 16px; margin-bottom: 18px; font-size: .8em; color: #aaa; line-height: 1.7; }
-  .info strong { color: #00e676; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Arial, sans-serif; background: #0f0f0f; color: #eee; min-height: 100vh; padding: 16px; }
+h1 { text-align: center; color: #00e676; font-size: 1.3em; margin-bottom: 4px; }
+.subtitle { text-align: center; color: #777; font-size: .78em; margin-bottom: 18px; }
+.tabs { display: flex; gap: 8px; justify-content: center; margin-bottom: 18px; }
+.tab { padding: 9px 20px; border-radius: 6px; border: 2px solid #333; background: #1a1a1a; color: #aaa; cursor: pointer; font-size: .85em; font-weight: bold; }
+.tab.active { background: #00e676; color: #000; border-color: #00e676; }
+.panel { display: none; }
+.panel.active { display: block; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 680px) { .row { grid-template-columns: 1fr; } }
+.box { background: #1a1a1a; border: 1px solid #252525; border-radius: 10px; padding: 14px; }
+.box h3 { color: #00e676; font-size: .8em; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+.controls { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; align-items: center; }
+label { font-size: .76em; color: #999; }
+select, input[type="number"] { background: #111; border: 1px solid #333; color: #eee; border-radius: 5px; padding: 5px 8px; font-size: .8em; }
+textarea { width: 100%; background: #111; border: 1px solid #2a2a2a; color: #eee; border-radius: 6px; padding: 10px; font-family: 'Courier New', monospace; font-size: .75em; line-height: 1.5; resize: vertical; min-height: 240px; }
+textarea:focus { outline: none; border-color: #00e676; }
+.btn { padding: 8px 18px; border-radius: 6px; border: none; font-size: .82em; font-weight: bold; cursor: pointer; }
+.btn-green { background: #00e676; color: #000; }
+.btn-blue  { background: #1565c0; color: #fff; }
+.btn-gray  { background: #2a2a2a; color: #aaa; font-size: .75em; padding: 6px 12px; }
+.actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; align-items: center; }
+.ok { background:#00e676; color:#000; font-size:.7em; padding:2px 8px; border-radius:4px; font-weight:bold; }
+.info { background:#1a2a1a; border:1px solid #2a4a2a; border-radius:8px; padding:12px 14px; margin-bottom:14px; font-size:.78em; color:#aaa; line-height:1.7; }
+.info strong { color:#00e676; }
+.eventos-lista { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+.evento-item { background: #111; border: 1px solid #2a2a2a; border-radius: 8px; padding: 10px 12px; }
+.evento-header { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 6px; }
+.evento-nombre { font-size: .8em; color: #eee; font-weight: bold; flex: 1; }
+.evento-hora { font-size: .75em; color: #00e676; white-space: nowrap; }
+.evento-canales { font-size: .72em; color: #888; }
+.evento-clase { background: #111; border: 1px solid #333; color: #eee; border-radius: 4px; padding: 3px 6px; font-size: .75em; }
 </style>
 </head>
 <body>
@@ -47,54 +53,192 @@
 <!-- TAB 1 -->
 <div class="panel active" id="tab1">
   <div class="info">
-    <strong>Cómo usar:</strong> Pega los canales del evento (bloques de 6 líneas cada uno).<br>
-    Formato: <strong>hora - nombre evento</strong> / código país / idioma / URL / Copiar / En vivo
+    <strong>Cómo usar:</strong> Pega todos los canales juntos — el generador detecta cada evento automáticamente.<br>
+    Las <strong>líneas vacías no importan</strong>. Cada canal debe empezar con: <strong>hora - nombre del evento</strong>
   </div>
   <div class="row">
     <div class="box">
-      <h3>📥 Pega los canales aquí</h3>
+      <h3>📥 Pega todos los canales aquí</h3>
       <div class="controls">
-        <label>Clase CSS:</label>
-        <select id="claseCSS">
-          <option value="FIFA">FIFA — Fútbol Internacional</option>
-          <option value="FUT">FUT — Fútbol / Otros</option>
-          <option value="ENG">ENG — Inglaterra</option>
-          <option value="ALE">ALE — Alemania</option>
-          <option value="FRA">FRA — Francia</option>
-          <option value="ESP">ESP — España</option>
-          <option value="ITA">ITA — Italia</option>
-          <option value="POR">POR — Portugal</option>
-          <option value="ARG">ARG — Argentina</option>
-          <option value="ECUA">ECUA — Ecuador</option>
-          <option value="TUR">TUR — Turquía</option>
-          <option value="HOL">HOL — Holanda</option>
-          <option value="BRA">BRA — Brasil</option>
-          <option value="COL">COL — Colombia</option>
+        <label>Liga por defecto:</label>
+        <select id="claseDefault">
+          <optgroup label="─ FÚTBOL MUNDIAL">
+            <option value="FIFA">FIFA — Internacional</option>
+            <option value="CHA">CHA — Champions League</option>
+            <option value="UE">UE — Europa League</option>
+            <option value="UEC">UEC — Conference League</option>
+            <option value="EURO">EURO — Eurocopa</option>
+            <option value="EUROFEM">EUROFEM — Euro Femenino</option>
+            <option value="AMERICA">AMERICA — Copa América</option>
+            <option value="LIB">LIB — Copa Libertadores</option>
+            <option value="SUD">SUD — Copa Sudamericana</option>
+            <option value="RECOPASUD">RECOPASUD — Recopa Sudamericana</option>
+            <option value="NATIONS">NATIONS — Nations League</option>
+            <option value="NATIONSF">NATIONSF — Nations League Fem.</option>
+            <option value="GOLDCUP">GOLDCUP — Gold Cup</option>
+            <option value="CONCACAFCHA">CONCACAFCHA — CONCACAF Champ.</option>
+            <option value="CONCACAFCUP">CONCACAFCUP — CONCACAF Cup</option>
+            <option value="CONCACAFNATIONS">CONCACAFNATIONS — CONCACAF Nations</option>
+            <option value="LEAGUESCUP">LEAGUESCUP — Leagues Cup</option>
+            <option value="CENTRALAMERICANCUP">CENTRALAMERICANCUP — C.A. Cup</option>
+            <option value="SOCCERCHAMPIONS">SOCCERCHAMPIONS — Soccer Champions</option>
+            <option value="UEFA_SUPERCOPA">UEFA_SUPERCOPA — UEFA Supercopa</option>
+            <option value="FIFAINTERCUP">FIFAINTERCUP — FIFA Intercontinental</option>
+            <option value="AFRICA">AFRICA — CAF / Africa</option>
+            <option value="AFRICANNATIONS">AFRICANNATIONS — African Nations</option>
+            <option value="ASIA">ASIA — AFC Asia</option>
+            <option value="AFCCUP">AFCCUP — AFC Cup</option>
+            <option value="AFC">AFC — AFC Champions</option>
+            <option value="AFCTWO">AFCTWO — AFC Champions Two</option>
+            <option value="MFP">MFP — Mundial Futsal</option>
+            <option value="FUTSAL">FUTSAL — Futsal</option>
+            <option value="KINGSLEAGUE">KINGSLEAGUE — Kings League</option>
+            <option value="FUT">FUT — Fútbol General</option>
+          </optgroup>
+          <optgroup label="─ LIGAS EUROPA">
+            <option value="ENG1">ENG1 — Premier League</option>
+            <option value="ENG">ENG — Inglaterra</option>
+            <option value="CHAMPIONSHIPENG">CHAMPIONSHIPENG — Championship</option>
+            <option value="ENG3">ENG3 — League One</option>
+            <option value="EFLCUP">EFLCUP — EFL Cup</option>
+            <option value="ENGWOMEN">ENGWOMEN — Premier League Fem.</option>
+            <option value="ES1">ES1 — La Liga</option>
+            <option value="ES2">ES2 — La Liga 2</option>
+            <option value="ES">ES — España</option>
+            <option value="ESCOPAREY">ESCOPAREY — Copa del Rey</option>
+            <option value="ESSUPERCOPA">ESSUPERCOPA — Supercopa ES</option>
+            <option value="ALE1">ALE1 — Bundesliga</option>
+            <option value="ALE">ALE — Alemania</option>
+            <option value="FRA1">FRA1 — Ligue 1</option>
+            <option value="FRA">FRA — Francia</option>
+            <option value="FRACOUPE">FRACOUPE — Coupe de France</option>
+            <option value="FRASUPERCUP">FRASUPERCUP — Supercopa Francia</option>
+            <option value="IT1">IT1 — Serie A</option>
+            <option value="IT">IT — Italia</option>
+            <option value="ITCOPA">ITCOPA — Copa Italia</option>
+            <option value="ITSUPERCOPA">ITSUPERCOPA — Supercopa Italia</option>
+            <option value="PT1">PT1 — Primeira Liga</option>
+            <option value="POR">POR — Portugal</option>
+            <option value="HOL">HOL — Holanda</option>
+            <option value="HOLCOPA">HOLCOPA — Copa Holanda</option>
+            <option value="BEL1">BEL1 — Pro League Bélgica</option>
+            <option value="BEL">BEL — Bélgica</option>
+            <option value="TUR1">TUR1 — Süper Lig</option>
+            <option value="TUR">TUR — Turquía</option>
+            <option value="ESC1">ESC1 — Scottish Premiership</option>
+            <option value="ESC">ESC — Escocia</option>
+            <option value="POL">POL — Polonia</option>
+            <option value="GR">GR — Grecia</option>
+            <option value="RO">RO — Rumania</option>
+            <option value="RU">RU — Rusia</option>
+            <option value="SDC">SDC — SDC</option>
+          </optgroup>
+          <optgroup label="─ LIGAS AMÉRICAS">
+            <option value="AR1">AR1 — Primera División AR</option>
+            <option value="AR">AR — Argentina</option>
+            <option value="ARCOPA">ARCOPA — Copa Argentina</option>
+            <option value="ECUA">ECUA — Ecuador / Liga Pro</option>
+            <option value="COL">COL — Colombia</option>
+            <option value="MX1">MX1 — Liga MX</option>
+            <option value="MX2">MX2 — Ascenso MX</option>
+            <option value="MEX">MEX — México</option>
+            <option value="MXF">MXF — Liga MX Femenino</option>
+            <option value="BRA">BRA — Brasil</option>
+            <option value="CHI">CHI — Chile</option>
+            <option value="URU">URU — Uruguay</option>
+            <option value="UYL">UYL — Youth League URU</option>
+            <option value="PE">PE — Perú</option>
+            <option value="VEN">VEN — Venezuela</option>
+            <option value="BOL">BOL — Bolivia</option>
+            <option value="PY">PY — Paraguay</option>
+            <option value="HN1">HN1 — Liga Nacional Honduras</option>
+            <option value="HN">HN — Honduras</option>
+            <option value="CR1">CR1 — Primera CR</option>
+            <option value="CR">CR — Costa Rica</option>
+            <option value="GT">GT — Guatemala</option>
+            <option value="MLS">MLS — MLS</option>
+            <option value="USA">USA — Estados Unidos</option>
+            <option value="COPAAMERICAF">COPAAMERICAF — Copa América Fem.</option>
+            <option value="LIGAF">LIGAF — Liga Femenina</option>
+            <option value="AMERICUP">AMERICUP — AmeriCup Basket</option>
+          </optgroup>
+          <optgroup label="─ COPAS JUVENILES">
+            <option value="CONMEBOLU20">CONMEBOLU20 — CONMEBOL U20</option>
+            <option value="MUNDIALU20">MUNDIALU20 — Mundial U20</option>
+            <option value="MUNDIAL20FE">MUNDIAL20FE — Mundial U20 Fem.</option>
+            <option value="CONCAU20">CONCAU20 — CONCACAF U20</option>
+            <option value="U17CONCA">U17CONCA — CONCACAF U17</option>
+            <option value="ELIAFC">ELIAFC — Eli AFC</option>
+            <option value="ELIUEFA">ELIUEFA — Eli UEFA</option>
+            <option value="ELICONCACAF">ELICONCACAF — Eli CONCACAF</option>
+            <option value="ELISUDA">ELISUDA — Eli SUDA</option>
+            <option value="LCC">LCC — LCC</option>
+          </optgroup>
+          <optgroup label="─ ÁRABE / ASIA">
+            <option value="ARA1">ARA1 — Saudi Pro League</option>
+            <option value="ARA">ARA — Arabia Saudita</option>
+          </optgroup>
+          <optgroup label="─ OTROS DEPORTES">
+            <option value="UFC">UFC — UFC / MMA</option>
+            <option value="BOX">BOX — Boxeo</option>
+            <option value="WWE">WWE — WWE</option>
+            <option value="AEW">AEW — AEW</option>
+            <option value="NBA">NBA — NBA</option>
+            <option value="WNBA">WNBA — WNBA</option>
+            <option value="EUROLEAGUE">EUROLEAGUE — EuroLeague Basket</option>
+            <option value="ENDESA">ENDESA — Liga Endesa</option>
+            <option value="FIBA">FIBA — FIBA</option>
+            <option value="FIBAAMERICUP">FIBAAMERICUP — FIBA AmeriCup</option>
+            <option value="NHL">NHL — NHL Hockey</option>
+            <option value="NFL">NFL — NFL Americano</option>
+            <option value="MLB">MLB — MLB Béisbol</option>
+            <option value="WBC">WBC — WBC Béisbol</option>
+            <option value="F1">F1 — Fórmula 1</option>
+            <option value="F2">F2 — Fórmula 2</option>
+            <option value="F3">F3 — Fórmula 3</option>
+            <option value="MOTOGP">MOTOGP — MotoGP</option>
+            <option value="INDYCAR">INDYCAR — IndyCar</option>
+            <option value="CICLISMO">CICLISMO — Ciclismo</option>
+            <option value="ATP">ATP — Tennis ATP</option>
+            <option value="WTA">WTA — Tennis WTA</option>
+            <option value="TE">TE — Tennis General</option>
+            <option value="AOTENNIS">AOTENNIS — Australian Open</option>
+            <option value="RUG">RUG — Rugby</option>
+            <option value="CHAWOMEN">CHAWOMEN — Champions Femenino</option>
+            <option value="EUROCOPAFEM">EUROCOPAFEM — Eurocopa Femenino</option>
+          </optgroup>
         </select>
       </div>
       <textarea id="inputCanales" placeholder="15:00 - UFC: Belal Muhammad vs Gabriel Bonfim
 es
 Spanish
+
 https://streamx741.com/global1.php?channel=paramount1
+
 Copiar
+
 En vivo
-15:00 - UFC: Belal Muhammad vs Gabriel Bonfim
-us
-English
-https://streamx741.com/global1.php?channel=paramount2
+19:00 - Amistoso Internacional: Argentina vs Honduras
+
+https://streamx741.com/global1.php?channel=tyc
+
 Copiar
+
 En vivo"></textarea>
       <div class="actions">
-        <button class="btn btn-green" onclick="generarHTML()">⚡ Generar HTML</button>
-        <button class="btn btn-copy" onclick="limpiar('inputCanales')">🗑 Limpiar</button>
+        <button class="btn btn-green" onclick="parsearYMostrar()">⚡ Detectar eventos</button>
+        <button class="btn btn-gray" onclick="limpiarTodo()">🗑 Limpiar</button>
       </div>
+      <div id="eventosList" class="eventos-lista"></div>
     </div>
+
     <div class="box">
       <h3>📤 Código HTML generado</h3>
-      <textarea id="outputHTML" readonly placeholder="El código aparecerá aquí..."></textarea>
+      <textarea id="outputHTML" readonly placeholder="1. Detecta los eventos (izquierda)&#10;2. Cambia la liga si es necesario&#10;3. Pulsa Generar HTML"></textarea>
       <div class="actions">
-        <button class="btn btn-blue" onclick="copiar('outputHTML','statusHTML')">📋 Copiar HTML</button>
-        <span id="statusHTML"></span>
+        <button class="btn btn-green" onclick="generarHTML()">⚡ Generar HTML</button>
+        <button class="btn btn-blue" onclick="copiar('outputHTML','stHTML')">📋 Copiar</button>
+        <span id="stHTML"></span>
       </div>
     </div>
   </div>
@@ -103,15 +247,14 @@ En vivo"></textarea>
 <!-- TAB 2 -->
 <div class="panel" id="tab2">
   <div class="info">
-    <strong>Cómo usar:</strong> Pega uno o varios bloques <code>&lt;li&gt;</code> de tu agenda.<br>
-    Extrae el <strong>id</strong> y la <strong>hora_inicio</strong>, calcula <strong>hora_fin</strong> automáticamente (+2 horas).
+    <strong>Cómo usar:</strong> Pega uno o varios bloques <code>&lt;li&gt;</code> de tu agenda y genera el JSON para <code>marcadores.json</code>.
   </div>
   <div class="row">
     <div class="box">
       <h3>📥 Pega el HTML aquí</h3>
       <div class="controls">
         <label>Adicionales:</label>
-        <input type="number" id="adicDefecto" value="3" min="0" max="10" style="width:55px">
+        <input type="number" id="adicDefecto" value="3" min="0" max="15" style="width:52px">
         <label>Estado:</label>
         <select id="estadoDefecto">
           <option value="auto">auto</option>
@@ -119,24 +262,177 @@ En vivo"></textarea>
           <option value="finalizado">finalizado</option>
         </select>
       </div>
-      <textarea id="inputHTML" placeholder='Pega aquí el bloque <li class="FIFA" data-evento-id="..."> de tu agenda'></textarea>
+      <textarea id="inputHTML" placeholder='Pega los bloques &lt;li class="FIFA" data-evento-id="..."&gt; de tu agenda'></textarea>
       <div class="actions">
         <button class="btn btn-green" onclick="generarJSON()">⚡ Generar JSON</button>
-        <button class="btn btn-copy" onclick="limpiar('inputHTML')">🗑 Limpiar</button>
+        <button class="btn btn-gray" onclick="document.getElementById('inputHTML').value=''">🗑 Limpiar</button>
       </div>
     </div>
     <div class="box">
       <h3>📤 JSON generado</h3>
       <textarea id="outputJSON" readonly placeholder="El JSON aparecerá aquí..."></textarea>
       <div class="actions">
-        <button class="btn btn-blue" onclick="copiar('outputJSON','statusJSON')">📋 Copiar JSON</button>
-        <span id="statusJSON"></span>
+        <button class="btn btn-blue" onclick="copiar('outputJSON','stJSON')">📋 Copiar JSON</button>
+        <span id="stJSON"></span>
       </div>
     </div>
   </div>
 </div>
 
 <script>
+var eventosParsed = [];
+
+var TODAS_LIGAS = [
+  'FIFA','CHA','UE','UEC','EURO','EUROFEM','AMERICA','LIB','SUD','RECOPASUD',
+  'NATIONS','NATIONSF','GOLDCUP','CONCACAFCHA','CONCACAFCUP','CONCACAFNATIONS',
+  'LEAGUESCUP','CENTRALAMERICANCUP','SOCCERCHAMPIONS','UEFA_SUPERCOPA','FIFAINTERCUP',
+  'AFRICA','AFRICANNATIONS','ASIA','AFCCUP','AFC','AFCTWO','MFP','FUTSAL','KINGSLEAGUE','FUT',
+  'ENG1','ENG','CHAMPIONSHIPENG','ENG3','EFLCUP','ENGWOMEN',
+  'ES1','ES2','ES','ESCOPAREY','ESSUPERCOPA',
+  'ALE1','ALE','FRA1','FRA','FRACOUPE','FRASUPERCUP',
+  'IT1','IT','ITCOPA','ITSUPERCOPA','PT1','POR','HOL','HOLCOPA',
+  'BEL1','BEL','TUR1','TUR','ESC1','ESC','POL','GR','RO','RU','SDC',
+  'AR1','AR','ARCOPA','ECUA','COL','MX1','MX2','MEX','MXF',
+  'BRA','CHI','URU','UYL','PE','VEN','BOL','PY',
+  'HN1','HN','CR1','CR','GT','MLS','USA','COPAAMERICAF','LIGAF','AMERICUP',
+  'CONMEBOLU20','MUNDIALU20','MUNDIAL20FE','CONCAU20','U17CONCA',
+  'ELIAFC','ELIUEFA','ELICONCACAF','ELISUDA','LCC',
+  'ARA1','ARA',
+  'UFC','BOX','WWE','AEW','NBA','WNBA','EUROLEAGUE','ENDESA','FIBA','FIBAAMERICUP',
+  'NHL','NFL','MLB','WBC','F1','F2','F3','MOTOGP','INDYCAR','CICLISMO',
+  'ATP','WTA','TE','AOTENNIS','RUG','CHAWOMEN','EUROCOPAFEM'
+];
+
+function autoLiga(nombre, def) {
+  var n = nombre.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  if (/\bufc\b/.test(n))                                          return 'UFC';
+  if (/\bwwe\b/.test(n))                                          return 'WWE';
+  if (/\baew\b/.test(n))                                          return 'AEW';
+  if (/\bnba\b/.test(n))                                          return 'NBA';
+  if (/\bwnba\b/.test(n))                                         return 'WNBA';
+  if (/\bnhl\b/.test(n))                                          return 'NHL';
+  if (/\bnfl\b/.test(n))                                          return 'NFL';
+  if (/\bmlb\b/.test(n))                                          return 'MLB';
+  if (/\bwbc\b/.test(n))                                          return 'WBC';
+  if (/formula\s*1|gran\s*premio|\bf1\b|gp\s+/.test(n))          return 'F1';
+  if (/formula\s*2|\bf2\b/.test(n))                               return 'F2';
+  if (/formula\s*3|\bf3\b/.test(n))                               return 'F3';
+  if (/motogp|moto\s*gp/.test(n))                                 return 'MOTOGP';
+  if (/indycar/.test(n))                                          return 'INDYCAR';
+  if (/ciclismo|tour\s+de|vuelta\s+a/.test(n))                    return 'CICLISMO';
+  if (/\batp\b/.test(n))                                          return 'ATP';
+  if (/\bwta\b/.test(n))                                          return 'WTA';
+  if (/australian\s*open|ao\s+tennis/.test(n))                    return 'AOTENNIS';
+  if (/tenis|tennis/.test(n))                                     return 'TE';
+  if (/\brugby\b/.test(n))                                        return 'RUG';
+  if (/boxeo|boxing|\bbox\b/.test(n))                             return 'BOX';
+  if (/\bfutsal\b/.test(n))                                       return 'FUTSAL';
+  if (/euroleague|euroliga/.test(n))                              return 'EUROLEAGUE';
+  if (/\bendesa\b/.test(n))                                       return 'ENDESA';
+  if (/\bfiba\b/.test(n))                                         return 'FIBA';
+  if (/fibaamericup/.test(n))                                     return 'FIBAAMERICUP';
+  if (/champions\s*league|liga\s+de\s+campeones/.test(n))         return 'CHA';
+  if (/europa\s*league/.test(n))                                  return 'UE';
+  if (/conference\s*league|\buec\b/.test(n))                      return 'UEC';
+  if (/supercopa.*uefa|uefa.*supercup/.test(n))                   return 'UEFA_SUPERCOPA';
+  if (/eurocopa|euro\s*\d{4}|euro\s+cup/.test(n))                 return 'EURO';
+  if (/eurocopa.*fem|euro.*women/.test(n))                        return 'EUROFEM';
+  if (/youth.*league|\buyl\b/.test(n))                            return 'UYL';
+  if (/kings\s*league/.test(n))                                   return 'KINGSLEAGUE';
+  if (/copa\s*(sudamericana|sud\b)/.test(n))                      return 'SUD';
+  if (/libertadores/.test(n))                                     return 'LIB';
+  if (/recopa\s*sud/.test(n))                                     return 'RECOPASUD';
+  if (/copa\s*america.*fem/.test(n))                              return 'COPAAMERICAF';
+  if (/copa\s*america/.test(n))                                   return 'AMERICA';
+  if (/conmebol.*u20|sudamericano.*u20/.test(n))                  return 'CONMEBOLU20';
+  if (/mundial.*u20.*fem/.test(n))                                return 'MUNDIAL20FE';
+  if (/mundial.*u20|u20.*mundial/.test(n))                        return 'MUNDIALU20';
+  if (/gold\s*cup/.test(n))                                       return 'GOLDCUP';
+  if (/concacaf.*champions/.test(n))                              return 'CONCACAFCHA';
+  if (/concacaf.*nations/.test(n))                                return 'CONCACAFNATIONS';
+  if (/concacaf.*cup/.test(n))                                    return 'CONCACAFCUP';
+  if (/leagues\s*cup/.test(n))                                    return 'LEAGUESCUP';
+  if (/soccer\s*champions/.test(n))                               return 'SOCCERCHAMPIONS';
+  if (/central\s*american\s*cup/.test(n))                         return 'CENTRALAMERICANCUP';
+  if (/concacaf.*u20/.test(n))                                    return 'CONCAU20';
+  if (/concacaf.*u17/.test(n))                                    return 'U17CONCA';
+  if (/\bmls\b/.test(n))                                          return 'MLS';
+  if (/afctwo|afc.*two/.test(n))                                  return 'AFCTWO';
+  if (/afc.*champions|champions.*afc/.test(n))                    return 'AFC';
+  if (/afccup|afc.*cup/.test(n))                                  return 'AFCCUP';
+  if (/\basia\b|asian/.test(n))                                   return 'ASIA';
+  if (/african\s*nations|african.*cup/.test(n))                   return 'AFRICANNATIONS';
+  if (/\bcaf\b|\bafrica\b/.test(n))                               return 'AFRICA';
+  if (/nations.*league.*fem|nations.*f/.test(n))                  return 'NATIONSF';
+  if (/nations\s*league|liga\s*de\s*naciones/.test(n))            return 'NATIONS';
+  if (/mundial\s*futsal/.test(n))                                 return 'MFP';
+  if (/intercontinental|fifaintercup/.test(n))                    return 'FIFAINTERCUP';
+  if (/mundial|world\s*cup/.test(n))                              return 'FIFA';
+  if (/\bfifa\b/.test(n))                                         return 'FIFA';
+  if (/amistoso|friendly|internacional/.test(n))                  return 'FIFA';
+  if (/premier\s*league.*fem|women.*premier/.test(n))             return 'ENGWOMEN';
+  if (/premier\s*league|\bepl\b/.test(n))                         return 'ENG1';
+  if (/championship.*eng|english.*championship/.test(n))          return 'CHAMPIONSHIPENG';
+  if (/efl\s*cup/.test(n))                                        return 'EFLCUP';
+  if (/copa\s*del\s*rey/.test(n))                                 return 'ESCOPAREY';
+  if (/supercopa.*esp/.test(n))                                   return 'ESSUPERCOPA';
+  if (/la\s*liga\s*2|segunda\s*division/.test(n))                 return 'ES2';
+  if (/\bla\s*liga\b/.test(n))                                    return 'ES1';
+  if (/bundesliga/.test(n))                                       return 'ALE1';
+  if (/coupe.*france|copa.*franc/.test(n))                        return 'FRACOUPE';
+  if (/supercopa.*franc|trophee\s+des/.test(n))                   return 'FRASUPERCUP';
+  if (/\bligue\s*1\b/.test(n))                                    return 'FRA1';
+  if (/copa.*italia|coppa.*italia/.test(n))                       return 'ITCOPA';
+  if (/supercoppa|supercopa.*ital/.test(n))                       return 'ITSUPERCOPA';
+  if (/serie\s*a/.test(n))                                        return 'IT1';
+  if (/primeira\s*liga|liga\s*portugal/.test(n))                  return 'PT1';
+  if (/copa.*holand|knvb/.test(n))                                return 'HOLCOPA';
+  if (/pro\s*league|jupiler/.test(n))                             return 'BEL1';
+  if (/super\s*lig|superliga.*tur/.test(n))                       return 'TUR1';
+  if (/scottish\s*prem/.test(n))                                  return 'ESC1';
+  if (/saudi.*pro|pro.*saudi/.test(n))                            return 'ARA1';
+  if (/primera.*argentina|liga.*profesional.*ar/.test(n))         return 'AR1';
+  if (/copa.*argentina/.test(n))                                  return 'ARCOPA';
+  if (/liga\s*pro|liga\s*pro.*ecuador/.test(n))                   return 'ECUA';
+  if (/liga\s*mx.*fem/.test(n))                                   return 'MXF';
+  if (/ascenso.*mx/.test(n))                                      return 'MX2';
+  if (/\bliga\s*mx\b/.test(n))                                    return 'MX1';
+  if (/liga\s*nacional.*hon/.test(n))                             return 'HN1';
+  if (/primera.*costa\s*rica|unafut/.test(n))                     return 'CR1';
+  if (/eli.*afc/.test(n))                                         return 'ELIAFC';
+  if (/eli.*uefa/.test(n))                                        return 'ELIUEFA';
+  if (/eli.*concacaf/.test(n))                                    return 'ELICONCACAF';
+  if (/eli.*sud/.test(n))                                         return 'ELISUDA';
+  if (/\bargentina\b/.test(n))   return 'AR';
+  if (/\becuador\b/.test(n))     return 'ECUA';
+  if (/\bcolombia\b/.test(n))    return 'COL';
+  if (/\bmexico\b/.test(n))      return 'MEX';
+  if (/\bbrasil\b|\bbrazil\b/.test(n)) return 'BRA';
+  if (/\bchile\b/.test(n))       return 'CHI';
+  if (/\buruguay\b/.test(n))     return 'URU';
+  if (/\bperu\b/.test(n))        return 'PE';
+  if (/\bvenezuela\b/.test(n))   return 'VEN';
+  if (/\bbolivia\b/.test(n))     return 'BOL';
+  if (/\bparaguay\b/.test(n))    return 'PY';
+  if (/\bhonduras\b/.test(n))    return 'HN';
+  if (/costa\s*rica/.test(n))    return 'CR';
+  if (/\bguatemala\b/.test(n))   return 'GT';
+  if (/\busa\b|estados\s*unidos/.test(n)) return 'USA';
+  if (/\binglaterra\b|\bengland\b/.test(n)) return 'ENG';
+  if (/\balemania\b|\bgermany\b/.test(n))  return 'ALE';
+  if (/\bfrancia\b|\bfrance\b/.test(n))    return 'FRA';
+  if (/\bitalia\b|\bitaly\b/.test(n))      return 'IT';
+  if (/\bespa.a\b|\bspain\b/.test(n))      return 'ES';
+  if (/\bportugal\b/.test(n))    return 'POR';
+  if (/\bholanda\b|\bnetherlands\b/.test(n)) return 'HOL';
+  if (/\bturquia\b|\bturkey\b/.test(n))    return 'TUR';
+  if (/\bbelgica\b|\bbelgium\b/.test(n))   return 'BEL';
+  if (/\bpolonia\b|\bpoland\b/.test(n))    return 'POL';
+  if (/\brusia\b|\brussia\b/.test(n))      return 'RU';
+  if (/\barabia\b|\bsaudi\b/.test(n))      return 'ARA';
+  return def;
+}
+
 function showTab(id, btn) {
   document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('active'); });
   document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
@@ -144,110 +440,140 @@ function showTab(id, btn) {
   btn.classList.add('active');
 }
 
-function copiar(id, statusId) {
+function copiar(id, stId) {
   var el = document.getElementById(id);
-  el.select();
-  document.execCommand('copy');
-  var s = document.getElementById(statusId);
-  s.innerHTML = '<span class="badge-ok">¡Copiado!</span>';
-  setTimeout(function(){ s.innerHTML = ''; }, 2000);
+  el.select(); document.execCommand('copy');
+  var s = document.getElementById(stId);
+  s.innerHTML = '<span class="ok">¡Copiado!</span>';
+  setTimeout(function(){ s.innerHTML=''; }, 2000);
 }
 
-function limpiar(id) {
-  document.getElementById(id).value = '';
+function limpiarTodo() {
+  document.getElementById('inputCanales').value = '';
+  document.getElementById('outputHTML').value = '';
+  document.getElementById('eventosList').innerHTML = '';
+  eventosParsed = [];
 }
 
-function slugify(texto) {
-  return texto.toLowerCase()
-    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9\s-]/g, '').trim()
-    .replace(/\s+/g, '-').replace(/-+/g, '-');
+function slugify(t) {
+  return t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^a-z0-9\s-]/g,'').trim().replace(/\s+/g,'-').replace(/-+/g,'-');
 }
 
 function extraerCanal(url) {
-  var m = url.match(/[?&]channel=([^&]+)/i);
+  var m = url.match(/[?&]channel=([^&\s]+)/i);
   return m ? m[1] : null;
 }
 
 function sumarHoras(hora, n) {
-  var p = hora.split(':');
-  var d = new Date();
-  d.setHours(parseInt(p[0]) + n, parseInt(p[1]), 0, 0);
-  return d.getHours().toString().padStart(2,'0') + ':' + d.getMinutes().toString().padStart(2,'0');
+  var p = hora.split(':'), d = new Date();
+  d.setHours(parseInt(p[0])+n, parseInt(p[1]), 0, 0);
+  return d.getHours().toString().padStart(2,'0')+':'+d.getMinutes().toString().padStart(2,'0');
+}
+
+function ligaOptions(sel) {
+  return TODAS_LIGAS.map(function(l){
+    return '<option value="'+l+'"'+(l===sel?' selected':'')+'>'+l+'</option>';
+  }).join('');
+}
+
+function parsearEventos(raw) {
+  var lineas = raw.split('\n').map(function(l){ return l.trim(); });
+  var eventos = {}, orden = [], i = 0;
+  while (i < lineas.length) {
+    var mEv = lineas[i].match(/^(\d{1,2}:\d{2})\s*[-–]\s*(.+)/);
+    if (mEv) {
+      var hora = mEv[1].trim(), nombre = mEv[2].trim();
+      if (!eventos[nombre]) { eventos[nombre] = { hora:hora, nombre:nombre, canales:[] }; orden.push(nombre); }
+      i++;
+      var bloque = [];
+      while (i < lineas.length) {
+        if (lineas[i].match(/^\d{1,2}:\d{2}\s*[-–]/)) break;
+        if (lineas[i] !== '') bloque.push(lineas[i]);
+        i++;
+      }
+      var url = '';
+      for (var b = 0; b < bloque.length; b++) {
+        if (bloque[b].match(/^https?:\/\//i)) { url = bloque[b]; break; }
+      }
+      if (url) {
+        var canal = extraerCanal(url);
+        if (!canal) {
+          for (var x = 0; x < bloque.length; x++) {
+            if (!bloque[x].match(/^https?:\/\//i) && bloque[x].toLowerCase()!=='copiar' && bloque[x].toLowerCase()!=='en vivo' && bloque[x].length>1) { canal=bloque[x]; break; }
+          }
+        }
+        if (canal) eventos[nombre].canales.push(canal);
+      }
+    } else { i++; }
+  }
+  return { eventos:eventos, orden:orden };
+}
+
+function parsearYMostrar() {
+  var raw = document.getElementById('inputCanales').value;
+  var defCls = document.getElementById('claseDefault').value;
+  var res = parsearEventos(raw);
+  eventosParsed = [];
+  var container = document.getElementById('eventosList');
+  container.innerHTML = '';
+  if (!res.orden.length) {
+    container.innerHTML = '<p style="color:#e53935;font-size:.78em;margin-top:8px">⚠️ No se detectaron eventos. Cada canal debe empezar con: "15:00 - Nombre del evento"</p>';
+    return;
+  }
+  res.orden.forEach(function(key, idx) {
+    var ev = res.eventos[key];
+    var ligaAuto = autoLiga(ev.nombre, defCls);
+    eventosParsed.push({ hora:ev.hora, nombre:ev.nombre, canales:ev.canales });
+    var div = document.createElement('div');
+    div.className = 'evento-item';
+    div.innerHTML =
+      '<div class="evento-header">'+
+        '<span class="evento-hora">'+ev.hora+'</span>'+
+        '<span class="evento-nombre">'+ev.nombre+'</span>'+
+        '<select class="evento-clase" id="liga_'+idx+'">'+ligaOptions(ligaAuto)+'</select>'+
+      '</div>'+
+      '<div class="evento-canales">📡 '+ev.canales.map(function(c){ return c.toUpperCase(); }).join(' · ')+'</div>';
+    container.appendChild(div);
+  });
 }
 
 function generarHTML() {
-  var raw   = document.getElementById('inputCanales').value.trim();
-  var clase = document.getElementById('claseCSS').value;
-  if (!raw) return;
-
-  var lineas  = raw.split('\n').map(function(l){ return l.trim(); }).filter(function(l){ return l !== ''; });
-  var bloques = [];
-
-  for (var i = 0; i < lineas.length; i += 6) {
-    if (i + 3 < lineas.length) {
-      bloques.push({ linea1: lineas[i], pais: lineas[i+1]||'', idioma: lineas[i+2]||'', url: lineas[i+3]||'' });
-    }
-  }
-
-  if (!bloques.length) {
-    document.getElementById('outputHTML').value = '// No se detectaron bloques. Revisa el formato (6 líneas por canal).';
-    return;
-  }
-
-  var primer    = bloques[0].linea1;
-  var hora      = '';
-  var nombre    = primer;
-  var mHora     = primer.match(/^(\d{1,2}:\d{2})\s*[-–]\s*/);
-  if (mHora) { hora = mHora[1]; nombre = primer.replace(mHora[0], '').trim(); }
-
-  var eventoId = slugify(nombre);
-  var subItems = '';
-
-  bloques.forEach(function(b) {
-    var canal   = extraerCanal(b.url) || b.idioma || b.pais || 'canal';
-    var canalUp = canal.toUpperCase();
-    subItems +=
-      '\n    <li class="subitem1"><a href="/eventos/eventos.html?channel=' + canal + '" target="_">' + canalUp + '<span>Calidad 720p</span></a></li>' +
-      '\n    <li class="subitem1"><a href="/eventos/reproductor2.html?channel=' + canal + '" target="_">' + canalUp + '|PC<span>Calidad 720p</span></a></li>';
+  if (!eventosParsed.length) { alert('Primero pulsa "Detectar eventos"'); return; }
+  var bloques = eventosParsed.map(function(ev, idx) {
+    var clase = document.getElementById('liga_'+idx).value;
+    var eventoId = slugify(ev.nombre);
+    var subItems = ev.canales.map(function(canal) {
+      var cUp = canal.toUpperCase();
+      return '\n    <li class="subitem1"><a href="/eventos/eventos.html?channel='+canal+'" target="_">'+cUp+'<span>Calidad 720p</span></a></li>'+
+             '\n    <li class="subitem1"><a href="/eventos/reproductor2.html?channel='+canal+'" target="_">'+cUp+'|PC<span>Calidad 720p</span></a></li>';
+    }).join('');
+    return '<li class="'+clase+'" data-evento-id="'+eventoId+'"><a href="#">\n'+
+           ev.nombre+'\n<span class="t">'+ev.hora+'</span></a>\n\n  <ul style="display: none;">'+subItems+'\n  </ul>\n</li>';
   });
-
-  document.getElementById('outputHTML').value =
-    '<li class="' + clase + '" data-evento-id="' + eventoId + '"><a href="#">\n' +
-    nombre + '\n' +
-    '<span class="t">' + (hora || '00:00') + '</span></a>\n' +
-    '\n  <ul style="display: none;">' + subItems + '\n  </ul>\n</li>';
+  document.getElementById('outputHTML').value = bloques.join('\n\n');
 }
 
 function generarJSON() {
-  var raw        = document.getElementById('inputHTML').value.trim();
-  var adicDef    = parseInt(document.getElementById('adicDefecto').value) || 3;
-  var estadoDef  = document.getElementById('estadoDefecto').value;
+  var raw = document.getElementById('inputHTML').value.trim();
+  var adicDef = parseInt(document.getElementById('adicDefecto').value) || 3;
+  var estadoDef = document.getElementById('estadoDefecto').value;
   if (!raw) return;
-
-  var regexLi   = /<li[^>]+data-evento-id="([^"]+)"[^>]*>[\s\S]*?<\/li>/gi;
-  var regexId   = /data-evento-id="([^"]+)"/i;
+  var regexLi = /<li[^>]+data-evento-id="([^"]+)"[^>]*>[\s\S]*?<\/li>/gi;
+  var regexId = /data-evento-id="([^"]+)"/i;
   var regexHora = /<span\s+class="t">(\d{1,2}:\d{2})<\/span>/i;
-  var eventos   = [];
-  var match;
-
+  var eventos = [], match;
   while ((match = regexLi.exec(raw)) !== null) {
-    var bloque     = match[0];
-    var mId        = bloque.match(regexId);
-    var mHora      = bloque.match(regexHora);
-    var id         = mId   ? mId[1]   : 'evento-' + eventos.length;
-    var hora_inicio = mHora ? mHora[1] : '00:00';
-    eventos.push({ id: id, hora_inicio: hora_inicio, hora_fin: sumarHoras(hora_inicio, 2), adicionales: adicDef, estado: estadoDef });
+    var b = match[0];
+    var mId = b.match(regexId), mH = b.match(regexHora);
+    var id = mId ? mId[1] : 'evento-'+eventos.length;
+    var hora_inicio = mH ? mH[1] : '00:00';
+    eventos.push({ id:id, hora_inicio:hora_inicio, hora_fin:sumarHoras(hora_inicio,2), adicionales:adicDef, estado:estadoDef });
   }
-
-  if (!eventos.length) {
-    document.getElementById('outputJSON').value = '// No se encontraron <li> con data-evento-id="..."';
-    return;
-  }
-
-  document.getElementById('outputJSON').value = JSON.stringify({ eventos: eventos }, null, 2);
+  document.getElementById('outputJSON').value = eventos.length
+    ? JSON.stringify({ eventos:eventos }, null, 2)
+    : '// No se encontraron <li> con data-evento-id="..."';
 }
 </script>
-
 </body>
 </html>
