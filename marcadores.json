@@ -3,7 +3,13 @@
     {
       "id": "argentina-honduras",
       "estado": "en_vivo",
-      "minuto": 300,
+      "minuto": 250,
+      "adicionales": 0
+    },
+    {
+      "id": "ufc-belal-bonfim",
+      "estado": "proximo",
+      "minuto": 0,
       "adicionales": 0
     }
   ]
