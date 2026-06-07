@@ -2,7 +2,7 @@
   "eventos": [
     {
       "id": "f1-gp-de-monaco-carrera",
-      "hora_inicio": "08:00",
+      "hora_inicio": "08:03",
       "hora_fin": "10:00",
       "adicionales": 3,
       "estado": "auto"
