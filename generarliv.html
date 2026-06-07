@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generador de Eventos - EcuTVHD</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, sans-serif; background: #0f0f0f; color: #eee; min-height: 100vh; padding: 20px; }
+  h1 { text-align: center; color: #00e676; font-size: 1.4em; margin-bottom: 6px; letter-spacing: 1px; }
+  .subtitle { text-align: center; color: #888; font-size: .8em; margin-bottom: 24px; }
+  .tabs { display: flex; gap: 8px; margin-bottom: 20px; justify-content: center; }
+  .tab { padding: 10px 22px; border-radius: 6px; border: 2px solid #333; background: #1a1a1a; color: #aaa; cursor: pointer; font-size: .9em; font-weight: bold; transition: all .2s; }
+  .tab.active { background: #00e676; color: #000; border-color: #00e676; }
+  .panel { display: none; }
+  .panel.active { display: block; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 700px) { .row { grid-template-columns: 1fr; } }
+  .box { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 10px; padding: 16px; }
+  .box h3 { color: #00e676; font-size: .85em; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+  .controls { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; align-items: center; }
+  label { font-size: .78em; color: #aaa; }
+  select, input[type="number"] { background: #111; border: 1px solid #333; color: #eee; border-radius: 5px; padding: 5px 8px; font-size: .82em; }
+  textarea { width: 100%; background: #111; border: 1px solid #333; color: #eee; border-radius: 6px; padding: 10px; font-family: 'Courier New', monospace; font-size: .78em; line-height: 1.5; resize: vertical; min-height: 220px; }
+  textarea:focus { outline: none; border-color: #00e676; }
+  .btn { padding: 9px 20px; border-radius: 6px; border: none; font-size: .85em; font-weight: bold; cursor: pointer; transition: opacity .2s; }
+  .btn:hover { opacity: .85; }
+  .btn-green { background: #00e676; color: #000; }
+  .btn-blue  { background: #1565c0; color: #fff; }
+  .btn-copy  { background: #333; color: #eee; font-size: .78em; padding: 6px 14px; }
+  .actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; align-items: center; }
+  .badge-ok { background:#00e676; color:#000; font-size:.72em; padding:2px 8px; border-radius:4px; font-weight:bold; }
+  .info { background: #1a2a1a; border: 1px solid #2a4a2a; border-radius: 8px; padding: 12px 16px; margin-bottom: 18px; font-size: .8em; color: #aaa; line-height: 1.7; }
+  .info strong { color: #00e676; }
+</style>
+</head>
+<body>
+
+<h1>⚡ Generador de Eventos EcuTVHD</h1>
+<p class="subtitle">Genera código HTML y JSON para tu agenda deportiva</p>
+
+<div class="tabs">
+  <button class="tab active" onclick="showTab('tab1',this)">📋 Texto → HTML</button>
+  <button class="tab" onclick="showTab('tab2',this)">🔄 HTML → JSON</button>
+</div>
+
+<!-- TAB 1 -->
+<div class="panel active" id="tab1">
+  <div class="info">
+    <strong>Cómo usar:</strong> Pega los canales del evento (bloques de 6 líneas cada uno).<br>
+    Formato: <strong>hora - nombre evento</strong> / código país / idioma / URL / Copiar / En vivo
+  </div>
+  <div class="row">
+    <div class="box">
+      <h3>📥 Pega los canales aquí</h3>
+      <div class="controls">
+        <label>Clase CSS:</label>
+        <select id="claseCSS">
+          <option value="FIFA">FIFA — Fútbol Internacional</option>
+          <option value="FUT">FUT — Fútbol / Otros</option>
+          <option value="ENG">ENG — Inglaterra</option>
+          <option value="ALE">ALE — Alemania</option>
+          <option value="FRA">FRA — Francia</option>
+          <option value="ESP">ESP — España</option>
+          <option value="ITA">ITA — Italia</option>
+          <option value="POR">POR — Portugal</option>
+          <option value="ARG">ARG — Argentina</option>
+          <option value="ECUA">ECUA — Ecuador</option>
+          <option value="TUR">TUR — Turquía</option>
+          <option value="HOL">HOL — Holanda</option>
+          <option value="BRA">BRA — Brasil</option>
+          <option value="COL">COL — Colombia</option>
+        </select>
+      </div>
+      <textarea id="inputCanales" placeholder="15:00 - UFC: Belal Muhammad vs Gabriel Bonfim
+es
+Spanish
+https://streamx741.com/global1.php?channel=paramount1
+Copiar
+En vivo
+15:00 - UFC: Belal Muhammad vs Gabriel Bonfim
+us
+English
+https://streamx741.com/global1.php?channel=paramount2
+Copiar
+En vivo"></textarea>
+      <div class="actions">
+        <button class="btn btn-green" onclick="generarHTML()">⚡ Generar HTML</button>
+        <button class="btn btn-copy" onclick="limpiar('inputCanales')">🗑 Limpiar</button>
+      </div>
+    </div>
+    <div class="box">
+      <h3>📤 Código HTML generado</h3>
+      <textarea id="outputHTML" readonly placeholder="El código aparecerá aquí..."></textarea>
+      <div class="actions">
+        <button class="btn btn-blue" onclick="copiar('outputHTML','statusHTML')">📋 Copiar HTML</button>
+        <span id="statusHTML"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 2 -->
+<div class="panel" id="tab2">
+  <div class="info">
+    <strong>Cómo usar:</strong> Pega uno o varios bloques <code>&lt;li&gt;</code> de tu agenda.<br>
+    Extrae el <strong>id</strong> y la <strong>hora_inicio</strong>, calcula <strong>hora_fin</strong> automáticamente (+2 horas).
+  </div>
+  <div class="row">
+    <div class="box">
+      <h3>📥 Pega el HTML aquí</h3>
+      <div class="controls">
+        <label>Adicionales:</label>
+        <input type="number" id="adicDefecto" value="3" min="0" max="10" style="width:55px">
+        <label>Estado:</label>
+        <select id="estadoDefecto">
+          <option value="auto">auto</option>
+          <option value="proximo">proximo</option>
+          <option value="finalizado">finalizado</option>
+        </select>
+      </div>
+      <textarea id="inputHTML" placeholder='Pega aquí el bloque <li class="FIFA" data-evento-id="..."> de tu agenda'></textarea>
+      <div class="actions">
+        <button class="btn btn-green" onclick="generarJSON()">⚡ Generar JSON</button>
+        <button class="btn btn-copy" onclick="limpiar('inputHTML')">🗑 Limpiar</button>
+      </div>
+    </div>
+    <div class="box">
+      <h3>📤 JSON generado</h3>
+      <textarea id="outputJSON" readonly placeholder="El JSON aparecerá aquí..."></textarea>
+      <div class="actions">
+        <button class="btn btn-blue" onclick="copiar('outputJSON','statusJSON')">📋 Copiar JSON</button>
+        <span id="statusJSON"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showTab(id, btn) {
+  document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('active'); });
+  document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function copiar(id, statusId) {
+  var el = document.getElementById(id);
+  el.select();
+  document.execCommand('copy');
+  var s = document.getElementById(statusId);
+  s.innerHTML = '<span class="badge-ok">¡Copiado!</span>';
+  setTimeout(function(){ s.innerHTML = ''; }, 2000);
+}
+
+function limpiar(id) {
+  document.getElementById(id).value = '';
+}
+
+function slugify(texto) {
+  return texto.toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s-]/g, '').trim()
+    .replace(/\s+/g, '-').replace(/-+/g, '-');
+}
+
+function extraerCanal(url) {
+  var m = url.match(/[?&]channel=([^&]+)/i);
+  return m ? m[1] : null;
+}
+
+function sumarHoras(hora, n) {
+  var p = hora.split(':');
+  var d = new Date();
+  d.setHours(parseInt(p[0]) + n, parseInt(p[1]), 0, 0);
+  return d.getHours().toString().padStart(2,'0') + ':' + d.getMinutes().toString().padStart(2,'0');
+}
+
+function generarHTML() {
+  var raw   = document.getElementById('inputCanales').value.trim();
+  var clase = document.getElementById('claseCSS').value;
+  if (!raw) return;
+
+  var lineas  = raw.split('\n').map(function(l){ return l.trim(); }).filter(function(l){ return l !== ''; });
+  var bloques = [];
+
+  for (var i = 0; i < lineas.length; i += 6) {
+    if (i + 3 < lineas.length) {
+      bloques.push({ linea1: lineas[i], pais: lineas[i+1]||'', idioma: lineas[i+2]||'', url: lineas[i+3]||'' });
+    }
+  }
+
+  if (!bloques.length) {
+    document.getElementById('outputHTML').value = '// No se detectaron bloques. Revisa el formato (6 líneas por canal).';
+    return;
+  }
+
+  var primer    = bloques[0].linea1;
+  var hora      = '';
+  var nombre    = primer;
+  var mHora     = primer.match(/^(\d{1,2}:\d{2})\s*[-–]\s*/);
+  if (mHora) { hora = mHora[1]; nombre = primer.replace(mHora[0], '').trim(); }
+
+  var eventoId = slugify(nombre);
+  var subItems = '';
+
+  bloques.forEach(function(b) {
+    var canal   = extraerCanal(b.url) || b.idioma || b.pais || 'canal';
+    var canalUp = canal.toUpperCase();
+    subItems +=
+      '\n    <li class="subitem1"><a href="/eventos/eventos.html?channel=' + canal + '" target="_">' + canalUp + '<span>Calidad 720p</span></a></li>' +
+      '\n    <li class="subitem1"><a href="/eventos/reproductor2.html?channel=' + canal + '" target="_">' + canalUp + '|PC<span>Calidad 720p</span></a></li>';
+  });
+
+  document.getElementById('outputHTML').value =
+    '<li class="' + clase + '" data-evento-id="' + eventoId + '"><a href="#">\n' +
+    nombre + '\n' +
+    '<span class="t">' + (hora || '00:00') + '</span></a>\n' +
+    '\n  <ul style="display: none;">' + subItems + '\n  </ul>\n</li>';
+}
+
+function generarJSON() {
+  var raw        = document.getElementById('inputHTML').value.trim();
+  var adicDef    = parseInt(document.getElementById('adicDefecto').value) || 3;
+  var estadoDef  = document.getElementById('estadoDefecto').value;
+  if (!raw) return;
+
+  var regexLi   = /<li[^>]+data-evento-id="([^"]+)"[^>]*>[\s\S]*?<\/li>/gi;
+  var regexId   = /data-evento-id="([^"]+)"/i;
+  var regexHora = /<span\s+class="t">(\d{1,2}:\d{2})<\/span>/i;
+  var eventos   = [];
+  var match;
+
+  while ((match = regexLi.exec(raw)) !== null) {
+    var bloque     = match[0];
+    var mId        = bloque.match(regexId);
+    var mHora      = bloque.match(regexHora);
+    var id         = mId   ? mId[1]   : 'evento-' + eventos.length;
+    var hora_inicio = mHora ? mHora[1] : '00:00';
+    eventos.push({ id: id, hora_inicio: hora_inicio, hora_fin: sumarHoras(hora_inicio, 2), adicionales: adicDef, estado: estadoDef });
+  }
+
+  if (!eventos.length) {
+    document.getElementById('outputJSON').value = '// No se encontraron <li> con data-evento-id="..."';
+    return;
+  }
+
+  document.getElementById('outputJSON').value = JSON.stringify({ eventos: eventos }, null, 2);
+}
+</script>
+
+</body>
+</html>
