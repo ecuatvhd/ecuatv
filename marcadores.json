@@ -42,6 +42,14 @@
       "adicionales": 3,
       "estado": "auto"
     },
+
+    {
+      "id": "amistoso-internacional-marruecos-vs-noruega",
+      "hora_inicio": "13:00",
+      "hora_fin": "15:00",
+      "adicionales": 3,
+      "estado": "auto"
+    },
     {
       "id": "amistoso-internacional-grecia-vs-italia",
       "hora_inicio": "14:00",
