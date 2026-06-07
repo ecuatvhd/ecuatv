@@ -184,7 +184,7 @@ function myFunction() {
   left:auto !important;
   top:auto !important;
   margin:0 0 0 8px !important;
-  padding:2px 7px !important;
+  padding:2px 8px !important;
   border-radius:4px !important;
   font-size:.75em !important;
   font-weight:bold !important;
@@ -195,75 +195,98 @@ function myFunction() {
   box-shadow:none !important;
   height:auto !important;
 }
-.marcador-en-vivo  { background:#e53935 !important; color:#fff !important; animation:pulso 1.5s infinite; }
-.marcador-et       { background:#1565c0 !important; color:#fff !important; }
-.marcador-adicional{ background:#ff6f00 !important; color:#fff !important; animation:pulso 1.5s infinite; }
-.marcador-finalizado{ background:#444 !important; color:#ccc !important; }
-@keyframes pulso{0%{opacity:1}50%{opacity:.55}100%{opacity:1}}
+.marcador-en-vivo   { background:#e53935 !important; color:#fff !important; animation:pulso 1.5s infinite; }
+.marcador-et        { background:#1565c0 !important; color:#fff !important; }
+.marcador-adicional { background:#ff6f00 !important; color:#fff !important; animation:pulso 1.5s infinite; }
+.marcador-finalizado{ background:#444444 !important; color:#cccccc !important; }
+@keyframes pulso { 0%{opacity:1} 50%{opacity:.5} 100%{opacity:1} }
 </style>
 
 <script>
 var URL_MARCADORES = 'https://ecuatvhd.github.io/ecuatv/marcadores.json?v=';
 
-function calcularBadge(evento) {
+function getMinutos(horaStr) {
+  var p = horaStr.split(':');
+  var ref = new Date();
+  ref.setHours(parseInt(p[0]), parseInt(p[1]), 0, 0);
+  return Math.floor((new Date() - ref) / 60000);
+}
 
-  // Estado manual
-  if (evento.estado === 'proximo')    return null;
-  if (evento.estado === 'finalizado') return { texto: 'Finalizado', clase: 'marcador-finalizado' };
+function calcularBadge(ev) {
 
-  // Estado automático por hora
-  if (!evento.hora_inicio) return null;
+  // MANUAL: proximo → no muestra nada
+  if (ev.estado === 'proximo') return null;
 
-  var ahora   = new Date();
-  var partes  = evento.hora_inicio.split(':');
-  var inicio  = new Date();
-  inicio.setHours(parseInt(partes[0]), parseInt(partes[1]), 0, 0);
+  // MANUAL: finalizado forzado
+  if (ev.estado === 'finalizado') return { texto: 'Finalizado', clase: 'marcador-finalizado' };
 
-  var elapsed = Math.floor((ahora - inicio) / 60000); // minutos desde el inicio
+  // AUTO: calcula por hora
+  if (ev.estado !== 'auto' || !ev.hora_inicio) return null;
 
-  // Partido no ha comenzado todavía
+  var elapsed = getMinutos(ev.hora_inicio);
+
+  // No ha comenzado
   if (elapsed < 0) return null;
 
-  var adicionales = evento.adicionales || 0;
+  var adicionales = parseInt(ev.adicionales) || 0;
 
-  // ── PRIMER TIEMPO: 0 a 44 min transcurridos ──
-  if (elapsed < 45) {
+  // Duración real del evento en minutos (hora_fin - hora_inicio)
+  var duracion = 105; // default fútbol 90' + 15' descanso
+  if (ev.hora_fin) {
+    var pf = ev.hora_fin.split(':');
+    var fin = new Date();
+    fin.setHours(parseInt(pf[0]), parseInt(pf[1]), 0, 0);
+    var pi2 = ev.hora_inicio.split(':');
+    var ini = new Date();
+    ini.setHours(parseInt(pi2[0]), parseInt(pi2[1]), 0, 0);
+    duracion = Math.floor((fin - ini) / 60000);
+  }
+
+  // Tiempo de juego (sin el descanso de 15 min)
+  var juego = duracion - 15;
+  var mitad  = Math.floor(juego / 2); // duración del 1er tiempo
+
+  // ── PRIMER TIEMPO ──────────────────────────
+  if (elapsed <= mitad - 1) {
     return { texto: (elapsed + 1) + "'", clase: 'marcador-en-vivo' };
   }
 
-  // ── DESCANSO: 45 a 59 min transcurridos (15 min) ──
-  if (elapsed < 60) {
+  // ── DESCANSO (ET) ──────────────────────────
+  if (elapsed <= mitad + 14) {
     return { texto: 'ET', clase: 'marcador-et' };
   }
 
-  // ── SEGUNDO TIEMPO: 60 a 104 min transcurridos ──
-  if (elapsed < 105) {
-    var minuto2t = elapsed - 15 + 1; // 46 a 90
-    return { texto: minuto2t + "'", clase: 'marcador-en-vivo' };
+  // ── SEGUNDO TIEMPO ─────────────────────────
+  // Minuto dentro del 2T: descontamos mitad + 15 min descanso
+  var min2t = elapsed - mitad - 15 + mitad + 1; // = elapsed - 14 (para mitad=45)
+  var minMostrar = elapsed - 15 + 1;
+  if (minMostrar <= juego) {
+    return { texto: minMostrar + "'", clase: 'marcador-en-vivo' };
   }
 
-  // ── ADICIONALES: 105 a (105 + adicionales - 1) ──
-  if (elapsed < 105 + adicionales) {
-    var adic = elapsed - 104; // 1, 2, 3...
-    return { texto: '90+' + adic + "'", clase: 'marcador-adicional' };
+  // ── ADICIONALES ────────────────────────────
+  var minutosExtra = elapsed - (15 + juego - 1);
+  if (minutosExtra <= adicionales) {
+    return { texto: juego + '+' + minutosExtra + "'", clase: 'marcador-adicional' };
   }
 
-  // ── FINALIZADO ──
+  // ── FINALIZADO ─────────────────────────────
   return { texto: 'Finalizado', clase: 'marcador-finalizado' };
 }
 
 function actualizarMarcadores() {
   fetch(URL_MARCADORES + Date.now())
-    .then(function(r){ return r.json(); })
-    .then(function(data){
-      data.eventos.forEach(function(evento){
-        var li = document.querySelector('[data-evento-id="' + evento.id + '"]');
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      data.eventos.forEach(function(ev) {
+        var li = document.querySelector('[data-evento-id="' + ev.id + '"]');
         if (!li) return;
 
+        // Borra badge anterior
         var viejo = li.querySelector('.marcador-badge');
         if (viejo) viejo.remove();
 
-        var badge = calcularBadge(evento);
+        var badge = calcularBadge(ev);
         if (!badge) return;
 
         var span = document.createElement('span');
@@ -275,27 +298,12 @@ function actualizarMarcadores() {
         else li.querySelector('a').appendChild(span);
       });
     })
-    .catch(function(e){ console.warn('Marcadores error:', e); });
+    .catch(function(e) { console.warn('Marcadores:', e); });
 }
 
-// Actualiza cada 60 segundos desde el servidor
+// Carga el JSON cada 60 segundos
 actualizarMarcadores();
 setInterval(actualizarMarcadores, 60000);
-
-// Avanza el minuto en pantalla cada 60 segundos sin recargar el JSON
-setInterval(function(){
-  document.querySelectorAll('[data-evento-id]').forEach(function(li){
-    var badge = li.querySelector('.marcador-badge');
-    if (badge && (badge.classList.contains('marcador-en-vivo') || badge.classList.contains('marcador-adicional'))) {
-      var texto = badge.textContent;
-      // Incrementa el número visible
-      var match = texto.match(/(\d+)'/);
-      if (match) {
-        badge.textContent = texto.replace(match[0], (parseInt(match[1]) + 1) + "'");
-      }
-    }
-  });
-}, 60000);
 </script>
 <!-- ========================================= -->
 	
