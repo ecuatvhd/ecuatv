@@ -194,23 +194,62 @@ function myFunction() {
   text-shadow:none !important;
   box-shadow:none !important;
   height:auto !important;
-  background:#e53935 !important;
-  color:#fff !important;
 }
-.marcador-en-vivo{background:#e53935 !important;color:#fff !important;animation:pulso 1.5s infinite}
-.marcador-adicional{background:#ff6f00 !important;color:#fff !important;animation:pulso 1.5s infinite}
-.marcador-finalizado{background:#444 !important;color:#ccc !important;animation:none !important}
+.marcador-en-vivo  { background:#e53935 !important; color:#fff !important; animation:pulso 1.5s infinite; }
+.marcador-et       { background:#1565c0 !important; color:#fff !important; }
+.marcador-adicional{ background:#ff6f00 !important; color:#fff !important; animation:pulso 1.5s infinite; }
+.marcador-finalizado{ background:#444 !important; color:#ccc !important; }
 @keyframes pulso{0%{opacity:1}50%{opacity:.55}100%{opacity:1}}
 </style>
 
 <script>
 var URL_MARCADORES = 'https://ecuatvhd.github.io/ecuatv/marcadores.json?v=';
 
-function obtenerBadge(e) {
-  if (e.estado === 'en_vivo')    return { texto: e.minuto + "'",                       clase: 'marcador-en-vivo' };
-  if (e.estado === 'adicional')  return { texto: e.minuto + '+' + e.adicionales + "'", clase: 'marcador-adicional' };
-  if (e.estado === 'finalizado') return { texto: 'Finalizado',                          clase: 'marcador-finalizado' };
-  return null;
+function calcularBadge(evento) {
+
+  // Estado manual
+  if (evento.estado === 'proximo')    return null;
+  if (evento.estado === 'finalizado') return { texto: 'Finalizado', clase: 'marcador-finalizado' };
+
+  // Estado automático por hora
+  if (!evento.hora_inicio) return null;
+
+  var ahora   = new Date();
+  var partes  = evento.hora_inicio.split(':');
+  var inicio  = new Date();
+  inicio.setHours(parseInt(partes[0]), parseInt(partes[1]), 0, 0);
+
+  var elapsed = Math.floor((ahora - inicio) / 60000); // minutos desde el inicio
+
+  // Partido no ha comenzado todavía
+  if (elapsed < 0) return null;
+
+  var adicionales = evento.adicionales || 0;
+
+  // ── PRIMER TIEMPO: 0 a 44 min transcurridos ──
+  if (elapsed < 45) {
+    return { texto: (elapsed + 1) + "'", clase: 'marcador-en-vivo' };
+  }
+
+  // ── DESCANSO: 45 a 59 min transcurridos (15 min) ──
+  if (elapsed < 60) {
+    return { texto: 'ET', clase: 'marcador-et' };
+  }
+
+  // ── SEGUNDO TIEMPO: 60 a 104 min transcurridos ──
+  if (elapsed < 105) {
+    var minuto2t = elapsed - 15 + 1; // 46 a 90
+    return { texto: minuto2t + "'", clase: 'marcador-en-vivo' };
+  }
+
+  // ── ADICIONALES: 105 a (105 + adicionales - 1) ──
+  if (elapsed < 105 + adicionales) {
+    var adic = elapsed - 104; // 1, 2, 3...
+    return { texto: '90+' + adic + "'", clase: 'marcador-adicional' };
+  }
+
+  // ── FINALIZADO ──
+  return { texto: 'Finalizado', clase: 'marcador-finalizado' };
 }
 
 function actualizarMarcadores() {
@@ -220,13 +259,17 @@ function actualizarMarcadores() {
       data.eventos.forEach(function(evento){
         var li = document.querySelector('[data-evento-id="' + evento.id + '"]');
         if (!li) return;
+
         var viejo = li.querySelector('.marcador-badge');
         if (viejo) viejo.remove();
-        var badge = obtenerBadge(evento);
+
+        var badge = calcularBadge(evento);
         if (!badge) return;
+
         var span = document.createElement('span');
         span.className = 'marcador-badge ' + badge.clase;
         span.textContent = badge.texto;
+
         var hora = li.querySelector('a > .t');
         if (hora) hora.before(span);
         else li.querySelector('a').appendChild(span);
@@ -235,8 +278,24 @@ function actualizarMarcadores() {
     .catch(function(e){ console.warn('Marcadores error:', e); });
 }
 
+// Actualiza cada 60 segundos desde el servidor
 actualizarMarcadores();
 setInterval(actualizarMarcadores, 60000);
+
+// Avanza el minuto en pantalla cada 60 segundos sin recargar el JSON
+setInterval(function(){
+  document.querySelectorAll('[data-evento-id]').forEach(function(li){
+    var badge = li.querySelector('.marcador-badge');
+    if (badge && (badge.classList.contains('marcador-en-vivo') || badge.classList.contains('marcador-adicional'))) {
+      var texto = badge.textContent;
+      // Incrementa el número visible
+      var match = texto.match(/(\d+)'/);
+      if (match) {
+        badge.textContent = texto.replace(match[0], (parseInt(match[1]) + 1) + "'");
+      }
+    }
+  });
+}, 60000);
 </script>
 <!-- ========================================= -->
 	
