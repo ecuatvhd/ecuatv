@@ -167,14 +167,14 @@
     (function init() {
       resetHide();
       var url     = getParam('url');
-      var channel = getParam('channel');
+      var stream = getParam('stream');
 
       if (url) {
-        var m = url.match(/[?&]channel=([^&]+)/);
+        var m = url.match(/[?&]stream=([^&]+)/);
         var label = m ? m[1].toUpperCase() : url.split('/').pop().split('?')[0];
         launchPlayer(url, label);
-      } else if (channel) {
-        launchPlayer('https://ecutvhd-api--hernantv94.replit.app/watch?channel=' + channel, channel.toUpperCase());
+      } else if (stream) {
+        launchPlayer('https://canchatv.online/la14hd/proxy.php?stream=' + stream, stream.toUpperCase());
       } else {
         hideLoading();
         showToast('No se especificó canal o URL.', 8000);
