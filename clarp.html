@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>EcuTVHD Player</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>▶</text></svg>">
+
+  <script src="https://cdn.jsdelivr.net/npm/clappr@latest/dist/clappr.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/clappr/clappr-level-selector-plugin@latest/dist/level-selector.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@clappr/hlsjs-playback@1.2.0/dist/hlsjs-playback.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@c3voc/clappr-audio-track-selector@0.2.4/dist/audio-track-selector.min.js"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; width: 100%; overflow: hidden; background: #000; }
+
+    #player { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; }
+
+    /* ── Sin barras negras: video llena toda la pantalla ── */
+    [data-html5-video],
+    [data-player],
+    [data-container],
+    .container[data-container] {
+      width: 100% !important;
+      height: 100% !important;
+      position: absolute !important;
+      top: 0 !important; left: 0 !important;
+    }
+    video,
+    [data-html5-video] {
+      object-fit: fill !important;
+      width: 100% !important;
+      height: 100% !important;
+      position: absolute !important;
+      top: 0 !important; left: 0 !important;
+    }
+
+    #topbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+      background: linear-gradient(to bottom, rgba(0,0,0,.8) 0%, transparent 100%);
+      padding: 12px 16px; display: flex; align-items: center; gap: 12px;
+      transition: opacity .4s;
+    }
+    #topbar.hide { opacity: 0; pointer-events: none; }
+    #logo { font-size: .95em; font-weight: 900; color: #00e676; font-family: Arial, sans-serif; letter-spacing: 1px; text-shadow: 0 0 10px #00e67677; }
+    #channel-name { font-size: .8em; color: #bbb; font-family: Arial, sans-serif; background: rgba(255,255,255,.08); padding: 3px 10px; border-radius: 20px; }
+
+    #loading {
+      position: fixed; inset: 0; background: #000;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      z-index: 300; gap: 18px; transition: opacity .5s;
+    }
+    #loading.fade { opacity: 0; pointer-events: none; }
+    .spinner { width: 48px; height: 48px; border: 4px solid #222; border-top-color: #00e676; border-radius: 50%; animation: spin .8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    #loading-label { color: #00e676; font-size: 1.1em; font-family: Arial, sans-serif; font-weight: 900; }
+    #loading-text  { color: #555; font-size: .75em; font-family: Arial, sans-serif; }
+
+    #toast {
+      position: fixed; bottom: 24px; left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: #1a1a1a; color: #ff6b6b; border: 1px solid #ff6b6b44;
+      padding: 10px 20px; border-radius: 8px; font-size: .8em; font-family: Arial, sans-serif;
+      z-index: 600; opacity: 0; transition: transform .3s, opacity .3s; white-space: nowrap;
+    }
+    #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+  </style>
+</head>
+<body>
+
+  <div id="topbar">
+    <span id="logo">▶ EcuTVHD</span>
+    <span id="channel-name"></span>
+  </div>
+
+  <div id="loading">
+    <div class="spinner"></div>
+    <span id="loading-label">EcuTVHD</span>
+    <span id="loading-text">Cargando transmisión...</span>
+  </div>
+
+  <div id="player"></div>
+  <div id="toast"></div>
+
+  <script>
+    'use strict';
+    var playerInstance = null;
+    var hideTimer;
+
+    function getParam(name) {
+      var search = location.search.slice(1);
+      var prefix = name + '=';
+      var idx    = search.indexOf(prefix);
+      if (idx === -1) return '';
+      return decodeURIComponent(search.slice(idx + prefix.length));
+    }
+
+    function showToast(msg, ms) {
+      var t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(function(){ t.classList.remove('show'); }, ms || 4500);
+    }
+
+    function hideLoading() {
+      var l = document.getElementById('loading');
+      l.classList.add('fade');
+      setTimeout(function(){ l.style.display = 'none'; }, 500);
+    }
+
+    function resetHide() {
+      document.getElementById('topbar').classList.remove('hide');
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(function(){
+        document.getElementById('topbar').classList.add('hide');
+      }, 4000);
+    }
+    document.addEventListener('mousemove', resetHide);
+    document.addEventListener('touchstart', resetHide);
+
+    function launchPlayer(url, label) {
+      document.getElementById('channel-name').textContent = label || '';
+      document.getElementById('loading-text').textContent = 'Conectando' + (label ? ' · ' + label : '') + '...';
+
+      if (playerInstance) {
+        playerInstance.destroy();
+        playerInstance = null;
+        document.getElementById('player').innerHTML = '';
+      }
+
+      try {
+        playerInstance = new Clappr.Player({
+          source:   url,
+          plugins:  [HlsjsPlayback, LevelSelector, AudioTrackSelector],
+          width:    '100%',
+          height:   '100%',
+          autoPlay: true,
+          parentId: '#player',
+          mediacontrol: { seekbar: '#00e676', buttons: '#eee' },
+          hlsUseNextLevel:    false,
+          hlsMinimumDvrSize:  60,
+          hlsRecoverAttempts: 16,
+          hlsPlayback: { preload: true, customListeners: [] },
+          playback: {
+            extrapolatedWindowNumSegments: 2,
+            triggerFatalErrorOnResourceDenied: false,
+            hlsjsConfig: {}
+          },
+          events: {
+            onPlay:  function() { hideLoading(); resetHide(); },
+            onError: function(e) {
+              console.error('Clappr error:', e);
+              hideLoading();
+              showToast('⚠ Stream offline o sin señal.', 5000);
+            }
+          }
+        });
+        setTimeout(hideLoading, 8000);
+      } catch (err) {
+        console.error(err);
+        hideLoading();
+        showToast('Error al iniciar el reproductor.');
+      }
+    }
+
+    (function init() {
+      resetHide();
+      var url     = getParam('url');
+      var channel = getParam('channel');
+
+      if (url) {
+        var m = url.match(/[?&]channel=([^&]+)/);
+        var label = m ? m[1].toUpperCase() : url.split('/').pop().split('?')[0];
+        launchPlayer(url, label);
+      } else if (channel) {
+        launchPlayer('https://ecutvhd-api--hernantv94.replit.app/watch?channel=' + channel, channel.toUpperCase());
+      } else {
+        hideLoading();
+        showToast('No se especificó canal o URL.', 8000);
+      }
+    })();
+  </script>
+
+</body>
+</html>
