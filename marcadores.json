@@ -4,55 +4,55 @@
       "id": "amistoso-internacional-armenia-vs-moldavia",
       "hora_inicio": "10:00",
       "hora_fin": "11:54",
-      "adicionales": 0,
+      "adicionales": 1,
       "estado": "auto"
     },
     {
       "id": "amistoso-internacional-letonia-vs-islas-feroe",
       "hora_inicio": "10:00",
       "hora_fin": "11:50",
-      "adicionales": 3,
+      "adicionales": 1,
       "estado": "auto"
     },
     {
       "id": "amistoso-internacional-lituania-vs-estonia",
       "hora_inicio": "11:00",
-      "hora_fin": "13:00",
+      "hora_fin": "12:50",
       "adicionales": 3,
       "estado": "auto"
     },
     {
       "id": "amistoso-internacional-rd-del-congo-vs-chile",
       "hora_inicio": "11:00",
-      "hora_fin": "13:00",
+      "hora_fin": "12:50",
       "adicionales": 3,
       "estado": "auto"
     },
     {
       "id": "amistoso-internacional-bielorrusia-vs-burkina-faso",
       "hora_inicio": "11:30",
-      "hora_fin": "13:30",
+      "hora_fin": "13:25",
       "adicionales": 3,
       "estado": "auto"
     },
     {
       "id": "amistoso-internacional-hungria-vs-kazajstan",
       "hora_inicio": "12:00",
-      "hora_fin": "14:00",
+      "hora_fin": "13:50",
       "adicionales": 3,
       "estado": "auto"
     },
     {
       "id": "amistoso-internacional-azerbaiyan-vs-san-marino",
       "hora_inicio": "13:00",
-      "hora_fin": "15:00",
+      "hora_fin": "14:50",
       "adicionales": 3,
       "estado": "auto"
     },
     {
       "id": "laliga-2-almeria-vs-cd-castellon",
       "hora_inicio": "14:00",
-      "hora_fin": "16:00",
+      "hora_fin": "15:50",
       "adicionales": 3,
       "estado": "auto"
     },
