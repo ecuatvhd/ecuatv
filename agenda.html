@@ -298,7 +298,40 @@ setInterval(actualizarMarcadores, 60000);
 <!-- ========================================= -->
 	
 
+<!---Marcadores replit-->
+<!-- MARCADORES EN VIVO ─ TheSportsDB proxy ─ -->
 
+<!-- 1. Estilos del badge de score -->
+<style>
+  .marcador-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 1px 7px;
+    border-radius: 4px;
+    margin-right: 5px;
+    vertical-align: middle;
+    font-family: monospace;
+    letter-spacing: 0.5px;
+  }
+  .marcador-score-vivo  { background: #16a34a; color: #fff; }
+  .marcador-score-dt    { background: #d97706; color: #fff; }
+  .marcador-score-fin   { background: #6b7280; color: #fff; }
+</style>
 
+<!-- 2. Configuración del proxy -->
+<script>
+  window.MARCADOR_CONFIG = {
+    // ⚠️ Reemplaza con la URL real de tu app desplegada:
+    proxyUrl: 'https://TU-APP.replit.app/api/marcadores/live',
+    intervalo: 60000,  // actualizar cada 60 segundos
+  };
+</script>
+
+<!-- 3. Script de marcadores -->
+<script src="marcador-live.js"></script>
+<!-- Si no usas el archivo separado, pega aquí el contenido de marcador-live.js -->
+
+<!-- /MARCADORES EN VIVO -->
 	
 </body></html>
