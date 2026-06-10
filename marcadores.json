@@ -1,73 +1,31 @@
 {
   "eventos": [
     {
-      "id": "amistoso-internacional-armenia-vs-moldavia",
-      "hora_inicio": "10:00",
-      "hora_fin": "11:54",
-      "adicionales": 1,
-      "estado": "auto"
-    },
-    {
-      "id": "amistoso-internacional-letonia-vs-islas-feroe",
-      "hora_inicio": "10:00",
-      "hora_fin": "11:50",
-      "adicionales": 1,
-      "estado": "auto"
-    },
-    {
-      "id": "amistoso-internacional-lituania-vs-estonia",
-      "hora_inicio": "11:00",
-      "hora_fin": "12:50",
-      "adicionales": 3,
-      "estado": "auto"
-    },
-    {
-      "id": "amistoso-internacional-rd-del-congo-vs-chile",
-      "hora_inicio": "11:00",
-      "hora_fin": "12:50",
-      "adicionales": 3,
-      "estado": "auto"
-    },
-    {
-      "id": "amistoso-internacional-bielorrusia-vs-burkina-faso",
-      "hora_inicio": "11:30",
-      "hora_fin": "13:25",
-      "adicionales": 3,
-      "estado": "auto"
-    },
-    {
-      "id": "amistoso-internacional-hungria-vs-kazajstan",
-      "hora_inicio": "12:00",
-      "hora_fin": "13:50",
-      "adicionales": 3,
-      "estado": "auto"
-    },
-    {
-      "id": "amistoso-internacional-azerbaiyan-vs-san-marino",
-      "hora_inicio": "13:00",
-      "hora_fin": "14:50",
-      "adicionales": 3,
-      "estado": "auto"
-    },
-    {
-      "id": "laliga-2-almeria-vs-cd-castellon",
+      "id": "laliga-2-malaga-vs-las-palmas",
       "hora_inicio": "14:00",
-      "hora_fin": "15:50",
-      "adicionales": 6,
-      "estado": "auto"
-    },
-    {
-      "id": "amistoso-internacional-argentina-vs-islandia",
-      "hora_inicio": "20:16",
-      "hora_fin": "22:00",
+      "hora_fin": "16:00",
       "adicionales": 3,
       "estado": "auto"
     },
     {
-      "id": "amistoso-internacional-iraq-vs-venezuela",
-      "hora_inicio": "20:13",
-      "hora_fin": "21:58",
-      "adicionales": 1,
+      "id": "amistoso-internacional-portugal-vs-nigeria",
+      "hora_inicio": "14:45",
+      "hora_fin": "16:45",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "amistoso-internacional-inglaterra-vs-costa-rica",
+      "hora_inicio": "15:00",
+      "hora_fin": "17:00",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "nba-spurs-vs-knicks-finals-game-4",
+      "hora_inicio": "19:30",
+      "hora_fin": "21:30",
+      "adicionales": 3,
       "estado": "auto"
     }
   ]
