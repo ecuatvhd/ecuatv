@@ -52,10 +52,7 @@
       letter-spacing: 0.06em;
     }
 
-    .input-row {
-      display: flex;
-      gap: 10px;
-    }
+    .input-row { display: flex; gap: 10px; }
 
     input[type="text"] {
       flex: 1;
@@ -109,7 +106,7 @@
       background: #111;
       border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 12px 14px;
+      padding: 12px 44px 12px 14px;
       font-family: "Courier New", monospace;
       font-size: 0.82rem;
       color: var(--accent);
@@ -118,37 +115,28 @@
       cursor: pointer;
       position: relative;
       transition: border-color 0.2s;
+      min-height: 42px;
     }
     .result-value:hover { border-color: var(--accent); }
-    .result-value::after {
-      content: "copiar";
+    .copy-hint {
       position: absolute;
-      top: 8px; right: 10px;
+      top: 50%; right: 12px;
+      transform: translateY(-50%);
       font-size: 0.65rem;
       color: var(--muted);
       text-transform: uppercase;
+      pointer-events: none;
     }
-    .result-value.copied::after { content: "✓ copiado"; color: var(--accent); }
+    .result-value.copied .copy-hint { color: var(--accent); content: "✓"; }
 
-    .divider {
-      border: none;
-      border-top: 1px solid var(--border);
-      margin: 4px 0 20px;
-    }
-
+    .divider { border: none; border-top: 1px solid var(--border); margin: 4px 0 20px; }
     .block-label {
-      font-size: 0.7rem;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
+      font-size: 0.7rem; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.06em;
       margin: 0 0 6px;
     }
 
-    footer {
-      font-size: 0.72rem;
-      color: #333;
-      text-align: center;
-    }
+    footer { font-size: 0.72rem; color: #333; text-align: center; }
 
     .spinner {
       display: inline-block;
@@ -190,85 +178,138 @@
     <hr class="divider" />
 
     <p class="block-label">URL del Stream (DASH / MPD)</p>
-    <div class="result-value" id="outUrl" onclick="copyVal(this)"></div>
+    <div class="result-value" id="outUrl" onclick="copyVal(this)">
+      <span class="val-text"></span><span class="copy-hint">copiar</span>
+    </div>
 
     <p class="block-label">Key ID (ClearKey)</p>
-    <div class="result-value" id="outKeyId" onclick="copyVal(this)"></div>
+    <div class="result-value" id="outKeyId" onclick="copyVal(this)">
+      <span class="val-text"></span><span class="copy-hint">copiar</span>
+    </div>
 
     <p class="block-label">Key (ClearKey)</p>
-    <div class="result-value" id="outKey" onclick="copyVal(this)"></div>
+    <div class="result-value" id="outKey" onclick="copyVal(this)">
+      <span class="val-text"></span><span class="copy-hint">copiar</span>
+    </div>
   </div>
 
-  <footer>Las claves pueden rotar con el tiempo. Si el stream deja de funcionar, volvé a extraer.</footer>
+  <footer>Las claves pueden rotar. Si el stream deja de funcionar, volvé a extraer.</footer>
 
   <script>
-    // Proxies CORS públicos (se intenta en orden si uno falla)
+    // Proxies CORS públicos (se prueban en orden)
     var PROXIES = [
-      function(u){ return 'https://api.allorigins.win/get?url=' + encodeURIComponent(u); },
-      function(u){ return 'https://corsproxy.io/?' + encodeURIComponent(u); },
-      function(u){ return 'https://thingproxy.freeboard.io/fetch/' + u; }
+      function(u) { return 'https://api.allorigins.win/get?url=' + encodeURIComponent(u); },
+      function(u) { return 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(u); },
+      function(u) { return 'https://corsproxy.io/?' + encodeURIComponent(u); }
     ];
 
-    function setStatus(msg, type) {
+    function setStatus(html, cls) {
       var el = document.getElementById('status');
-      el.innerHTML = msg;
-      el.className = type || '';
+      el.innerHTML = html;
+      el.className = cls || '';
+    }
+
+    function setVal(id, text) {
+      var el = document.getElementById(id);
+      el.querySelector('.val-text').textContent = text || '—';
     }
 
     function copyVal(el) {
-      var text = el.textContent.replace(/copiar|✓ copiado/g, '').trim();
-      navigator.clipboard.writeText(text).then(function(){
+      var text = el.querySelector('.val-text').textContent.trim();
+      if (!text || text === '—') return;
+      navigator.clipboard.writeText(text).then(function () {
         el.classList.add('copied');
-        setTimeout(function(){ el.classList.remove('copied'); }, 1800);
+        el.querySelector('.copy-hint').textContent = '✓ copiado';
+        setTimeout(function () {
+          el.classList.remove('copied');
+          el.querySelector('.copy-hint').textContent = 'copiar';
+        }, 1800);
       });
     }
 
-    function showResults(streamUrl, keyId, key) {
-      document.getElementById('outUrl').textContent   = streamUrl || '—';
-      document.getElementById('outKeyId').textContent = keyId     || '—';
-      document.getElementById('outKey').textContent   = key       || '—';
-      document.getElementById('resultCard').classList.add('visible');
+    function decodeHtmlEntities(str) {
+      var txt = document.createElement('textarea');
+      txt.innerHTML = str;
+      return txt.value;
     }
 
-    function extractFromHtml(html) {
-      // Buscamos el bloque IIFE que setea url, ck_keyid, ck_key
-      var match = html.match(/var url,ck_keyid,ck_key;[\s\S]*?return \d+\}\)\(\)/);
-      if (!match) return null;
+    function extractFromHtml(rawHtml) {
+      // Decodificar entidades HTML que el proxy pueda haber añadido
+      var html = decodeHtmlEntities(rawHtml);
 
-      var block = match[0];
+      // Buscar el bloque IIFE que contiene las variables
+      // Patrón flexible: var url,ck_keyid,ck_key; ... return NÚMERO})()
+      var patterns = [
+        /var url,ck_keyid,ck_key;[\s\S]*?return \d+\}\)\(\)/,
+        /var url,ck_keyid,ck_key;[\s\S]*?\}\)\(\)/,
+        /var url,ck_keyid,ck_key[\s\S]*?ck_key\s*\}/
+      ];
 
-      // Corremos el bloque en el contexto de window para que Function() pueda acceder a las vars
-      window.url       = undefined;
-      window.ck_keyid  = undefined;
-      window.ck_key    = undefined;
+      var block = null;
+      for (var i = 0; i < patterns.length; i++) {
+        var m = html.match(patterns[i]);
+        if (m) { block = m[0]; break; }
+      }
 
-      try {
-        // eslint-disable-next-line no-new-func
-        var fn = new Function(block + '; return { url: url, ck_keyid: ck_keyid, ck_key: ck_key };');
-        var result = fn();
-        if (result.url || result.ck_keyid) return result;
-      } catch(e1) {
-        // Si falla con return, intentamos con eval directo (accede a window.*)
-        try {
-          eval(block); // eslint-disable-line no-eval
-        } catch(e2) { /* ignorar */ }
-        if (window.url || window.ck_keyid) {
-          return { url: window.url, ck_keyid: window.ck_keyid, ck_key: window.ck_key };
+      if (!block) {
+        console.warn('[deofuscador] Bloque no encontrado. Buscando fragmento...');
+        // Buscar manualmente entre etiquetas <script>
+        var scripts = html.match(/<script[\s\S]*?<\/script>/gi) || [];
+        for (var s = 0; s < scripts.length; s++) {
+          if (scripts[s].indexOf('ck_keyid') > -1 && scripts[s].indexOf('ck_key') > -1) {
+            var inner = scripts[s].replace(/<\/?script[^>]*>/gi, '');
+            for (var p = 0; p < patterns.length; p++) {
+              var mm = inner.match(patterns[p]);
+              if (mm) { block = mm[0]; break; }
+            }
+          }
+          if (block) break;
         }
       }
-      return null;
+
+      if (!block) return null;
+
+      console.log('[deofuscador] Bloque encontrado, longitud:', block.length);
+
+      // Limpiar posibles vars globales previas
+      try { delete window.url; } catch(e) {}
+      try { delete window.ck_keyid; } catch(e) {}
+      try { delete window.ck_key; } catch(e) {}
+      window.url      = undefined;
+      window.ck_keyid = undefined;
+      window.ck_key   = undefined;
+
+      // Ejecutar el bloque — el Function() interno asigna directamente a window.*
+      try {
+        // eslint-disable-next-line no-eval
+        eval(block);
+      } catch (e) {
+        console.warn('[deofuscador] eval error (ignorable):', e.message);
+      }
+
+      var result = {
+        url:      window.url,
+        ck_keyid: window.ck_keyid,
+        ck_key:   window.ck_key
+      };
+
+      console.log('[deofuscador] Resultado:', result);
+      return result;
     }
 
-    async function fetchViaProxy(targetUrl, proxyIndex) {
-      var proxyUrl = PROXIES[proxyIndex](targetUrl);
-      var resp = await fetch(proxyUrl, { headers: { 'Accept': 'application/json, text/plain, */*' } });
-      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    async function fetchViaProxy(targetUrl, proxyFn) {
+      var proxyUrl = proxyFn(targetUrl);
+      var resp = await fetch(proxyUrl, {
+        headers: { 'Accept': 'application/json, text/plain, */*' },
+        cache: 'no-store'
+      });
+      if (!resp.ok) throw new Error('HTTP ' + resp.status + ' desde proxy');
       var text = await resp.text();
-      // allorigins devuelve JSON con { contents: "..." }
+      // allorigins devuelve { contents: "..." }
       try {
         var json = JSON.parse(text);
-        if (json.contents) return json.contents;
-      } catch(e) {}
+        if (json && json.contents) return json.contents;
+      } catch (e) { }
       return text;
     }
 
@@ -279,47 +320,61 @@
 
       document.getElementById('btn').disabled = true;
       document.getElementById('resultCard').classList.remove('visible');
-      setStatus('<span class="spinner"></span>Obteniendo página…');
 
       var html = null;
+      var lastErr = '';
+
       for (var i = 0; i < PROXIES.length; i++) {
+        setStatus('<span class="spinner"></span>Obteniendo página (proxy ' + (i + 1) + '/' + PROXIES.length + ')…');
         try {
-          setStatus('<span class="spinner"></span>Intentando con proxy ' + (i + 1) + '/' + PROXIES.length + '…');
-          html = await fetchViaProxy(rawUrl, i);
-          if (html && html.length > 200) break;
-        } catch(e) {
-          if (i === PROXIES.length - 1) {
-            setStatus('No se pudo obtener la página. Puede que el sitio bloquee proxies externos.', 'error');
-            document.getElementById('btn').disabled = false;
-            return;
+          var candidate = await fetchViaProxy(rawUrl, PROXIES[i]);
+          if (candidate && candidate.length > 300) {
+            html = candidate;
+            console.log('[deofuscador] Proxy ' + (i+1) + ' OK, tamaño:', html.length);
+            break;
           }
+        } catch (e) {
+          lastErr = e.message;
+          console.warn('[deofuscador] Proxy ' + (i+1) + ' falló:', e.message);
         }
       }
 
-      setStatus('<span class="spinner"></span>Analizando código…');
+      if (!html) {
+        setStatus('No se pudo obtener la página: ' + lastErr + '<br>Puede que el sitio bloquee proxies externos.', 'error');
+        document.getElementById('btn').disabled = false;
+        return;
+      }
 
-      var result = null;
+      setStatus('<span class="spinner"></span>Analizando código JavaScript…');
+
+      var result;
       try {
         result = extractFromHtml(html);
-      } catch(e) {
-        setStatus('Error al analizar el código: ' + e.message, 'error');
+      } catch (e) {
+        setStatus('Error al analizar: ' + e.message, 'error');
         document.getElementById('btn').disabled = false;
         return;
       }
 
       if (!result || (!result.url && !result.ck_keyid)) {
-        setStatus('No se encontró el bloque de stream en esta página. ¿Es un canal compatible?', 'error');
+        setStatus(
+          'No se encontró el bloque de stream.<br>' +
+          '<small style="color:#444">Este formato de ofuscación puede ser diferente. Abrí la consola del navegador (F12) para ver detalles.</small>',
+          'error'
+        );
         document.getElementById('btn').disabled = false;
         return;
       }
 
       setStatus('✓ Extracción exitosa', 'ok');
-      showResults(result.url, result.ck_keyid, result.ck_key);
+      setVal('outUrl',   result.url);
+      setVal('outKeyId', result.ck_keyid);
+      setVal('outKey',   result.ck_key);
+      document.getElementById('resultCard').classList.add('visible');
       document.getElementById('btn').disabled = false;
     }
 
-    // Permitir Enter en el input
-    document.getElementById('urlInput').addEventListener('keydown', function(e) {
+    document.getElementById('urlInput').addEventListener('keydown', function (e) {
       if (e.key === 'Enter') extract();
     });
   </script>
