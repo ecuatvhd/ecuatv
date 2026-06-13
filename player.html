@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TYC Sports — Live Stream</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.5/shaka-player.compiled.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TYC Sports — Live</title>
+  <link rel="stylesheet" href="https://cdn.bitmovin.com/player/web/8/bitmovinplayer-ui.css" />
+  <script src="https://cdn.bitmovin.com/player/web/8/bitmovinplayer.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -17,183 +18,87 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 20px;
+      gap: 16px;
       padding: 20px;
     }
 
-    header {
-      text-align: center;
-    }
-
-    header h1 {
-      font-size: 1.6rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      color: #e8f0ff;
-    }
-
-    header p {
-      font-size: 0.85rem;
-      color: #666;
-      margin-top: 4px;
-    }
+    header { text-align: center; }
+    header h1 { font-size: 1.5rem; font-weight: 700; color: #e8f0ff; }
+    header p  { font-size: 0.82rem; color: #555; margin-top: 4px; }
 
     .player-wrapper {
       width: 100%;
-      max-width: 860px;
-      background: #111;
-      border-radius: 12px;
+      max-width: 900px;
+      border-radius: 10px;
       overflow: hidden;
-      box-shadow: 0 0 40px rgba(0,0,0,0.7);
-      position: relative;
-    }
-
-    video {
-      width: 100%;
-      display: block;
+      box-shadow: 0 0 50px rgba(0,0,0,0.8);
       aspect-ratio: 16/9;
       background: #000;
     }
 
-    #status {
-      padding: 10px 16px;
+    #player { width: 100%; height: 100%; }
+
+    #msg {
       font-size: 0.78rem;
-      color: #aaa;
-      background: #0e0e0e;
-      border-top: 1px solid #1e1e1e;
-      min-height: 36px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      color: #555;
+      text-align: center;
+      max-width: 600px;
     }
 
-    #status .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      flex-shrink: 0;
-      background: #555;
-      transition: background 0.3s;
-    }
-
-    #status.live .dot  { background: #e63; animation: pulse 1.5s infinite; }
-    #status.error .dot { background: #c33; }
-    #status.ok    .dot { background: #3c9; }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: 0.3; }
-    }
-
-    footer {
-      font-size: 0.72rem;
-      color: #333;
-    }
+    #msg.error { color: #c44; }
+    #msg.ok    { color: #3a9; }
   </style>
 </head>
 <body>
 
   <header>
     <h1>TYC Sports</h1>
-    <p>Live Stream</p>
+    <p>EN VIVO</p>
   </header>
 
   <div class="player-wrapper">
-    <video id="video" controls autoplay playsinline></video>
-    <div id="status">
-      <span class="dot"></span>
-      <span id="status-text">Iniciando reproductor…</span>
-    </div>
+    <div id="player"></div>
   </div>
 
-  <footer>Powered by Shaka Player</footer>
+  <p id="msg">Iniciando…</p>
 
   <script>
     const MANIFEST = "https://lilac01.pontiscloud.com/live/eds/TYCSports/live_dash_cld/TYCSports.mpd";
-    const KEY_ID   = "11d3698c-efdf-42f1-8769-54663995de2b";
+    const LICENSE  = "11d3698c-efdf-42f1-8769-54663995de2b";
+    const msg      = document.getElementById("msg");
 
-    const video      = document.getElementById("video");
-    const statusEl   = document.getElementById("status");
-    const statusText = document.getElementById("status-text");
+    const config = {
+      key: LICENSE,
+      source: {
+        dash: MANIFEST,
+        type: "application/dash+xml"
+      },
+      playback: {
+        autoplay: true,
+        muted: false
+      },
+      ui: true,
+      logs: { bitdash: false }
+    };
 
-    function setStatus(type, msg) {
-      statusEl.className = type;
-      statusText.textContent = msg;
-    }
+    const player = new bitmovin.player.Player(document.getElementById("player"), config);
 
-    async function init() {
-      shaka.polyfill.installAll();
+    player.on(bitmovin.player.PlayerEvent.Ready, () => {
+      msg.textContent = "● EN VIVO — stream cargado";
+      msg.className = "ok";
+    });
 
-      if (!shaka.Player.isBrowserSupported()) {
-        setStatus("error", "Tu navegador no soporta DASH/EME. Usa Chrome o Edge.");
-        return;
-      }
+    player.on(bitmovin.player.PlayerEvent.Error, (e) => {
+      console.error("Bitmovin error:", e);
+      msg.textContent = `Error: ${e.name || e.code} — ${e.message || "no se pudo cargar el stream"}`;
+      msg.className = "error";
+    });
 
-      const player = new shaka.Player(video);
-
-      // Mostrar errores detallados en consola
-      player.addEventListener("error", (e) => {
-        const err = e.detail;
-        console.error("Shaka error:", err);
-        setStatus("error", `Error ${err.code}: ${err.message || "fallo al cargar el stream"}`);
-      });
-
-      // Intentar primero sin DRM (algunos streams no lo requieren)
-      player.configure({
-        streaming: {
-          bufferingGoal: 30,
-          rebufferingGoal: 2,
-          retryParameters: {
-            maxAttempts: 5,
-            baseDelay: 1000,
-            backoffFactor: 2,
-          }
-        },
-        manifest: {
-          retryParameters: {
-            maxAttempts: 5,
-            baseDelay: 1000,
-          }
-        }
-      });
-
-      setStatus("", "Cargando stream…");
-
-      try {
-        await player.load(MANIFEST);
-        setStatus("live", "● EN VIVO");
-        video.play().catch(() => {});
-      } catch (err) {
-        console.warn("Sin DRM falló, intentando con ClearKey…", err);
-
-        // Intento 2: ClearKey (útil si el key-id es un ClearKey real)
-        // Necesitás la KEY en hex (16 bytes). El UUID lo convertimos:
-        const keyIdHex = KEY_ID.replace(/-/g, "");
-
-        player.configure({
-          drm: {
-            clearKeys: {
-              [keyIdHex]: keyIdHex   // mismo valor como placeholder; reemplazá el segundo con la KEY real si tenés
-            },
-            retryParameters: { maxAttempts: 3 }
-          }
-        });
-
-        try {
-          await player.load(MANIFEST);
-          setStatus("ok", "Stream cargado (ClearKey)");
-          video.play().catch(() => {});
-        } catch (err2) {
-          console.error("ClearKey también falló:", err2);
-          setStatus(
-            "error",
-            "El stream requiere DRM Widevine con servidor de licencias. Contactá al proveedor para obtener la URL de licencias."
-          );
-        }
-      }
-    }
-
-    init();
+    player.load(config.source).catch(err => {
+      console.error("Load error:", err);
+      msg.textContent = `No se pudo cargar: ${err.message || err}`;
+      msg.className = "error";
+    });
   </script>
 </body>
 </html>
