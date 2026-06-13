@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Deofuscador de Streams</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:     #0d0d0d;
+      --card:   #161616;
+      --border: #262626;
+      --accent: #18c5a3;
+      --text:   #e0e0e0;
+      --muted:  #555;
+      --error:  #e05555;
+      --radius: 10px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px 60px;
+      gap: 28px;
+    }
+
+    header { text-align: center; }
+    header h1 { font-size: 1.6rem; font-weight: 700; color: #fff; }
+    header p  { font-size: 0.85rem; color: var(--muted); margin-top: 6px; max-width: 500px; }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      width: 100%;
+      max-width: 640px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      background: #111;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 0.9rem;
+      padding: 10px 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input[type="text"]:focus { border-color: var(--accent); }
+
+    button {
+      background: var(--accent);
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      white-space: nowrap;
+    }
+    button:hover { opacity: 0.85; }
+    button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    #status {
+      font-size: 0.82rem;
+      margin-top: 12px;
+      min-height: 20px;
+      color: var(--muted);
+    }
+    #status.error { color: var(--error); }
+    #status.ok    { color: var(--accent); }
+
+    .result-card { display: none; }
+    .result-card.visible { display: block; }
+
+    .result-title {
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+
+    .result-value {
+      background: #111;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-family: "Courier New", monospace;
+      font-size: 0.82rem;
+      color: var(--accent);
+      word-break: break-all;
+      margin-bottom: 16px;
+      cursor: pointer;
+      position: relative;
+      transition: border-color 0.2s;
+    }
+    .result-value:hover { border-color: var(--accent); }
+    .result-value::after {
+      content: "copiar";
+      position: absolute;
+      top: 8px; right: 10px;
+      font-size: 0.65rem;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    .result-value.copied::after { content: "✓ copiado"; color: var(--accent); }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 4px 0 20px;
+    }
+
+    .block-label {
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin: 0 0 6px;
+    }
+
+    footer {
+      font-size: 0.72rem;
+      color: #333;
+      text-align: center;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 12px; height: 12px;
+      border: 2px solid #333;
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Deofuscador de Streams</h1>
+    <p>Pegá la URL de la página del canal y extraerá automáticamente la URL del stream y las claves DRM.</p>
+  </header>
+
+  <div class="card">
+    <label for="urlInput">URL de la página</label>
+    <div class="input-row">
+      <input
+        id="urlInput"
+        type="text"
+        placeholder="https://latamplay1.click/channel/tyc.php"
+        spellcheck="false"
+        autocomplete="off"
+      />
+      <button id="btn" onclick="extract()">Extraer</button>
+    </div>
+    <div id="status"></div>
+  </div>
+
+  <div class="card result-card" id="resultCard">
+    <p class="result-title">Resultados</p>
+    <hr class="divider" />
+
+    <p class="block-label">URL del Stream (DASH / MPD)</p>
+    <div class="result-value" id="outUrl" onclick="copyVal(this)"></div>
+
+    <p class="block-label">Key ID (ClearKey)</p>
+    <div class="result-value" id="outKeyId" onclick="copyVal(this)"></div>
+
+    <p class="block-label">Key (ClearKey)</p>
+    <div class="result-value" id="outKey" onclick="copyVal(this)"></div>
+  </div>
+
+  <footer>Las claves pueden rotar con el tiempo. Si el stream deja de funcionar, volvé a extraer.</footer>
+
+  <script>
+    // Proxies CORS públicos (se intenta en orden si uno falla)
+    var PROXIES = [
+      function(u){ return 'https://api.allorigins.win/get?url=' + encodeURIComponent(u); },
+      function(u){ return 'https://corsproxy.io/?' + encodeURIComponent(u); },
+      function(u){ return 'https://thingproxy.freeboard.io/fetch/' + u; }
+    ];
+
+    function setStatus(msg, type) {
+      var el = document.getElementById('status');
+      el.innerHTML = msg;
+      el.className = type || '';
+    }
+
+    function copyVal(el) {
+      var text = el.textContent.replace(/copiar|✓ copiado/g, '').trim();
+      navigator.clipboard.writeText(text).then(function(){
+        el.classList.add('copied');
+        setTimeout(function(){ el.classList.remove('copied'); }, 1800);
+      });
+    }
+
+    function showResults(streamUrl, keyId, key) {
+      document.getElementById('outUrl').textContent   = streamUrl || '—';
+      document.getElementById('outKeyId').textContent = keyId     || '—';
+      document.getElementById('outKey').textContent   = key       || '—';
+      document.getElementById('resultCard').classList.add('visible');
+    }
+
+    function extractFromHtml(html) {
+      // Buscamos el bloque IIFE que setea url, ck_keyid, ck_key
+      var match = html.match(/var url,ck_keyid,ck_key;[\s\S]*?return \d+\}\)\(\)/);
+      if (!match) return null;
+
+      var block = match[0];
+
+      // Corremos el bloque en el contexto de window para que Function() pueda acceder a las vars
+      window.url       = undefined;
+      window.ck_keyid  = undefined;
+      window.ck_key    = undefined;
+
+      try {
+        // eslint-disable-next-line no-new-func
+        var fn = new Function(block + '; return { url: url, ck_keyid: ck_keyid, ck_key: ck_key };');
+        var result = fn();
+        if (result.url || result.ck_keyid) return result;
+      } catch(e1) {
+        // Si falla con return, intentamos con eval directo (accede a window.*)
+        try {
+          eval(block); // eslint-disable-line no-eval
+        } catch(e2) { /* ignorar */ }
+        if (window.url || window.ck_keyid) {
+          return { url: window.url, ck_keyid: window.ck_keyid, ck_key: window.ck_key };
+        }
+      }
+      return null;
+    }
+
+    async function fetchViaProxy(targetUrl, proxyIndex) {
+      var proxyUrl = PROXIES[proxyIndex](targetUrl);
+      var resp = await fetch(proxyUrl, { headers: { 'Accept': 'application/json, text/plain, */*' } });
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      var text = await resp.text();
+      // allorigins devuelve JSON con { contents: "..." }
+      try {
+        var json = JSON.parse(text);
+        if (json.contents) return json.contents;
+      } catch(e) {}
+      return text;
+    }
+
+    async function extract() {
+      var rawUrl = document.getElementById('urlInput').value.trim();
+      if (!rawUrl) { setStatus('Ingresá una URL primero.', 'error'); return; }
+      if (!/^https?:\/\//i.test(rawUrl)) rawUrl = 'https://' + rawUrl;
+
+      document.getElementById('btn').disabled = true;
+      document.getElementById('resultCard').classList.remove('visible');
+      setStatus('<span class="spinner"></span>Obteniendo página…');
+
+      var html = null;
+      for (var i = 0; i < PROXIES.length; i++) {
+        try {
+          setStatus('<span class="spinner"></span>Intentando con proxy ' + (i + 1) + '/' + PROXIES.length + '…');
+          html = await fetchViaProxy(rawUrl, i);
+          if (html && html.length > 200) break;
+        } catch(e) {
+          if (i === PROXIES.length - 1) {
+            setStatus('No se pudo obtener la página. Puede que el sitio bloquee proxies externos.', 'error');
+            document.getElementById('btn').disabled = false;
+            return;
+          }
+        }
+      }
+
+      setStatus('<span class="spinner"></span>Analizando código…');
+
+      var result = null;
+      try {
+        result = extractFromHtml(html);
+      } catch(e) {
+        setStatus('Error al analizar el código: ' + e.message, 'error');
+        document.getElementById('btn').disabled = false;
+        return;
+      }
+
+      if (!result || (!result.url && !result.ck_keyid)) {
+        setStatus('No se encontró el bloque de stream en esta página. ¿Es un canal compatible?', 'error');
+        document.getElementById('btn').disabled = false;
+        return;
+      }
+
+      setStatus('✓ Extracción exitosa', 'ok');
+      showResults(result.url, result.ck_keyid, result.ck_key);
+      document.getElementById('btn').disabled = false;
+    }
+
+    // Permitir Enter en el input
+    document.getElementById('urlInput').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') extract();
+    });
+  </script>
+
+</body>
+</html>
