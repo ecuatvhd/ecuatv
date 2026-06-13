@@ -1,9 +1,79 @@
 {
   "eventos": [
     {
-      "id": "copa-mundial-de-la-fifa-2026-ee-uu-vs-paraguay",
+      "id": "f1-gp-de-barcelona-entrenamientos-3",
+      "hora_inicio": "05:30",
+      "hora_fin": "08:30",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "f1-gp-de-barcelona-clasificacion",
+      "hora_inicio": "09:00",
+      "hora_fin": "11:00",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "copa-mundial-de-la-fifa-2026-qatar-vs-suiza",
+      "hora_inicio": "14:00",
+      "hora_fin": "16:00",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "liga-de-primera-everton-vs-palestino",
+      "hora_inicio": "14:00",
+      "hora_fin": "16:00",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "liga-de-primera-colo-colo-vs-cobresal",
+      "hora_inicio": "16:30",
+      "hora_fin": "18:30",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "copa-mundial-de-la-fifa-2026-brasil-vs-marruecos",
+      "hora_inicio": "17:00",
+      "hora_fin": "19:00",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "liga-de-primera-coquimbo-unido-vs-ohiggins",
+      "hora_inicio": "17:30",
+      "hora_fin": "19:30",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "liga-de-primera-nublense-vs-huachipato",
+      "hora_inicio": "19:00",
+      "hora_fin": "21:00",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "nba-spurs-vs-knicks-finals-game-5",
+      "hora_inicio": "19:30",
+      "hora_fin": "21:30",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "copa-mundial-de-la-fifa-2026-haiti-vs-escocia",
       "hora_inicio": "20:00",
       "hora_fin": "22:00",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "copa-mundial-de-la-fifa-2026-australia-vs-turquia",
+      "hora_inicio": "23:00",
+      "hora_fin": "01:00",
       "adicionales": 3,
       "estado": "auto"
     }
