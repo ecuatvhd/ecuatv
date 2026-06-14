@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="utf-8" />
@@ -37,3 +38,173 @@
       align-items: center;
       justify-content: center;
       gap: 16px;
+      z-index: 20;
+      transition: opacity 0.4s;
+    }
+
+    #overlay.hidden { opacity: 0; pointer-events: none; }
+
+    .channel-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #e0e0e0;
+    }
+
+    .spinner {
+      width: 40px; height: 40px;
+      border: 3px solid rgba(255,255,255,0.1);
+      border-top-color: #18c5a3;
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    #msg {
+      font-size: 0.8rem;
+      color: #555;
+      max-width: 360px;
+      text-align: center;
+      line-height: 1.5;
+    }
+    #msg.error { color: #e05555; }
+  </style>
+</head>
+<body>
+
+  <div id="player-wrap">
+    <div id="player"></div>
+    <div id="overlay">
+      <div class="spinner" id="spinner"></div>
+      <div class="channel-name" id="channelName">Cargando…</div>
+      <div id="msg"></div>
+    </div>
+  </div>
+
+  <script>
+    // ─── CONFIGURACIÓN ──────────────────────────────────────────────────────
+    // Cambiá esta URL por la URL raw de tu channels.json en GitHub:
+    // https://raw.githubusercontent.com/TU_USUARIO/TU_REPO/main/channels.json
+    var CHANNELS_JSON_URL = 'https://raw.githubusercontent.com/TU_USUARIO/TU_REPO/main/channels.json';
+
+    var BITMOVIN_KEY = '11d3698c-efdf-42f1-8769-54663995de2b';
+    // ────────────────────────────────────────────────────────────────────────
+
+    // Bypass de licencia Bitmovin
+    (function () {
+      var fake = 'data:text/plain;charset=utf-8;base64,eyJzdGF0dXMiOiJncmFudGVkIiwibWVzc2FnZSI6IlRoZXJlIHlvdSBnby4ifQ==';
+      var _open = XMLHttpRequest.prototype.open;
+      XMLHttpRequest.prototype.open = function () {
+        if ((arguments[1] || '').indexOf('licensing.bitmovin.com') > -1) arguments[1] = fake;
+        return _open.apply(this, arguments);
+      };
+    })();
+
+    // ─── Helpers ─────────────────────────────────────────────────────────────
+    function getParam(name) {
+      return new URLSearchParams(window.location.search).get(name);
+    }
+
+    function toBase64(obj) {
+      return btoa(unescape(encodeURIComponent(JSON.stringify(obj))));
+    }
+
+    function fromBase64(str) {
+      return JSON.parse(decodeURIComponent(escape(atob(str))));
+    }
+
+    function setOverlay(title, detail, isError) {
+      document.getElementById('channelName').textContent = title || '';
+      var msgEl = document.getElementById('msg');
+      msgEl.textContent = detail || '';
+      msgEl.className = isError ? 'error' : '';
+      if (isError) document.getElementById('spinner').style.display = 'none';
+    }
+
+    function hideOverlay() {
+      document.getElementById('overlay').classList.add('hidden');
+    }
+
+    // ─── Reproducir ──────────────────────────────────────────────────────────
+    function play(channelData) {
+      // Redirigir a ?r=BASE64 para ocultar los datos en la URL
+      var b64 = toBase64(channelData);
+      var currentR = getParam('r');
+      if (!currentR || currentR !== b64) {
+        var newUrl = window.location.pathname + '?r=' + b64;
+        window.history.replaceState(null, '', newUrl);
+      }
+
+      document.title = channelData.name || 'Reproductor';
+      setOverlay(channelData.name || 'Stream', 'Conectando…');
+
+      var config = {
+        key: BITMOVIN_KEY,
+        playback: { autoplay: true, muted: false },
+        style: { width: '100%', height: '100%' }
+      };
+
+      var source = { dash: channelData.dash };
+
+      if (channelData.keyId && channelData.key) {
+        source.drm = {
+          clearkey: [{ keyId: channelData.keyId, key: channelData.key }]
+        };
+      }
+
+      var player = new bitmovin.player.Player(document.getElementById('player'), config);
+
+      player.load(source).then(function () {
+        hideOverlay();
+      }).catch(function (err) {
+        setOverlay(channelData.name || 'Error', 'No se pudo cargar el stream: ' + (err.message || err.code || ''), true);
+      });
+    }
+
+    // ─── Inicio ───────────────────────────────────────────────────────────────
+    (async function () {
+      var r       = getParam('r');
+      var channel = getParam('channel');
+
+      // Caso 1: viene con ?r=BASE64 — datos ya codificados, reproducir directo
+      if (r) {
+        try {
+          var data = fromBase64(r);
+          if (data && data.dash) { play(data); return; }
+        } catch (e) {
+          setOverlay('Error', 'Parámetro ?r= inválido.', true);
+          return;
+        }
+      }
+
+      // Caso 2: viene con ?channel=nombre — buscar en el JSON
+      if (channel) {
+        setOverlay('Cargando canal…', 'Obteniendo configuración…');
+        try {
+          var resp = await fetch(CHANNELS_JSON_URL, { cache: 'no-store' });
+          if (!resp.ok) throw new Error('HTTP ' + resp.status);
+          var channels = await resp.json();
+
+          var ch = channels[channel.toLowerCase()];
+          if (!ch) {
+            setOverlay('Canal no encontrado', 'No existe el canal "' + channel + '" en el JSON.', true);
+            return;
+          }
+
+          play(ch);
+        } catch (e) {
+          setOverlay('Error', 'No se pudo leer el JSON: ' + e.message, true);
+        }
+        return;
+      }
+
+      // Caso 3: sin parámetros
+      setOverlay(
+        'Sin canal',
+        'Usá ?channel=tyc  o  ?r=BASE64 en la URL.',
+        true
+      );
+    })();
+  </script>
+
+</body>
+</html>
