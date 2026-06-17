@@ -1,30 +1,30 @@
 {
   "eventos": [
     {
-      "id": "copa-mundial-de-la-fifa-2026-francia-vs-senegal",
-      "hora_inicio": "14:00",
-      "hora_fin": "15:55",
-      "adicionales": 8,
+      "id": "copa-mundial-de-la-fifa-2026-portugal-vs-rd-del-congo",
+      "hora_inicio": "12:00",
+      "hora_fin": "14:00",
+      "adicionales": 3,
       "estado": "auto"
     },
     {
-      "id": "copa-mundial-de-la-fifa-2026-iraq-vs-noruega",
-      "hora_inicio": "17:01",
-      "hora_fin": "18:53",
-      "adicionales": 6,
+      "id": "copa-mundial-de-la-fifa-2026-inglaterra-vs-croacia",
+      "hora_inicio": "15:00",
+      "hora_fin": "17:00",
+      "adicionales": 3,
       "estado": "auto"
     },
     {
-      "id": "copa-mundial-de-la-fifa-2026-argentina-vs-argelia",
-      "hora_inicio": "20:03",
-      "hora_fin": "21:54",
-      "adicionales": 6,
+      "id": "copa-mundial-de-la-fifa-2026-ghana-vs-panama",
+      "hora_inicio": "18:00",
+      "hora_fin": "20:00",
+      "adicionales": 3,
       "estado": "auto"
     },
     {
-      "id": "copa-mundial-de-la-fifa-2026-austria-vs-jordania",
-      "hora_inicio": "23:00",
-      "hora_fin": "01:00",
+      "id": "copa-mundial-de-la-fifa-2026-uzbekistan-vs-colombia",
+      "hora_inicio": "21:00",
+      "hora_fin": "23:00",
       "adicionales": 3,
       "estado": "auto"
     }
