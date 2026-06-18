@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Deofuscador de Streams</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:     #0d0d0d;
+      --card:   #161616;
+      --border: #262626;
+      --accent: #18c5a3;
+      --text:   #e0e0e0;
+      --muted:  #555;
+      --error:  #e05555;
+      --radius: 10px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px 60px;
+      gap: 28px;
+    }
+
+    header { text-align: center; }
+    header h1 { font-size: 1.6rem; font-weight: 700; color: #fff; }
+    header p  { font-size: 0.85rem; color: var(--muted); margin-top: 6px; max-width: 520px; }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      width: 100%;
+      max-width: 680px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .input-row { display: flex; gap: 10px; }
+
+    input[type="text"] {
+      flex: 1;
+      background: #111;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 0.9rem;
+      padding: 10px 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input[type="text"]:focus { border-color: var(--accent); }
+
+    button {
+      background: var(--accent);
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      white-space: nowrap;
+    }
+    button:hover { opacity: 0.85; }
+    button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    #status {
+      font-size: 0.82rem;
+      margin-top: 12px;
+      min-height: 20px;
+      color: var(--muted);
+    }
+    #status.error { color: var(--error); }
+    #status.ok    { color: var(--accent); }
+    #status.warn  { color: #c5a018; }
+
+    .result-card { display: none; }
+    .result-card.visible { display: block; }
+
+    .section-label {
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin: 0 0 6px;
+    }
+
+    .result-value {
+      background: #111;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 52px 12px 14px;
+      font-family: "Courier New", monospace;
+      font-size: 0.82rem;
+      color: var(--accent);
+      word-break: break-all;
+      cursor: pointer;
+      position: relative;
+      transition: border-color 0.2s;
+      min-height: 42px;
+    }
+    .result-value + .result-value,
+    .result-value + .section-label { margin-top: 16px; }
+    .result-value:hover { border-color: var(--accent); }
+    .copy-hint {
+      position: absolute;
+      top: 50%; right: 12px;
+      transform: translateY(-50%);
+      font-size: 0.65rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .drm-row { display: flex; gap: 10px; margin-top: 16px; }
+    .drm-row > div { flex: 1; }
+    .drm-row .result-value { margin-top: 6px; font-size: 0.78rem; }
+
+    .divider { border: none; border-top: 1px solid var(--border); margin: 4px 0 20px; }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.62rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      margin-left: 8px;
+      vertical-align: middle;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .badge-dash   { background: #1a3a52; color: #5ab3e8; }
+    .badge-hls    { background: #3a1a52; color: #b35ae8; }
+    .badge-other  { background: #2a2a1a; color: #c8c85a; }
+
+    .raw-toggle {
+      font-size: 0.7rem;
+      color: var(--muted);
+      cursor: pointer;
+      text-decoration: underline dotted;
+      display: inline-block;
+      margin-top: 14px;
+    }
+    .raw-box {
+      display: none;
+      background: #0a0a0a;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px;
+      margin-top: 8px;
+      font-family: "Courier New", monospace;
+      font-size: 0.72rem;
+      color: #666;
+      word-break: break-all;
+      max-height: 180px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+    }
+    .raw-box.open { display: block; }
+
+    footer { font-size: 0.72rem; color: #333; text-align: center; }
+
+    .spinner {
+      display: inline-block;
+      width: 12px; height: 12px;
+      border: 2px solid #333;
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Deofuscador de Streams</h1>
+    <p>Pegá la URL de la página del canal y extraerá la URL del stream + claves DRM automáticamente.</p>
+  </header>
+
+  <div class="card">
+    <label for="urlInput">URL de la página del canal</label>
+    <div class="input-row">
+      <input
+        id="urlInput"
+        type="text"
+        placeholder="https://latamplay1.click/channel/dsports.html"
+        spellcheck="false"
+        autocomplete="off"
+      />
+      <button id="btn" onclick="extract()">Extraer</button>
+    </div>
+    <div id="status"></div>
+  </div>
+
+  <div class="card result-card" id="resultCard">
+    <p style="font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">
+      Resultados <span id="fmtBadge" class="badge"></span>
+    </p>
+    <hr class="divider" />
+
+    <p class="section-label">URL del Stream</p>
+    <div class="result-value" id="outUrl" onclick="copyVal(this)">
+      <span class="val-text"></span><span class="copy-hint">copiar</span>
+    </div>
+
+    <div id="drmSection" style="display:none">
+      <div class="drm-row">
+        <div>
+          <p class="section-label">Key ID</p>
+          <div class="result-value" id="outKeyId" onclick="copyVal(this)">
+            <span class="val-text"></span><span class="copy-hint">copiar</span>
+          </div>
+        </div>
+        <div>
+          <p class="section-label">Key</p>
+          <div class="result-value" id="outKey" onclick="copyVal(this)">
+            <span class="val-text"></span><span class="copy-hint">copiar</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <span class="raw-toggle" id="rawToggle" onclick="toggleRaw()" style="display:none">Ver config raw</span>
+    <div class="raw-box" id="rawBox"></div>
+  </div>
+
+  <footer>Las claves pueden rotar. Si el stream deja de funcionar, volvé a extraer.</footer>
+
+  <script>
+  /* =========================================================
+     CONFIGURACIÓN — apunta al backend en el mismo dominio
+  ========================================================= */
+  var API_BASE = (function() {
+    var h = location.hostname;
+    // En Replit el path base puede variar; el API está en /api
+    // Si abrís el HTML localmente (file://) no habrá backend,
+    // lo indicamos claramente.
+    if (location.protocol === 'file:') return null;
+    return location.origin;
+  })();
+
+  /* =========================================================
+     UI helpers
+  ========================================================= */
+  function setStatus(html, cls) {
+    var el = document.getElementById('status');
+    el.innerHTML = html;
+    el.className = cls || '';
+  }
+
+  function setVal(id, text) {
+    document.getElementById(id).querySelector('.val-text').textContent =
+      (text && text !== 'undefined' && text !== 'null') ? text : '—';
+  }
+
+  function copyVal(el) {
+    var text = (el.querySelector('.val-text').textContent || '').trim();
+    if (!text || text === '—') return;
+    navigator.clipboard.writeText(text).then(function() {
+      var hint = el.querySelector('.copy-hint');
+      hint.textContent = '✓ copiado';
+      setTimeout(function() { hint.textContent = 'copiar'; }, 1800);
+    });
+  }
+
+  function toggleRaw() {
+    document.getElementById('rawBox').classList.toggle('open');
+  }
+
+  /* =========================================================
+     MÉTODO PRINCIPAL — backend /api/extract
+     El servidor fetch-ea la página, ejecuta los scripts
+     en un sandbox Node.js vm y devuelve el JSON limpio.
+  ========================================================= */
+  async function extractViaBackend(targetUrl) {
+    if (!API_BASE) throw new Error('Sin backend (archivo local)');
+
+    var endpoint = API_BASE + '/api/extract?url=' + encodeURIComponent(targetUrl);
+    var resp = await fetch(endpoint, {
+      cache: 'no-store',
+      signal: AbortSignal.timeout(25000)
+    });
+
+    var json = await resp.json();
+
+    if (!resp.ok) {
+      throw new Error(json.error || ('HTTP ' + resp.status));
+    }
+
+    return json; // { url, keyId, key, format, raw? }
+  }
+
+  /* =========================================================
+     FALLBACK — iframe sandbox con spy script
+     Usa /api/proxy para obtener el HTML y lo ejecuta en
+     un iframe sandboxed interceptando el player.
+  ========================================================= */
+  var SPY_CODE = [
+    '(function(){',
+    '  var _sent=false;',
+    '  function send(d){if(_sent)return;_sent=true;try{parent.postMessage(JSON.stringify({__spy__:true,data:d}),"*");}catch(e){}}',
+    '  function parseSrc(c){',
+    '    var s=c&&(c.source||c);',
+    '    var u=s&&(s.dash||s.hls||s.mpd||(Array.isArray(s.progressive)?s.progressive[0]&&s.progressive[0].url:s.progressive));',
+    '    var drm=s&&s.drm,kid=null,k=null;',
+    '    if(drm){var ck=drm.clearkey||drm["com.apple.fps.1_0"]||null;',
+    '      if(ck&&typeof ck==="object"&&!ck.keys){var ks=Object.keys(ck);if(ks.length){kid=ks[0];k=ck[ks[0]];}}',
+    '      if(ck&&ck.keys&&ck.keys[0]){kid=ck.keys[0].kid||ck.keys[0].keyId;k=ck.keys[0].k||ck.keys[0].key;}',
+    '    }',
+    '    return{url:u||null,keyId:kid,key:k,raw:JSON.stringify(c)};',
+    '  }',
+    '  var _b={player:function(e){return{setup:function(c){send(parseSrc(c));return Promise.resolve();},load:function(c){send(parseSrc(c));return Promise.resolve();},on:function(){},off:function(){},play:function(){},pause:function(){}}}};',
+    '  Object.defineProperty(window,"bitmovin",{configurable:true,get:function(){return _b;},set:function(v){if(v&&v.player){var op=v.player.bind(v);v.player=function(e){var i=op(e);["setup","load"].forEach(function(m){var om=i[m];i[m]=function(c){var r=om.call(i,c);send(parseSrc(c));return r;};});return i;};}_b=v;}});',
+    '  window.jwplayer=function(e){return{setup:function(c){var s=c&&c.sources&&c.sources[0];send({url:s&&s.file,keyId:null,key:null,raw:JSON.stringify(c)});},on:function(){},play:function(){},pause:function(){}};};',
+    '  var _u,_kid,_k;',
+    '  function chkLeg(){if(_u||_kid)send({url:_u,keyId:_kid,key:_k,raw:null});}',
+    '  try{Object.defineProperty(window,"url",{configurable:true,set:function(v){_u=v;chkLeg();},get:function(){return _u;}});}catch(e){}',
+    '  try{Object.defineProperty(window,"ck_keyid",{configurable:true,set:function(v){_kid=v;chkLeg();},get:function(){return _kid;}});}catch(e){}',
+    '  try{Object.defineProperty(window,"ck_key",{configurable:true,set:function(v){_k=v;chkLeg();},get:function(){return _k;}});}catch(e){}',
+    '  var _ev=window.eval;window.eval=function(c){if(typeof c==="string"&&!_sent){var m=c.match(/(https?:\\/\\/[^\\s\'"<>]+\\.(?:mpd|m3u8)[^\\s\'"<>]*)/i);if(m)send({url:m[1],keyId:null,key:null,raw:c.slice(0,300)});}return _ev.call(window,c);};',
+    '})();'
+  ].join('\n');
+
+  function extractViaIframe(html) {
+    return new Promise(function(resolve, reject) {
+      var timer, iframe;
+      function cleanup() {
+        clearTimeout(timer);
+        window.removeEventListener('message', onMsg);
+        if (iframe && iframe.parentNode) iframe.parentNode.removeChild(iframe);
+      }
+      function onMsg(e) {
+        var p; try { p = typeof e.data==='string' ? JSON.parse(e.data) : e.data; } catch(ex){ return; }
+        if (!p || !p.__spy__) return;
+        cleanup();
+        resolve(p.data);
+      }
+      window.addEventListener('message', onMsg);
+
+      // Preparar HTML: quitar scripts externos, inyectar spy
+      var mod = html
+        .replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&')
+        .replace(/&#(\d+);/g, function(_,n){ return String.fromCharCode(parseInt(n,10)); });
+
+      mod = mod.replace(/<script[^>]+src=['"][^'"]*['"][^>]*>\s*<\/script>/gi,'');
+      mod = mod.replace(/<script[^>]+src=['"][^'"]*['"][^>]*\/>/gi,'');
+
+      var spy = '<script id="__spy__">'+SPY_CODE+'<\/script>';
+      if (/<body[^>]*>/i.test(mod)) {
+        mod = mod.replace(/<body[^>]*>/i, function(m){ return m+'\n'+spy+'\n'; });
+      } else {
+        mod = spy+'\n'+mod;
+      }
+
+      var blob = new Blob([mod], {type:'text/html; charset=utf-8'});
+      iframe = document.createElement('iframe');
+      iframe.style.cssText = 'position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;left:-9999px;';
+      iframe.sandbox = 'allow-scripts';
+      iframe.src = URL.createObjectURL(blob);
+      document.body.appendChild(iframe);
+
+      timer = setTimeout(function(){
+        cleanup();
+        reject(new Error('iframe timeout'));
+      }, 18000);
+    });
+  }
+
+  async function extractViaProxyIframe(targetUrl) {
+    if (!API_BASE) throw new Error('Sin backend');
+
+    setStatus('<span class="spinner"></span>Obteniendo página via proxy…');
+    var proxyUrl = API_BASE + '/api/proxy?url=' + encodeURIComponent(targetUrl);
+    var resp = await fetch(proxyUrl, { cache:'no-store', signal: AbortSignal.timeout(15000) });
+    if (!resp.ok) throw new Error('Proxy HTTP ' + resp.status);
+    var html = await resp.text();
+    if (!html || html.length < 100) throw new Error('Respuesta vacía del proxy');
+
+    setStatus('<span class="spinner"></span>Ejecutando sandbox — interceptando player…');
+    return await extractViaIframe(html);
+  }
+
+  /* =========================================================
+     EXTRACCIÓN PRINCIPAL
+  ========================================================= */
+  async function extract() {
+    var rawUrl = document.getElementById('urlInput').value.trim();
+    if (!rawUrl) { setStatus('Ingresá una URL primero.', 'error'); return; }
+    if (!/^https?:\/\//i.test(rawUrl)) rawUrl = 'https://' + rawUrl;
+
+    document.getElementById('btn').disabled = true;
+    document.getElementById('resultCard').classList.remove('visible');
+    document.getElementById('drmSection').style.display = 'none';
+    document.getElementById('rawToggle').style.display = 'none';
+    document.getElementById('rawBox').innerHTML = '';
+    document.getElementById('rawBox').classList.remove('open');
+
+    if (!API_BASE) {
+      setStatus('Abrí este archivo desde el servidor (no como archivo local).', 'error');
+      document.getElementById('btn').disabled = false;
+      return;
+    }
+
+    var result = null;
+
+    /* ---- Intento 1: backend vm sandbox ---- */
+    setStatus('<span class="spinner"></span>Extrayendo via servidor…');
+    try {
+      result = await extractViaBackend(rawUrl);
+    } catch(e) {
+      console.warn('[deofuscador] backend falló:', e.message);
+      setStatus('<span class="spinner"></span>Servidor no pudo extraer — intentando sandbox de navegador…', 'warn');
+    }
+
+    /* ---- Intento 2: proxy + iframe sandbox ---- */
+    if (!result || !result.url) {
+      try {
+        result = await extractViaProxyIframe(rawUrl);
+      } catch(e) {
+        console.warn('[deofuscador] iframe sandbox falló:', e.message);
+      }
+    }
+
+    document.getElementById('btn').disabled = false;
+
+    if (!result || !result.url) {
+      setStatus(
+        'No se pudo extraer la URL del stream.<br>' +
+        '<small style="color:#444">El sitio puede requerir autenticación o el formato de ofuscación cambió. Revisá la consola (F12) para detalles.</small>',
+        'error'
+      );
+      return;
+    }
+
+    /* ---- Mostrar resultados ---- */
+    var url = result.url || '';
+    var isDash = /\.mpd/i.test(url);
+    var isHls  = /\.m3u8/i.test(url);
+
+    var badge = document.getElementById('fmtBadge');
+    badge.textContent = isDash ? 'DASH/MPD' : isHls ? 'HLS/M3U8' : 'Stream';
+    badge.className   = 'badge ' + (isDash ? 'badge-dash' : isHls ? 'badge-hls' : 'badge-other');
+
+    setVal('outUrl', url);
+
+    if (result.keyId || result.key) {
+      document.getElementById('drmSection').style.display = 'block';
+      setVal('outKeyId', result.keyId || '');
+      setVal('outKey',   result.key   || '');
+    }
+
+    if (result.raw) {
+      document.getElementById('rawBox').textContent = result.raw;
+      document.getElementById('rawToggle').style.display = 'inline-block';
+    }
+
+    document.getElementById('resultCard').classList.add('visible');
+
+    var fmtInfo = result.format ? ' <small style="color:#444">(' + result.format + ')</small>' : '';
+    setStatus('✓ Extracción exitosa' + fmtInfo, 'ok');
+  }
+
+  document.getElementById('urlInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') extract();
+  });
+  </script>
+
+</body>
+</html>
