@@ -1,31 +1,38 @@
 {
   "eventos": [
     {
-      "id": "copa-mundial-de-la-fifa-2026-portugal-vs-rd-del-congo",
-      "hora_inicio": "12:00",
-      "hora_fin": "13:55",
-      "adicionales": 5,
-      "estado": "auto"
-    },
-    {
-      "id": "copa-mundial-de-la-fifa-2026-inglaterra-vs-croacia",
-      "hora_inicio": "15:00",
-      "hora_fin": "16:53",
+      "id": "copa-mundial-de-la-fifa-2026-republica-checa-vs-sur-africa",
+      "hora_inicio": "11:01",
+      "hora_fin": "14:54",
       "adicionales": 6,
       "estado": "auto"
     },
     {
-      "id": "copa-mundial-de-la-fifa-2026-ghana-vs-panama",
-      "hora_inicio": "18:00",
-      "hora_fin": "19:52",
-      "adicionales": 8,
+      "id": "copa-mundial-de-la-fifa-2026-suiza-vs-bosnia-herzegovina",
+      "hora_inicio": "14:00",
+      "hora_fin": "16:00",
+      "adicionales": 6,
       "estado": "auto"
     },
     {
-      "id": "copa-mundial-de-la-fifa-2026-uzbekistan-vs-colombia",
-      "hora_inicio": "21:00",
-      "hora_fin": "23:00",
-      "adicionales": 3,
+      "id": "copa-mundial-de-la-fifa-2026-canada-vs-qatar",
+      "hora_inicio": "17:00",
+      "hora_fin": "19:00",
+      "adicionales": 6,
+      "estado": "auto"
+    },
+    {
+      "id": "liga-de-primera-universidad-chile-vs-ohiggins",
+      "hora_inicio": "19:00",
+      "hora_fin": "21:00",
+      "adicionales": 6,
+      "estado": "auto"
+    },
+    {
+      "id": "copa-mundial-de-la-fifa-2026-mexico-vs-corea-del-sur",
+      "hora_inicio": "20:00",
+      "hora_fin": "22:00",
+      "adicionales": 6,
       "estado": "auto"
     }
   ]
