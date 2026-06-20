@@ -1,1 +1,60 @@
-
+{
+  "eventos": [
+    {
+      "id": "copa-mundial-de-la-fifa-2026-paises-bajos-vs-suecia",
+      "hora_inicio": "12:00",
+      "hora_fin": "13:54",
+      "adicionales": 6,
+      "estado": "auto"
+    },
+    {
+      "id": "laliga-2-almeria-vs-malaga-final-22",
+      "hora_inicio": "14:00",
+      "hora_fin": "15:54",
+      "adicionales": 6,
+      "estado": "auto"
+    },
+    {
+      "id": "copa-chile-copiapo-vs-universidad-catolica",
+      "hora_inicio": "14:00",
+      "hora_fin": "15:54",
+      "adicionales": 6,
+      "estado": "auto"
+    },
+    {
+      "id": "copa-mundial-de-la-fifa-2026-alemania-vs-costa-de-marfil",
+      "hora_inicio": "15:00",
+      "hora_fin": "16:54",
+      "adicionales": 6,
+      "estado": "auto"
+    },
+    {
+      "id": "ufc-manel-kape-vs-kyoji-horiguchi",
+      "hora_inicio": "15:00",
+      "hora_fin": "16:54",
+      "adicionales": 6,
+      "estado": "auto"
+    },
+    {
+      "id": "copa-chile-recoleta-vs-colo-colo",
+      "hora_inicio": "16:30",
+      "hora_fin": "18:25",
+      "adicionales": 6,
+      "estado": "auto"
+    },
+    {
+      "id": "copa-mundial-de-la-fifa-2026-ecuador-vs-curazao",
+      "hora_inicio": "19:00",
+      "hora_fin": "20:54",
+      "adicionales": 6,
+      "estado": "auto"
+    },
+    {
+      "id": "copa-mundial-de-la-fifa-2026-tunez-vs-japon",
+      "hora_inicio": "23:00",
+      "hora_fin": "00:54",
+      "adicionales": 6,
+      "estado": "auto"
+    }
+  ]
+}
