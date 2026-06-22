@@ -1,1 +1,32 @@
-
+{
+  "eventos": [
+    {
+      "id": "copa-mundial-de-la-fifa-2026-argentina-vs-austria",
+      "hora_inicio": "12:00",
+      "hora_fin": "13:54",
+      "adicionales": 6,
+      "estado": "auto"
+    },
+    {
+      "id": "copa-mundial-de-la-fifa-2026-francia-vs-iraq",
+      "hora_inicio": "16:00",
+      "hora_fin": "17:54",
+      "adicionales": 6,
+      "estado": "auto"
+    },
+    {
+      "id": "copa-mundial-de-la-fifa-2026-noruega-vs-senegal",
+      "hora_inicio": "19:00",
+      "hora_fin": "20:54",
+      "adicionales": 6,
+      "estado": "auto"
+    },
+    {
+      "id": "copa-mundial-de-la-fifa-2026-jordania-vs-argelia",
+      "hora_inicio": "22:00",
+      "hora_fin": "23:54",
+      "adicionales": 6,
+      "estado": "auto"
+    }
+  ]
+}
