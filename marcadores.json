@@ -34,49 +34,49 @@
       "hora_inicio": "12:00",
       "hora_fin": "13:54",
       "adicionales": 6,
-      "estado": "proximo"
+      "estado": "auto"
     },
     {
       "id": "copa-de-chile-coquimbo-unido-vs-deportes-limache",
       "hora_inicio": "14:00",
       "hora_fin": "15:54",
       "adicionales": 4,
-      "estado": "proximo"
+      "estado": "auto"
     },
     {
       "id": "copa-mundial-de-la-fifa-2026-inglaterra-vs-ghana",
       "hora_inicio": "15:00",
       "hora_fin": "16:54",
       "adicionales": 6,
-      "estado": "proximo"
+      "estado": "auto"
     },
     {
       "id": "copa-mundial-de-la-fifa-2026-panama-vs-croacia",
       "hora_inicio": "18:00",
       "hora_fin": "19:54",
       "adicionales": 6,
-      "estado": "proximo"
+      "estado": "auto"
     },
     {
       "id": "copa-de-chile-everton-vs-universidad-catolica",
       "hora_inicio": "19:30",
       "hora_fin": "21:25",
       "adicionales": 5,
-      "estado": "proximo"
+      "estado": "auto"
     },
     {
       "id": "copa-de-chile-palestino-vs-audax-italiano",
       "hora_inicio": "19:30",
       "hora_fin": "21:25",
       "adicionales": 4,
-      "estado": "proximo"
+      "estado": "auto"
     },
     {
       "id": "copa-mundial-de-la-fifa-2026-colombia-vs-rd-del-congo",
       "hora_inicio": "21:00",
       "hora_fin": "22:54",
       "adicionales": 6,
-      "estado": "proximo"
+      "estado": "auto"
     }
   ]
 }
