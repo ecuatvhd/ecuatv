@@ -48,6 +48,49 @@
       "hora_fin": "22:54",
       "adicionales": 6,
       "estado": "auto"
+    },
+  
+    {
+      "id": "copa-mundial-de-la-fifa-2026-noruega-vs-francia",
+      "hora_inicio": "14:00",
+      "hora_fin": "15:54",
+      "adicionales": 6,
+      "estado": "auto"
+    },
+    {
+      "id": "copa-mundial-de-la-fifa-2026-senegal-vs-iraq",
+      "hora_inicio": "14:00",
+      "hora_fin": "15:54",
+      "adicionales": 6,
+      "estado": "auto"
+    },
+    {
+      "id": "copa-mundial-de-la-fifa-2026-islas-de-cabo-verde-vs-arabia-saudita",
+      "hora_inicio": "19:00",
+      "hora_fin": "20:54",
+      "adicionales": 6,
+      "estado": "auto"
+    },
+    {
+      "id": "copa-mundial-de-la-fifa-2026-uruguay-vs-espana",
+      "hora_inicio": "19:00",
+      "hora_fin": "20:54",
+      "adicionales": 6,
+      "estado": "auto"
+    },
+    {
+      "id": "copa-mundial-de-la-fifa-2026-egipto-vs-iran",
+      "hora_inicio": "22:00",
+      "hora_fin": "23:54",
+      "adicionales": 6,
+      "estado": "auto"
+    },
+    {
+      "id": "copa-mundial-de-la-fifa-2026-nueva-zelanda-vs-belgica",
+      "hora_inicio": "22:00",
+      "hora_fin": "23:54",
+      "adicionales": 6,
+      "estado": "auto"
     }
   ]
 }
