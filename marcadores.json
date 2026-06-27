@@ -1,1 +1,67 @@
-
+{
+  "eventos": [
+    {
+      "id": "f1-gp-de-austria-clasificacion",
+      "hora_inicio": "09:00",
+      "hora_fin": "12:00",
+      "adicionales": 0,
+      "estado": "auto"
+    },
+    {
+      "id": "copa-mundial-de-la-fifa-2026-croacia-vs-ghana",
+      "hora_inicio": "16:00",
+      "hora_fin": "17:54",
+      "adicionales": 6,
+      "estado": "auto"
+    },
+    {
+      "id": "copa-mundial-de-la-fifa-2026-panama-vs-inglaterra",
+      "hora_inicio": "16:00",
+      "hora_fin": "17:54",
+      "adicionales": 6,
+      "estado": "auto"
+    },
+    {
+      "id": "copa-de-chile-audax-italiano-vs-magallanes",
+      "hora_inicio": "16:30",
+      "hora_fin": "18:25",
+      "adicionales": 4,
+      "estado": "auto"
+    },
+    {
+      "id": "copa-mundial-de-la-fifa-2026-colombia-vs-portugal",
+      "hora_inicio": "18:30",
+      "hora_fin": "20:25",
+      "adicionales": 6,
+      "estado": "auto"
+    },
+    {
+      "id": "copa-mundial-de-la-fifa-2026-rd-del-congo-vs-uzbekistan",
+      "hora_inicio": "18:30",
+      "hora_fin": "20:25",
+      "adicionales": 6,
+      "estado": "auto"
+    },
+    {
+      "id": "copa-de-chile-universidad-catolica-vs-san-luis",
+      "hora_inicio": "19:00",
+      "hora_fin": "20:54",
+      "adicionales": 4,
+      "estado": "auto"
+    },
+    {
+      "id": "copa-mundial-de-la-fifa-2026-jordania-vs-argentina",
+      "hora_inicio": "21:00",
+      "hora_fin": "22:54",
+      "adicionales": 6,
+      "estado": "auto"
+    },
+    {
+      "id": "copa-mundial-de-la-fifa-2026-argelia-vs-austria",
+      "hora_inicio": "21:00",
+      "hora_fin": "22:54",
+      "adicionales": 6,
+      "estado": "auto"
+    }
+  ]
+}
