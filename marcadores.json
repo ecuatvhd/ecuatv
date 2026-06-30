@@ -1,32 +1,38 @@
-
 {
   "eventos": [
     {
-      "id": "copa-mundial-de-la-fifa-2026-brasil-vs-japon",
+      "id": "copa-mundial-de-la-fifa-2026-costa-de-marfil-vs-noruega",
       "hora_inicio": "12:00",
-      "hora_fin": "14:00",
+      "hora_fin": "13:54",
+      "adicionales": 15,
+      "estado": "auto"
+    },
+    {
+      "id": "copa-mundial-de-la-fifa-2026-francia-vs-suecia",
+      "hora_inicio": "16:00",
+      "hora_fin": "17:54",
+      "adicionales": 15,
+      "estado": "auto"
+    },
+    {
+      "id": "copa-de-chile-audax-italiano-vs-palestino",
+      "hora_inicio": "17:00",
+      "hora_fin": "18:54",
       "adicionales": 6,
       "estado": "auto"
     },
     {
-      "id": "copa-mundial-de-la-fifa-2026-alemania-vs-paraguay",
-      "hora_inicio": "15:30",
-      "hora_fin": "17:30",
-      "adicionales": 50,
-      "estado": "auto"
-    },
-    {
-      "id": "copa-de-chile-union-espanola-vs-colo-colo",
-      "hora_inicio": "18:30",
-      "hora_fin": "20:30",
+      "id": "copa-de-chile-universidad-catolica-vs-everton",
+      "hora_inicio": "19:30",
+      "hora_fin": "21:25",
       "adicionales": 6,
       "estado": "auto"
     },
     {
-      "id": "copa-mundial-de-la-fifa-2026-paises-bajos-vs-marruecos",
+      "id": "copa-mundial-de-la-fifa-2026-mexico-vs-ecuador",
       "hora_inicio": "20:00",
-      "hora_fin": "22:51",
-      "adicionales": 4,
+      "hora_fin": "21:54",
+      "adicionales": 15,
       "estado": "auto"
     }
   ]
