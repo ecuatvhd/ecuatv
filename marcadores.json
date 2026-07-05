@@ -1,65 +1,58 @@
 {
   "eventos": [
     {
-      "id": "amistoso-cruzeiro-vs-defensor-sporting",
+      "id": "f1-gp-gran-bretana-carrera",
       "hora_inicio": "09:00",
-      "hora_fin": "10:54",
-      "adicionales": 4,
-      "estado": "auto"
-    },
-    {
-      "id": "ciclismo-tour-de-france-etapa-1",
-      "hora_inicio": "09:30",
-      "hora_fin": "13:16",
-      "adicionales": 0,
-      "estado": "auto"
-    },
-    {
-      "id": "f1-gp-de-gran-bretana-clasificacion",
-      "hora_inicio": "10:00",
-      "hora_fin": "12:00",
-      "adicionales": 3,
-      "estado": "auto"
-    },
-    {
-      "id": "copa-mundial-de-la-fifa-2026-canada-vs-marruecos-8vos-de-final",
-      "hora_inicio": "12:01",
-      "hora_fin": "13:54",
+      "hora_fin": "11:00",
       "adicionales": 6,
       "estado": "auto"
     },
     {
-      "id": "copa-mundial-de-la-fifa-2026-paraguay-vs-francia-8vos-de-final",
-      "hora_inicio": "16:00",
-      "hora_fin": "17:54",
-      "adicionales": 12,
+      "id": "copa-de-chile-santiago-wanderers-vs-universidad-chile",
+      "hora_inicio": "11:30",
+      "hora_fin": "13:30",
+      "adicionales": 6,
       "estado": "auto"
     },
     {
-      "id": "copa-de-chile-deportes-iquique-vs-coquimbo-unido",
-      "hora_inicio": "17:00",
-      "hora_fin": "18:52",
-      "adicionales": 4,
+      "id": "primera-division-danubio-vs-juventud",
+      "hora_inicio": "12:00",
+      "hora_fin": "14:00",
+      "adicionales": 6,
       "estado": "auto"
     },
     {
-      "id": "amistoso-cancun-vs-pumas-unam",
+      "id": "copa-de-chile-nublense-vs-curico-unido",
+      "hora_inicio": "14:00",
+      "hora_fin": "16:00",
+      "adicionales": 6,
+      "estado": "auto"
+    },
+    {
+      "id": "copa-mundial-de-la-fifa-2026-brasil-vs-noruega-8vos-de-final",
+      "hora_inicio": "15:00",
+      "hora_fin": "17:00",
+      "adicionales": 6,
+      "estado": "auto"
+    },
+    {
+      "id": "copa-de-chile-union-espanola-vs-ohiggins",
+      "hora_inicio": "16:30",
+      "hora_fin": "18:30",
+      "adicionales": 6,
+      "estado": "auto"
+    },
+    {
+      "id": "copa-mundial-de-la-fifa-2026-mexico-vs-inglaterra-8vos-de-final",
       "hora_inicio": "19:00",
-      "hora_fin": "20:54",
-      "adicionales": 4,
+      "hora_fin": "21:00",
+      "adicionales": 6,
       "estado": "auto"
     },
     {
-      "id": "copa-de-chile-universidad-catolica-vs-copiapo",
-      "hora_inicio": "19:30",
-      "hora_fin": "21:23",
-      "adicionales": 5,
-      "estado": "auto"
-    },
-    {
-      "id": "amistoso-cds-tampico-madero-vs-america",
-      "hora_inicio": "21:00",
-      "hora_fin": "22:54",
+      "id": "copa-de-chile-deportes-limache-vs-san-marcos",
+      "hora_inicio": "19:00",
+      "hora_fin": "21:00",
       "adicionales": 6,
       "estado": "auto"
     }
