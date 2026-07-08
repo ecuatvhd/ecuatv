@@ -1,17 +1,24 @@
 {
   "eventos": [
     {
-      "id": "copa-mundial-de-la-fifa-2026-argentina-vs-egipto-8vos-de-final",
-      "hora_inicio": "11:00",
-      "hora_fin": "12:54",
-      "adicionales": 7,
+      "id": "amistoso-lausanne-sport-vs-flamengo",
+      "hora_inicio": "14:30",
+      "hora_fin": "16:23",
+      "adicionales": 3,
       "estado": "auto"
     },
     {
-      "id": "copa-mundial-de-la-fifa-2026-suiza-vs-colombia-8vos-de-final",
-      "hora_inicio": "15:00",
-      "hora_fin": "16:54",
-      "adicionales": 6,
+      "id": "amistoso-fluminense-vs-nova-iguacu",
+      "hora_inicio": "18:30",
+      "hora_fin": "20:32",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "amistoso-boca-juniors-vs-athletico-pr",
+      "hora_inicio": "19:00",
+      "hora_fin": "20:52",
+      "adicionales": 3,
       "estado": "auto"
     }
   ]
