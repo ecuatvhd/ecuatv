@@ -1,23 +1,58 @@
 {
   "eventos": [
     {
-      "id": "amistoso-lausanne-sport-vs-flamengo",
-      "hora_inicio": "14:30",
-      "hora_fin": "16:23",
+      "id": "mlb-new-york-yankees-vs-tampa-bay-rays",
+      "hora_inicio": "12:10",
+      "hora_fin": "14:10",
       "adicionales": 3,
       "estado": "auto"
     },
     {
-      "id": "amistoso-fluminense-vs-nova-iguacu",
-      "hora_inicio": "18:30",
-      "hora_fin": "20:32",
+      "id": "copa-mundial-de-la-fifa-francia-vs-marruecos-4tos-de-final",
+      "hora_inicio": "15:00",
+      "hora_fin": "16:54",
+      "adicionales": 6,
+      "estado": "auto"
+    },
+    {
+      "id": "nba-summer-league-spurs-vs-hawks",
+      "hora_inicio": "15:30",
+      "hora_fin": "17:30",
       "adicionales": 3,
       "estado": "auto"
     },
     {
-      "id": "amistoso-boca-juniors-vs-athletico-pr",
-      "hora_inicio": "19:00",
-      "hora_fin": "20:52",
+      "id": "mlb-chicago-cubs-vs-baltimore-orioles",
+      "hora_inicio": "17:35",
+      "hora_fin": "19:35",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "copa-de-la-liga-nublense-vs-ohiggins",
+      "hora_inicio": "18:00",
+      "hora_fin": "20:00",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "nba-summer-league-mavericks-vs-warriors",
+      "hora_inicio": "18:00",
+      "hora_fin": "20:00",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "nba-summer-league-wizards-vs-jazz",
+      "hora_inicio": "20:00",
+      "hora_fin": "22:00",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "nba-summer-league-kings-vs-clippers",
+      "hora_inicio": "22:00",
+      "hora_fin": "00:00",
       "adicionales": 3,
       "estado": "auto"
     }
