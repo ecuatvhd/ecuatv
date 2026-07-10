@@ -1,59 +1,52 @@
 {
   "eventos": [
     {
-      "id": "mlb-new-york-yankees-vs-tampa-bay-rays",
-      "hora_inicio": "12:10",
-      "hora_fin": "14:10",
-      "adicionales": 3,
+      "id": "copa-mundial-de-la-fifa-espana-vs-belgica-4tos-de-final",
+      "hora_inicio": "14:00",
+      "hora_fin": "15:54",
+      "adicionales": 54,
       "estado": "auto"
     },
     {
-      "id": "copa-mundial-de-la-fifa-francia-vs-marruecos-4tos-de-final",
-      "hora_inicio": "15:00",
-      "hora_fin": "16:55",
-      "adicionales": 6,
-      "estado": "auto"
-    },
-    {
-      "id": "nba-summer-league-spurs-vs-hawks",
+      "id": "nba-summer-league-cavaliers-vs-pacers",
       "hora_inicio": "15:30",
-      "hora_fin": "17:30",
+      "hora_fin": "17:24",
       "adicionales": 3,
       "estado": "auto"
     },
     {
-      "id": "mlb-chicago-cubs-vs-baltimore-orioles",
-      "hora_inicio": "17:35",
-      "hora_fin": "19:35",
+      "id": "primera-division-deportivo-maldonado-vs-albion",
+      "hora_inicio": "17:00",
+      "hora_fin": "19:00",
       "adicionales": 3,
       "estado": "auto"
     },
     {
-      "id": "copa-de-la-liga-nublense-vs-ohiggins",
-      "hora_inicio": "18:00",
-      "hora_fin": "20:00",
+      "id": "nba-summer-league-rockets-vs-nuggets",
+      "hora_inicio": "17:30",
+      "hora_fin": "19:30",
       "adicionales": 3,
       "estado": "auto"
     },
     {
-      "id": "nba-summer-league-mavericks-vs-warriors",
-      "hora_inicio": "18:00",
-      "hora_fin": "20:00",
+      "id": "mlb-seattle-mariners-vs-tampa-bay-rays",
+      "hora_inicio": "18:10",
+      "hora_fin": "20:10",
       "adicionales": 3,
       "estado": "auto"
     },
     {
-      "id": "nba-summer-league-wizards-vs-jazz",
+      "id": "nba-summer-league-celtics-vs-raptors",
       "hora_inicio": "20:00",
       "hora_fin": "22:00",
       "adicionales": 3,
       "estado": "auto"
     },
     {
-      "id": "nba-summer-league-kings-vs-clippers",
+      "id": "nba-summer-league-trail-blazers-vs-suns",
       "hora_inicio": "22:00",
-      "hora_fin": "24:00",
-      "adicionales": 0,
+      "hora_fin": "00:00",
+      "adicionales": 3,
       "estado": "auto"
     }
   ]
