@@ -52,8 +52,8 @@
     {
       "id": "nba-summer-league-kings-vs-clippers",
       "hora_inicio": "22:00",
-      "hora_fin": "00:00",
-      "adicionales": 3,
+      "hora_fin": "24:00",
+      "adicionales": 0,
       "estado": "auto"
     }
   ]
