@@ -38,15 +38,15 @@
     {
       "id": "nba-summer-league-celtics-vs-raptors",
       "hora_inicio": "20:00",
-      "hora_fin": "22:00",
-      "adicionales": 3,
+      "hora_fin": "21:55",
+      "adicionales": 5,
       "estado": "auto"
     },
     {
       "id": "nba-summer-league-trail-blazers-vs-suns",
       "hora_inicio": "22:00",
-      "hora_fin": "00:00",
-      "adicionales": 3,
+      "hora_fin": "23:55",
+      "adicionales": 5,
       "estado": "auto"
     }
   ]
