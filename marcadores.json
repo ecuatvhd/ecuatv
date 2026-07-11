@@ -1,52 +1,94 @@
 {
   "eventos": [
     {
-      "id": "copa-mundial-de-la-fifa-espana-vs-belgica-4tos-de-final",
-      "hora_inicio": "14:00",
-      "hora_fin": "15:52",
-      "adicionales": 6,
-      "estado": "auto"
-    },
-    {
-      "id": "nba-summer-league-cavaliers-vs-pacers",
-      "hora_inicio": "15:30",
-      "hora_fin": "17:24",
+      "id": "primera-division-juventud-vs-torque",
+      "hora_inicio": "08:00",
+      "hora_fin": "09:54",
       "adicionales": 3,
       "estado": "auto"
     },
     {
-      "id": "primera-division-deportivo-maldonado-vs-albion",
+      "id": "primera-division-danubio-vs-nacional",
+      "hora_inicio": "13:00",
+      "hora_fin": "14:52",
+      "adicionales": 4,
+      "estado": "auto"
+    },
+    {
+      "id": "amistoso-benfica-vs-flamengo",
+      "hora_inicio": "13:30",
+      "hora_fin": "15:22",
+      "adicionales": 4,
+      "estado": "auto"
+    },
+    {
+      "id": "copa-de-chile-magallanes-vs-audax-italiano",
+      "hora_inicio": "14:00",
+      "hora_fin": "15:52",
+      "adicionales": 4,
+      "estado": "auto"
+    },
+    {
+      "id": "ufc-conor-mcgregor-vs-max-holloway",
+      "hora_inicio": "14:00",
+      "hora_fin": "16:00",
+      "adicionales": 0,
+      "estado": "auto"
+    },
+    {
+      "id": "nba-summer-league-pelicans-vs-hornets",
+      "hora_inicio": "15:00",
+      "hora_fin": "17:00",
+      "adicionales": 6,
+      "estado": "auto"
+    },
+    {
+      "id": "copa-mundial-de-la-fifa-noruega-vs-inglaterra-4tos-de-final",
+      "hora_inicio": "16:00",
+      "hora_fin": "17:54",
+      "adicionales": 6,
+      "estado": "auto"
+    },
+    {
+      "id": "primera-division-wanderers-vs-progreso",
+      "hora_inicio": "16:00",
+      "hora_fin": "15:52",
+      "adicionales": 4,
+      "estado": "auto"
+    },
+    {
+      "id": "copa-de-chile-san-luis-vs-universidad-catolica",
+      "hora_inicio": "16:30",
+      "hora_fin": "18:22",
+      "adicionales": 6,
+      "estado": "auto"
+    },
+    {
+      "id": "nba-summer-league-knicks-vs-spurs",
       "hora_inicio": "17:00",
-      "hora_fin": "18:50",
-      "adicionales": 7,
+      "hora_fin": "19:00",
+      "adicionales": 0,
       "estado": "auto"
     },
     {
-      "id": "nba-summer-league-rockets-vs-nuggets",
-      "hora_inicio": "17:30",
-      "hora_fin": "20:00",
-      "adicionales": 5,
+      "id": "nba-summer-league-hawks-vs-nets",
+      "hora_inicio": "19:00",
+      "hora_fin": "21:00",
+      "adicionales": 0,
       "estado": "auto"
     },
     {
-      "id": "mlb-seattle-mariners-vs-tampa-bay-rays",
-      "hora_inicio": "18:10",
-      "hora_fin": "20:10",
-      "adicionales": 5,
-      "estado": "auto"
-    },
-    {
-      "id": "nba-summer-league-celtics-vs-raptors",
+      "id": "copa-mundial-de-la-fifa-argentina-vs-suiza-4tos-de-final",
       "hora_inicio": "20:00",
-      "hora_fin": "21:55",
-      "adicionales": 5,
+      "hora_fin": "21:54",
+      "adicionales": 6,
       "estado": "auto"
     },
     {
-      "id": "nba-summer-league-trail-blazers-vs-suns",
-      "hora_inicio": "22:00",
-      "hora_fin": "23:55",
-      "adicionales": 5,
+      "id": "nba-summer-league-lakers-vs-mavericks",
+      "hora_inicio": "21:00",
+      "hora_fin": "23:00",
+      "adicionales": 9,
       "estado": "auto"
     }
   ]
