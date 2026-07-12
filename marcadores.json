@@ -1,94 +1,108 @@
 {
   "eventos": [
     {
-      "id": "primera-division-juventud-vs-torque",
-      "hora_inicio": "08:00",
-      "hora_fin": "09:54",
-      "adicionales": 3,
+      "id": "primera-division-liverpool-vs-cerro",
+      "hora_inicio": "10:00",
+      "hora_fin": "11:52",
+      "adicionales": 4,
       "estado": "auto"
     },
     {
-      "id": "primera-division-danubio-vs-nacional",
+      "id": "copa-de-chile-cobreloa-vs-la-serena",
+      "hora_inicio": "11:30",
+      "hora_fin": "13:22",
+      "adicionales": 5,
+      "estado": "auto"
+    },
+    {
+      "id": "primera-division-boston-river-vs-central-espanol",
       "hora_inicio": "13:00",
       "hora_fin": "14:52",
       "adicionales": 4,
       "estado": "auto"
     },
     {
-      "id": "amistoso-benfica-vs-flamengo",
-      "hora_inicio": "13:30",
-      "hora_fin": "15:22",
+      "id": "amistoso-pumas-unam-vs-america-de-cali",
+      "hora_inicio": "13:00",
+      "hora_fin": "14:52",
+      "adicionales": 5,
+      "estado": "auto"
+    },
+    {
+      "id": "amistoso-fluminense-vs-bahia",
+      "hora_inicio": "14:00",
+      "hora_fin": "15:52",
+      "adicionales": 5,
+      "estado": "auto"
+    },
+    {
+      "id": "amistoso-cascavel-vs-corinthians",
+      "hora_inicio": "14:00",
+      "hora_fin": "15:52",
+      "adicionales": 5,
+      "estado": "auto"
+    },
+    {
+      "id": "copa-de-la-liga-coquimbo-unido-vs-union-la-calera",
+      "hora_inicio": "14:00",
+      "hora_fin": "15:52",
       "adicionales": 4,
       "estado": "auto"
     },
     {
-      "id": "copa-de-chile-magallanes-vs-audax-italiano",
+      "id": "nba-summer-league-suns-vs-pelicans",
       "hora_inicio": "14:00",
-      "hora_fin": "15:45",
-      "adicionales": 2,
-      "estado": "auto"
-    },
-    {
-      "id": "ufc-conor-mcgregor-vs-max-holloway",
-      "hora_inicio": "14:00",
-      "hora_fin": "20:00",
+      "hora_fin": "16:00",
       "adicionales": 0,
       "estado": "auto"
     },
     {
-      "id": "nba-summer-league-pelicans-vs-hornets",
-      "hora_inicio": "15:00",
-      "hora_fin": "17:00",
-      "adicionales": 0,
+      "id": "copa-argentina-independiente-rivadavia-vs-tigre",
+      "hora_inicio": "14:15",
+      "hora_fin": "16:12",
+      "adicionales": 4,
       "estado": "auto"
     },
     {
-      "id": "copa-mundial-de-la-fifa-noruega-vs-inglaterra-4tos-de-final",
-      "hora_inicio": "16:02",
-      "hora_fin": "18:45",
-      "adicionales": 2,
-      "estado": "auto"
-    },
-    {
-      "id": "primera-division-wanderers-vs-progreso",
+      "id": "nba-summer-league-hornets-vs-celtics",
       "hora_inicio": "16:00",
-      "hora_fin": "15:48",
-      "adicionales": 5,
+      "hora_fin": "17:52",
+      "adicionales": 4,
       "estado": "auto"
     },
     {
-      "id": "copa-de-chile-san-luis-vs-universidad-catolica",
+      "id": "copa-de-chile-deportes-concepcion-vs-puerto-montt",
       "hora_inicio": "16:30",
       "hora_fin": "18:22",
-      "adicionales": 6,
+      "adicionales": 4,
       "estado": "auto"
     },
     {
-      "id": "nba-summer-league-knicks-vs-spurs",
-      "hora_inicio": "17:00",
-      "hora_fin": "19:00",
+      "id": "primera-division-racing-vs-penarol",
+      "hora_inicio": "16:30",
+      "hora_fin": "18:22",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "nba-summer-league-magic-vs-blazers",
+      "hora_inicio": "18:00",
+      "hora_fin": "19:52",
       "adicionales": 0,
       "estado": "auto"
     },
     {
-      "id": "nba-summer-league-hawks-vs-nets",
+      "id": "copa-de-la-liga-ohiggins-vs-nublense",
       "hora_inicio": "19:00",
-      "hora_fin": "21:00",
-      "adicionales": 0,
+      "hora_fin": "20:52",
+      "adicionales": 3,
       "estado": "auto"
     },
     {
-      "id": "copa-mundial-de-la-fifa-argentina-vs-suiza-4tos-de-final",
+      "id": "nba-summer-league-spurs-vs-bucks",
       "hora_inicio": "20:00",
-      "hora_fin": "22:41",
-      "adicionales": 5,
-      "estado": "auto"
-    },
-    {
-      "id": "nba-summer-league-lakers-vs-mavericks",
-      "hora_inicio": "21:00",
-      "hora_fin": "23:00",
-      "adicionales": 9,
+      "hora_fin": "22:00",
+      "adicionales": 3,
       "estado": "auto"
     }
   ]
