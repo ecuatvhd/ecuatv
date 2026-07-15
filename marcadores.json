@@ -1,17 +1,10 @@
 {
   "eventos": [
     {
-      "id": "liga-pro-ecuabet-macara-vs-mushuc-runa",
-      "hora_inicio": "16:30",
-      "hora_fin": "18:22",
-      "adicionales": 4,
-      "estado": "auto"
-    },
-    {
-      "id": "liga-pro-ecuabet-manta-vs-delfin",
-      "hora_inicio": "19:00",
-      "hora_fin": "20:52",
-      "adicionales": 3,
+      "id": "copa-mundial-de-la-fifa-inglaterra-vs-argentina-semifinal",
+      "hora_inicio": "14:00",
+      "hora_fin": "15:54",
+      "adicionales": 45,
       "estado": "auto"
     }
   ]
