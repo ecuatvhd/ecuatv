@@ -1,10 +1,73 @@
 {
   "eventos": [
     {
-      "id": "copa-mundial-de-la-fifa-inglaterra-vs-argentina-semifinal",
-      "hora_inicio": "14:00",
-      "hora_fin": "15:54",
-      "adicionales": 45,
+      "id": "copa-argentina-racing-club-vs-defensa-y-justicia",
+      "hora_inicio": "16:45",
+      "hora_fin": "18:40",
+      "adicionales": 4,
+      "estado": "auto"
+    },
+    {
+      "id": "brasileirao-vitoria-vs-vasco-da-gama",
+      "hora_inicio": "17:30",
+      "hora_fin": "19:23",
+      "adicionales": 4,
+      "estado": "auto"
+    },
+    {
+      "id": "brasileirao-botafogo-vs-santos",
+      "hora_inicio": "17:30",
+      "hora_fin": "19:24",
+      "adicionales": 4,
+      "estado": "auto"
+    },
+    {
+      "id": "mls-cf-montreal-vs-toronto-fc",
+      "hora_inicio": "18:24",
+      "hora_fin": "20:30",
+      "adicionales": 4,
+      "estado": "auto"
+    },
+    {
+      "id": "mls-chicago-fire-vs-vancouver-whitecaps",
+      "hora_inicio": "19:30",
+      "hora_fin": "21:24",
+      "adicionales": 4,
+      "estado": "auto"
+    },
+    {
+      "id": "mls-st-louis-city-vs-sporting-kc",
+      "hora_inicio": "19:30",
+      "hora_fin": "21:24",
+      "adicionales": 4,
+      "estado": "auto"
+    },
+    {
+      "id": "copa-argentina-sarmiento-vs-boca-juniors",
+      "hora_inicio": "19:45",
+      "hora_fin": "21:42",
+      "adicionales": 4,
+      "estado": "auto"
+    },
+    {
+      "id": "liga-mx-necaxa-vs-atlante",
+      "hora_inicio": "20:00",
+      "hora_fin": "21:53",
+      "adicionales": 4,
+      "estado": "auto"
+    },
+    {
+      "id": "mls-seattle-sounders-fc-vs-portland-timbers",
+      "hora_inicio": "21:23",
+      "hora_fin": "23:30",
+      "adicionales": 4,
+      "estado": "auto"
+    },
+    {
+      "id": "liga-mx-tijuana-vs-tigres-uanl",
+      "hora_inicio": "22:00",
+      "hora_fin": "23:54",
+      "adicionales": 4,
       "estado": "auto"
     }
   ]
