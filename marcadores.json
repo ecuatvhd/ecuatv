@@ -1,89 +1,115 @@
 {
   "eventos": [
-
     {
-      "id": "liga-pro-ecuabet-universidad-catolica-0-0-ldu-quito",
-      "hora_inicio": "16:30",
-      "hora_fin": "18:23",
-      "adicionales": 4,
+      "id": "mls-cincinnati-vs-dc-united",
+      "hora_inicio": "18:00",
+      "hora_fin": "20:00",
+      "adicionales": 3,
       "estado": "auto"
     },
     {
-      "id": "lia-pro-ecuabet-barcelona-vs-guayaquil-city",
-      "hora_inicio": "19:00",
-      "hora_fin": "20:53",
-      "adicionales": 4,
-      "estado": "auto"
-    },
-    
-    {
-      "id": "copa-argentina-racing-club-vs-defensa-y-justicia",
-      "hora_inicio": "16:45",
-      "hora_fin": "18:40",
-      "adicionales": 4,
+      "id": "liga-betplay-llaneros-vs-deportivo-cali",
+      "hora_inicio": "18:15",
+      "hora_fin": "20:15",
+      "adicionales": 3,
       "estado": "auto"
     },
     {
-      "id": "brasileirao-vitoria-vs-vasco-da-gama",
-      "hora_inicio": "17:30",
-      "hora_fin": "19:23",
-      "adicionales": 4,
-      "estado": "auto"
-    },
-    {
-      "id": "brasileirao-botafogo-vs-santos",
-      "hora_inicio": "17:30",
-      "hora_fin": "19:24",
-      "adicionales": 4,
-      "estado": "auto"
-    },
-    {
-      "id": "mls-cf-montreal-vs-toronto-fc",
-      "hora_inicio": "18:24",
+      "id": "nba-wolves-vs-heart",
+      "hora_inicio": "18:30",
       "hora_fin": "20:30",
-      "adicionales": 4,
+      "adicionales": 3,
       "estado": "auto"
     },
     {
-      "id": "mls-chicago-fire-vs-vancouver-whitecaps",
+      "id": "copa-sudamericana-palmeiras-vs-fluminense",
       "hora_inicio": "19:30",
-      "hora_fin": "21:24",
-      "adicionales": 4,
+      "hora_fin": "21:30",
+      "adicionales": 3,
       "estado": "auto"
     },
     {
-      "id": "mls-st-louis-city-vs-sporting-kc",
+      "id": "copa-colombia-barranquilla-vs-america-de-cali",
       "hora_inicio": "19:30",
-      "hora_fin": "21:24",
-      "adicionales": 4,
+      "hora_fin": "21:30",
+      "adicionales": 3,
       "estado": "auto"
     },
     {
-      "id": "copa-argentina-sarmiento-vs-boca-juniors",
-      "hora_inicio": "19:45",
-      "hora_fin": "21:42",
-      "adicionales": 4,
+      "id": "copa-centroamericana-de-concacaf-firpo-vs-deportivo-saprissa",
+      "hora_inicio": "19:30",
+      "hora_fin": "21:30",
+      "adicionales": 3,
       "estado": "auto"
     },
     {
-      "id": "liga-mx-necaxa-vs-atlante",
+      "id": "liga-mx-atlas-vs-america-drm",
       "hora_inicio": "20:00",
-      "hora_fin": "21:53",
-      "adicionales": 4,
+      "hora_fin": "22:00",
+      "adicionales": 3,
       "estado": "auto"
     },
     {
-      "id": "mls-seattle-sounders-fc-vs-portland-timbers",
-      "hora_inicio": "21:23",
+      "id": "liga-mx-atlas-vs-america",
+      "hora_inicio": "20:00",
+      "hora_fin": "22:00",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "liga-mx-puebla-vs-monterrey",
+      "hora_inicio": "20:00",
+      "hora_fin": "22:00",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "liga-mx-toluca-vs-tijuana",
+      "hora_inicio": "20:00",
+      "hora_fin": "22:00",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "liga-betplay-santa-fe-vs-jaguares-de-cordoba",
+      "hora_inicio": "20:20",
+      "hora_fin": "22:20",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "nba-warriors-vs-lakers",
+      "hora_inicio": "21:00",
+      "hora_fin": "23:00",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "copa-centroamericana-de-concacaf-cartagines-vs-olimpia",
+      "hora_inicio": "21:30",
       "hora_fin": "23:30",
-      "adicionales": 4,
+      "adicionales": 3,
       "estado": "auto"
     },
     {
-      "id": "liga-mx-tijuana-vs-tigres-uanl",
+      "id": "liga-mx-pachuca-vs-cruz-azul",
       "hora_inicio": "22:00",
-      "hora_fin": "23:54",
-      "adicionales": 4,
+      "hora_fin": "00:00",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "liga-mx-santos-laguna-vs-pumas-unam-drm",
+      "hora_inicio": "22:10",
+      "hora_fin": "00:10",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "liga-mx-santos-laguna-vs-pumas-unam",
+      "hora_inicio": "22:10",
+      "hora_fin": "00:10",
+      "adicionales": 3,
       "estado": "auto"
     }
   ]
