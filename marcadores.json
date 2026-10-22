@@ -1,114 +1,303 @@
 {
   "eventos": [
     {
-      "id": "mls-cincinnati-vs-dc-united",
+      "id": "uefa-conference-league-kairat-vs-panathinaikos",
+      "hora_inicio": "09:30",
+      "hora_fin": "11:25",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "uefa-europa-league-juventus-vs-rennes",
+      "hora_inicio": "11:45",
+      "hora_fin": "13:42",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "uefa-europa-league-sturm-graz-vs-olympique-marseille",
+      "hora_inicio": "11:45",
+      "hora_fin": "13:42",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "uefa-europa-league-ofi-vs-bayer-leverkusen",
+      "hora_inicio": "11:45",
+      "hora_fin": "13:42",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "uefa-europa-league-ararat-armenia-vs-az",
+      "hora_inicio": "11:45",
+      "hora_fin": "13:42",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "uefa-europa-league-lech-poznan-vs-sunderland",
+      "hora_inicio": "11:45",
+      "hora_fin": "13:42",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "uefa-europa-league-union-saint-gilloise-vs-hapoel-beer-sheva",
+      "hora_inicio": "11:45",
+      "hora_fin": "13:42",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "uefa-europa-league-ferencvaros-vs-torreense",
+      "hora_inicio": "11:45",
+      "hora_fin": "13:42",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "uefa-europa-league-dinamo-zagreb-vs-nec",
+      "hora_inicio": "11:45",
+      "hora_fin": "13:42",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "uefa-conference-league-getafe-vs-lugano",
+      "hora_inicio": "11:45",
+      "hora_fin": "13:42",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "uefa-conference-league-trabzonspor-vs-hearts",
+      "hora_inicio": "11:45",
+      "hora_fin": "13:42",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "uefa-conference-league-paphos-vs-riga",
+      "hora_inicio": "11:45",
+      "hora_fin": "13:42",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "uefa-conference-league-jablonec-vs-brighton-hove-albion",
+      "hora_inicio": "11:45",
+      "hora_fin": "13:42",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "uefa-conference-league-kauno-zalgiris-vs-brann",
+      "hora_inicio": "11:45",
+      "hora_fin": "13:42",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "uefa-conference-league-nordsjlland-vs-cska-sofia",
+      "hora_inicio": "11:45",
+      "hora_fin": "13:42",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "uefa-conference-league-inter-club-descaldes-vs-csu-craiova",
+      "hora_inicio": "11:45",
+      "hora_fin": "13:42",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "uefa-conference-league-iberia-1999-vs-mjallby",
+      "hora_inicio": "11:42",
+      "hora_fin": "13:45",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "uefa-conference-league-crvena-zvezda-vs-kbenhavn",
+      "hora_inicio": "11:45",
+      "hora_fin": "13:43",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "liga-profesional-saudi-al-ahli-vs-al-khaleej",
+      "hora_inicio": "13:00",
+      "hora_fin": "14:55",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "uefa-europa-league-afc-bournemouth-vs-milan",
+      "hora_inicio": "14:00",
+      "hora_fin": "15:55",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "uefa-europa-league-besiktas-vs-crystal-palace",
+      "hora_inicio": "14:00",
+      "hora_fin": "15:54",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "uefa-europa-league-omonia-nicosia-vs-benfica",
+      "hora_inicio": "14:00",
+      "hora_fin": "15:54",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "uefa-europa-league-hoffenheim-vs-olympique-lyonnais",
+      "hora_inicio": "14:00",
+      "hora_fin": "15:54",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "uefa-europa-league-celtic-vs-celta-de-vigo",
+      "hora_inicio": "14:00",
+      "hora_fin": "15:53",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "uefa-europa-league-olympiakos-piraeus-vs-sparta-praha",
+      "hora_inicio": "14:00",
+      "hora_fin": "15:54",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "uefa-europa-league-lillestrm-vs-real-sociedad",
+      "hora_inicio": "14:00",
+      "hora_fin": "15:54",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "uefa-europa-league-jagiellonia-biaystok-vs-anderlecht",
+      "hora_inicio": "14:00",
+      "hora_fin": "15:54",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "uefa-europa-league-celje-vs-salzburg",
+      "hora_inicio": "14:00",
+      "hora_fin": "15:54",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "uefa-europa-league-viktoria-plzen-vs-levski-sofia",
+      "hora_inicio": "14:00",
+      "hora_fin": "15:54",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "uefa-conference-league-ajax-vs-atalanta",
+      "hora_inicio": "14:00",
+      "hora_fin": "15:54",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "uefa-conference-league-monaco-vs-freiburg",
+      "hora_inicio": "14:00",
+      "hora_fin": "15:54",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "uefa-conference-league-sporting-braga-vs-gent",
+      "hora_inicio": "14:00",
+      "hora_fin": "15:54",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "uefa-conference-league-agf-vs-egnatia-rrogozhine",
+      "hora_inicio": "14:00",
+      "hora_fin": "15:54",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "uefa-conference-league-thun-vs-hajduk-split",
+      "hora_inicio": "14:00",
+      "hora_fin": "15:54",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "uefa-conference-league-midtjylland-vs-sint-truiden",
+      "hora_inicio": "14:00",
+      "hora_fin": "15:54",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "uefa-conference-league-lincoln-red-imps-vs-twente",
+      "hora_inicio": "14:00",
+      "hora_fin": "15:54",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "uefa-conference-league-borac-banja-luka-vs-kups",
+      "hora_inicio": "14:00",
+      "hora_fin": "15:54",
+      "adicionales": 3,
+      "estado": "auto"
+    },
+    {
+      "id": "nba-cavaliers-vs-76ers",
       "hora_inicio": "18:00",
-      "hora_fin": "20:00",
+      "hora_fin": "19:54",
       "adicionales": 3,
       "estado": "auto"
     },
     {
-      "id": "liga-betplay-llaneros-vs-deportivo-cali",
-      "hora_inicio": "18:15",
-      "hora_fin": "20:15",
-      "adicionales": 3,
-      "estado": "auto"
-    },
-    {
-      "id": "nba-wolves-vs-heart",
-      "hora_inicio": "18:30",
-      "hora_fin": "20:30",
-      "adicionales": 3,
-      "estado": "auto"
-    },
-    {
-      "id": "copa-sudamericana-palmeiras-vs-fluminense",
+      "id": "nfl-bears-vs-patriots",
       "hora_inicio": "19:30",
       "hora_fin": "21:30",
-      "adicionales": 6,
+      "adicionales": 3,
       "estado": "auto"
     },
     {
-      "id": "copa-colombia-barranquilla-vs-america-de-cali",
+      "id": "copa-libertadores-flamengo-vs-estudiantes-lp",
       "hora_inicio": "19:30",
-      "hora_fin": "21:20",
-      "adicionales": 5,
+      "hora_fin": "21:30",
+      "adicionales": 3,
       "estado": "auto"
     },
     {
-      "id": "copa-centroamericana-de-concacaf-firpo-vs-deportivo-saprissa",
-      "hora_inicio": "19:30",
-      "hora_fin": "21:20",
-      "adicionales": 5,
-      "estado": "auto"
-    },
-    {
-      "id": "liga-mx-atlas-vs-america-drm",
+      "id": "liga-betplay-atletico-nacional-vs-deportivo-pasto",
       "hora_inicio": "20:00",
       "hora_fin": "22:00",
       "adicionales": 3,
       "estado": "auto"
     },
     {
-      "id": "liga-mx-atlas-vs-america",
+      "id": "copa-centroamericana-de-concacaf-motagua-vs-alajuelense",
       "hora_inicio": "20:00",
       "hora_fin": "22:00",
       "adicionales": 3,
       "estado": "auto"
     },
     {
-      "id": "liga-mx-puebla-vs-monterrey",
-      "hora_inicio": "20:00",
-      "hora_fin": "22:00",
-      "adicionales": 3,
-      "estado": "auto"
-    },
-    {
-      "id": "liga-mx-toluca-vs-tijuana",
-      "hora_inicio": "20:00",
-      "hora_fin": "22:00",
-      "adicionales": 3,
-      "estado": "auto"
-    },
-    {
-      "id": "liga-betplay-santa-fe-vs-jaguares-de-cordoba",
-      "hora_inicio": "20:20",
-      "hora_fin": "22:20",
-      "adicionales": 3,
-      "estado": "auto"
-    },
-    {
-      "id": "nba-warriors-vs-lakers",
-      "hora_inicio": "21:00",
-      "hora_fin": "23:00",
-      "adicionales": 3,
-      "estado": "auto"
-    },
-    {
-      "id": "copa-centroamericana-de-concacaf-cartagines-vs-olimpia",
-      "hora_inicio": "21:30",
-      "hora_fin": "23:30",
-      "adicionales": 3,
-      "estado": "auto"
-    },
-    {
-      "id": "liga-mx-pachuca-vs-cruz-azul",
-      "hora_inicio": "22:00",
-      "hora_fin": "00:00",
-      "adicionales": 3,
-      "estado": "auto"
-    },
-    {
-      "id": "liga-mx-santos-laguna-vs-pumas-unam-drm",
-      "hora_inicio": "22:10",
-      "hora_fin": "00:10",
-      "adicionales": 3,
-      "estado": "auto"
-    },
-    {
-      "id": "liga-mx-santos-laguna-vs-pumas-unam",
-      "hora_inicio": "22:10",
-      "hora_fin": "00:10",
+      "id": "nba-nuggets-vs-thunder",
+      "hora_inicio": "20:30",
+      "hora_fin": "22:30",
       "adicionales": 3,
       "estado": "auto"
     }
